@@ -11,7 +11,17 @@ public class ModuleRegistry {
     public static List<GenericModule> modules = new ArrayList<>();
 
     public GenericModule getByName(String name) {
-        return null; //todo: implement genericcommand and genericmodule
+        for(GenericModule m : modules){
+            if(m.getName().equals(name)) return m;
+        }
+        return null;
+    }
+
+    public GenericModule instanceFromClass(Class<?> clazz){
+        for(GenericModule m : modules){
+            if(m.getClass().equals(clazz)) return m;
+        }
+        return null;
     }
 
     public static void addModule(GenericModule module){

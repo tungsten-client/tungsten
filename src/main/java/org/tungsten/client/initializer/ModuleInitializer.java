@@ -50,16 +50,23 @@ public class ModuleInitializer {
         }
     }
 
-    public static void initModule(File module) throws Exception {
-        ModuleClassLoader mloader = new ModuleClassLoader(ModuleInitializer.class.getClassLoader());
+    public static void initModule(File module) throws Exception{
         InputStream file = new FileInputStream(module);
         byte[] classBytes = file.readAllBytes();
         if(Utils.checkSignature(classBytes)) throw new Exception("invalid class file, did not pass class file signature check");
-        Class<?> loadedModule = mloader.registerClass(classBytes);
+        Class<?> loadedModule = ModuleClassLoader.getInstance().registerClass(classBytes);
         if(GenericModule.class.isAssignableFrom(loadedModule)){
             Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
             GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();
-            System.out.println("Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+
             ModuleRegistry.addModule(moduleInstance);
         }
     }

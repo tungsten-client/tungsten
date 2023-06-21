@@ -29,9 +29,9 @@ public class CommandInitializer {
 
 
     /*
-        this method is to be called ON THE MODULES TEMP DIRECTORY, NOT THE MODULES DIRECTORY, WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
+        WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
      */
-    public static void searchForCommands(File path){
+    private static void searchForCommands(File path){
         if(path != null){
             File[] files = path.listFiles();
             if(files != null){
@@ -55,12 +55,11 @@ public class CommandInitializer {
 
 
 
-    public static void initCommand(File module) throws Exception {
-        ModuleClassLoader mloader = new ModuleClassLoader(ModuleInitializer.class.getClassLoader()); //we can use moduleclassloader for commands too cause its just a wrapper around the URLClassLoader
+    private static void initCommand(File module) throws Exception {
         InputStream file = new FileInputStream(module);
         byte[] classBytes = file.readAllBytes();
         if(Utils.checkSignature(classBytes)) throw new Exception("invalid class file, did not pass class file signature check");
-        Class<?> loadedCommand = mloader.registerClass(classBytes);
+        Class<?> loadedCommand = ModuleClassLoader.getInstance().registerClass(classBytes);
         if(GenericCommand.class.isAssignableFrom(loadedCommand)){
             Class<GenericCommand> loadedCommandClass = (Class<GenericCommand>) loadedCommand;
             GenericCommand commandInstance = loadedCommandClass.getDeclaredConstructor().newInstance();

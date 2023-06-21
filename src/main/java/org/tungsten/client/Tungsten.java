@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.Utils;
 
@@ -24,5 +25,6 @@ public class Tungsten implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ModuleInitializer.initModules();
+        CommandInitializer.initCommands();
     }
 }
