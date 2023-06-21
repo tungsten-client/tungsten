@@ -1,5 +1,6 @@
 /.idea
 /bin
 /build
-/gradle
 /run
+/.gradle
+/.idea
