@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "tungsten",
+  "version": "${version}",
+  "name": "Tungsten",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/tungsten/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.tungsten.client.TungstenClient"
+    ]
+  },
+  "mixins": [
+    "tungsten.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "fabric": "*",
+    "minecraft": "1.20.1"
+  }
+}
