@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ModuleInitializer {
 
     private static final File MODULES = new File(Tungsten.RUNDIR, "modules");
-    private static final File MODULES_COMPILED = new File(Tungsten.APPDATA, "mod_tmp");
+    public static final File MODULES_COMPILED = new File(Tungsten.APPDATA, "mod_tmp");
 
     static {
         Utils.ensureDirectoryIsCreated(MODULES);
@@ -29,7 +29,7 @@ public class ModuleInitializer {
     /*
         this method is to be called ON THE MODULES TEMP DIRECTORY, NOT THE MODULES DIRECTORY, WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
      */
-    public static void searchForModules(File path){
+    private static void searchForModules(File path){
         if(path != null){
             File[] files = path.listFiles();
             if(files != null){
@@ -58,14 +58,7 @@ public class ModuleInitializer {
         if(GenericModule.class.isAssignableFrom(loadedModule)){
             Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
             GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
-            System.out.println("[YIPPIE] Loaded module " + moduleInstance.getName());
+            System.out.println("[TUNGSTEN] Loaded module " + moduleInstance.getName());
 
             ModuleRegistry.addModule(moduleInstance);
         }
