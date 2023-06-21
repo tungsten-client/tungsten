@@ -1,0 +1,28 @@
+package org.tungsten.client;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import org.tungsten.client.initializer.ModuleInitializer;
+import org.tungsten.client.util.Utils;
+
+import java.io.File;
+
+@Environment(EnvType.CLIENT)
+public class Tungsten implements ClientModInitializer {
+
+    public static final MinecraftClient client = MinecraftClient.getInstance();
+    public static final File RUNDIR = new File(MinecraftClient.getInstance().runDirectory, "tungsten"); //PLEASE USE THIS DIRECTORY TO SAVE ALL CONFIGURATION FILES, EVERYTHING
+    public static final File APPDATA = new File(RUNDIR, "appdata"); //use this for the temporary creation and storing of files that are needed for the launch of the client, e.g. compiled class files for modules, etc...
+
+    static {
+        Utils.ensureDirectoryIsCreated(RUNDIR);
+        Utils.ensureDirectoryIsCreated(APPDATA);
+    }
+
+    @Override
+    public void onInitializeClient() {
+        ModuleInitializer.initModules();
+    }
+}

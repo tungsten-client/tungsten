@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.tungsten.client.TungstenClient"
+      "org.tungsten.client.Tungsten"
     ]
   },
   "mixins": [
