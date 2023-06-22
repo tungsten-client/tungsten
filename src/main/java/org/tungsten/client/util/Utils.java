@@ -58,6 +58,10 @@ public class Utils {
         for (File file : files) {
             if (file.isFile()) {
                 file.delete();
+            }else{
+                if(file.isDirectory()){
+                    deleteAllFiles(file);
+                }
             }
         }
     }

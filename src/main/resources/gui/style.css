@@ -1,0 +1,49 @@
+/* Styling for the main screen */
+body {
+    background-color: #303030;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* Styling for the draggable windows */
+  .hwnd-window {
+    position: absolute;
+    width: 250px;
+    height: 600px;
+    background-color: #505050;
+    border-radius: 5px;
+    padding: 4px;
+    box-sizing: border-box;
+    color: white;
+    transition: width 0.5s, height 0.5s;
+  }
+
+  .hwnd-collapsed {
+    height: 39px;
+  }
+
+  .hwnd-content{
+    padding:6px;
+  }
+
+  .hwnd-head {
+    background:#2b2b2b;
+    border-radius: 5px;
+    width:100%;
+    height:30px;
+    cursor:grab;
+    text-align: left;
+  }
+
+  
+  .title {
+    padding-top:5px;
+    padding-left:5px;
+  }
+
+
+  h1,h2,h3,h4,h5{
+    margin:0px;
+  }
+  
+  
+  
