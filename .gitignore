@@ -2,5 +2,4 @@
 /bin
 /build
 /run
-/.gradle
-.gradle
+.gradle/

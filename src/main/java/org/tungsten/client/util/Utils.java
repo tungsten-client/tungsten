@@ -19,4 +19,61 @@ public class Utils {
         if (!directory.isDirectory()) directory.delete();
         if (!directory.exists()) directory.mkdir();
     }
+
+    public static void deleteFilesExcept(File directory, String... filenames) {
+
+        if (!directory.isDirectory()) {
+            System.out.println("Invalid directory path: " + directory.getAbsolutePath());
+            return;
+        }
+
+        File[] files = directory.listFiles();
+
+        if (files == null) {
+            System.out.println("An error occurred while retrieving files from the directory.");
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isFile() && !containsFilename(filenames, file.getName())) {
+                file.delete();
+            }
+        }
+    }
+
+    public static void deleteAllFiles(File directory) {
+
+        if (!directory.isDirectory()) {
+            System.out.println("Invalid directory path: " + directory.getAbsolutePath());
+            return;
+        }
+
+        File[] files = directory.listFiles();
+
+        if (files == null) {
+            System.out.println("An error occurred while retrieving files from the directory.");
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isFile()) {
+                file.delete();
+            }else{
+                if(file.isDirectory()){
+                    deleteAllFiles(file);
+                }
+            }
+        }
+    }
+
+
+
+    private static boolean containsFilename(String[] filenames, String filename) {
+        for (String name : filenames) {
+            if (name.equals(filename)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -21,6 +21,7 @@ public class ModuleInitializer {
     }
 
     public static void initModules(){
+        ModuleRegistry.modules.clear();
         //todo: compile modules into classes and put them in mod_tmp
         searchForModules(MODULES_COMPILED);
     }
