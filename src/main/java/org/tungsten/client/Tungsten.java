@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import org.apache.commons.io.FileUtils;
 import org.tungsten.client.initializer.CommandInitializer;
 import com.labymedia.ultralight.UltralightJava;
 import org.tungsten.client.initializer.ModuleInitializer;
@@ -48,18 +49,28 @@ public class Tungsten implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        //try {
-        //    ModuleCompiler.setupCompilerEnvironment();
-        //} catch (IOException | URISyntaxException e) {
-        //    throw new RuntimeException(e);
-        //}
-        //ModuleCompiler.compileModules();
-        //ModuleInitializer.initModules();
+        try {
+            ModuleCompiler.setupCompilerEnvironment();
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        ModuleCompiler.compileModules();
+        ModuleInitializer.initModules();
 
         Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
         try {
             startUltralight();
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setupUltraliteGUISystem(){
+        try {
+            FileUtils.copyDirectory(new File(Tungsten.class.getClassLoader().getResource("gui").toURI()), new File(Tungsten.APPDATA, "gui"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -103,6 +114,7 @@ public class Tungsten implements ClientModInitializer {
 
     public void startUltralight() throws Exception{
         System.out.println("Initializing Ultralight");
+        setupUltraliteGUISystem();
         ulNatives = new File(ULTRALIGHT, "natives").toPath();
         Utils.ensureDirectoryIsCreated(new File(ULTRALIGHT, "natives"));
         ulResources = new File(ULTRALIGHT, "resources").toPath();

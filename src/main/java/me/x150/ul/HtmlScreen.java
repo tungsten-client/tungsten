@@ -37,9 +37,12 @@ public class HtmlScreen extends Screen {
         }
     }
 
+    public UltralightViewable getUlm(){
+        return ulm;
+    }
+
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
         this.ulm.draw(); // render ul on top of background
     }
 

@@ -10,14 +10,14 @@ public class ModuleRegistry {
 
     public static List<GenericModule> modules = new ArrayList<>();
 
-    public GenericModule getByName(String name) {
+    public static GenericModule getByName(String name) {
         for(GenericModule m : modules){
             if(m.getName().equals(name)) return m;
         }
         return null;
     }
 
-    public GenericModule instanceFromClass(Class<?> clazz){
+    public static GenericModule instanceFromClass(Class<?> clazz){
         for(GenericModule m : modules){
             if(m.getClass().equals(clazz)) return m;
         }

@@ -4,6 +4,7 @@ import com.labymedia.ultralight.UltralightView;
 import com.labymedia.ultralight.bitmap.UltralightBitmap;
 import com.labymedia.ultralight.bitmap.UltralightBitmapSurface;
 import com.labymedia.ultralight.config.UltralightViewConfig;
+import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.math.IntRect;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.x150.ul.mgr.ExampleViewListener;
@@ -30,6 +31,10 @@ public class WebController {
     public WebController(CursorAdapter cursorManager) {
         this.cursorManager = cursorManager;
         platform = PlatformManager.instance();
+    }
+
+    public UltralightView getView(){
+        return view;
     }
 
     /**

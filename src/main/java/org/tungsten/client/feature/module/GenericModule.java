@@ -10,9 +10,14 @@ public abstract class GenericModule {
     private final String name;
     private final String description;
 
-    public GenericModule(String name, String description){
+    private final String moduleType;
+
+    private boolean enabled = false;
+
+    public GenericModule(String name, String description, String moduleType){
         this.name = name;
         this.description = description;
+        this.moduleType = moduleType;
     }
 
     public String getName(){
@@ -23,9 +28,25 @@ public abstract class GenericModule {
         return this.description;
     }
 
+    public String getType(){
+        return this.moduleType;
+    }
+
     protected abstract void disable();
 
     protected abstract void enable();
 
     protected abstract void tickClient();
+
+    public void toggle(){
+        enabled = !enabled;
+    }
+
+    public void setEnabled(boolean state){
+        enabled = state;
+    }
+
+    public boolean isEnabled(){
+        return enabled;
+    }
 }
