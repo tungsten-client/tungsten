@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Virtual Keyboard</title>
+  <script src="./keyboard.js"></script>
+  <link rel="stylesheet" href="./keyboard.css">
+  <style>
+    /* Hide overflow on the document */
+    body {
+      overflow: hidden;
+    }
+    
+    /* Center the keyboard */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #292929;
+    }
+    
+    /* Style the keyboard */
+    .keyboard {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 10px;
+      padding: 20px;
+      background-color: #171717;
+      border: 1px solid #000;
+      border-radius: 5px;
+      box-shadow: 0 8px 8px 0 rgba(51, 51, 51, 0.5);
+    }
+    
+    /* Style the regular keys */
+    .key {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      min-width: 70px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #000;
+      border-radius: 3px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      font-weight:bold;
+    }
+
+    /* Style the large keys */
+    .key-large {
+      grid-column: span 2;
+      min-width: 140px;
+    }
+
+    body {
+        -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+    }
+
+    /* Style the extra-large key */
+    .key-extra-large {
+      grid-column: span 7;
+      width:100%;
+      min-width: 40px;
+    }
+
+    .darker {
+        background-color: #222222;
+    }
+
+    .keyselection-box{
+        background-color: #1E1E1E;
+        min-width:300px;
+        min-height:150px;
+        border-radius: 5px;
+        border:3px rgba(0, 0, 0, 1);
+        margin-left: 50px;
+        box-shadow: 0 8px 8px 0 rgba(51, 51, 51, 0.5);
+
+    }
+
+    h1,h2,h3,h4,h5{ 
+        margin:0px;
+    }
+
+    #keyname {
+        margin-top:10px;
+        margin-left:10px;
+        color:white;
+        font-weight:bold;
+    }
+
+    button {
+        background:#171717;
+        border:none;
+        border-radius: 8px;
+        color:white;
+        padding:10px 20px;
+        margin-left:5px;
+        margin-top:5px;
+        width:96%;
+        box-sizing: border-box;
+        transition:all 0.2s
+    }
+
+    button:hover {
+        background:#0f0f0f
+    }
+
+    .bind-indicator {
+        color:white;
+        margin-top:5px;
+        margin-left:10px;
+    }
+
+    #binds-list {
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="keyboard">
+    <div class="key" keycode="27">Esc</div>
+    <div class="key" keycode="112">F1</div>
+    <div class="key" keycode="113">F2</div>
+    <div class="key" keycode="114">F3</div>
+    <div class="key" keycode="115">F4</div>
+    <div class="key" keycode="116">F5</div>
+    <div class="key" keycode="117">F6</div>
+    <div class="key" keycode="118">F7</div>
+    <div class="key" keycode="119">F8</div>
+    <div class="key" keycode="120">F9</div>
+    <div class="key" keycode="121">F10</div>
+    <div class="key" keycode="122">F11</div>
+    <div class="key" keycode="123">F12</div>
+    <div class="key" keycode="192">~<br>`</div>
+    <div class="key" keycode="49">!<br>1</div>
+    <div class="key" keycode="50">@<br>2</div>
+    <div class="key" keycode="51">#<br>3</div>
+    <div class="key" keycode="52">$<br>4</div>
+    <div class="key" keycode="53">%<br>5</div>
+    <div class="key" keycode="54">^<br>6</div>
+    <div class="key" keycode="55">&amp;<br>7</div>
+    <div class="key" keycode="56">*<br>8</div>
+    <div class="key" keycode="57">(<br>9</div>
+    <div class="key" keycode="48">)<br>0</div>
+    <div class="key" keycode="189">_<br>-</div>
+    <div class="key" keycode="187">+<br>=</div>
+    <div class="key-large key" keycode="8">Backspace</div>
+    <div class="key" keycode="9">Tab</div>
+    <div class="key" keycode="81">Q</div>
+    <div class="key" keycode="87">W</div>
+    <div class="key" keycode="69">E</div>
+    <div class="key" keycode="82">R</div>
+    <div class="key" keycode="84">T</div>
+    <div class="key" keycode="89">Y</div>
+    <div class="key" keycode="85">U</div>
+    <div class="key" keycode="73">I</div>
+    <div class="key" keycode="79">O</div>
+    <div class="key" keycode="80">P</div>
+    <div class="key" keycode="219">{<br>[</div>
+    <div class="key" keycode="221">}<br>]</div>
+    <div class="key" keycode="220">\<br>|</div>
+    <div class="key" keycode="20">Caps Lock</div>
+    <div class="key" keycode="65">A</div>
+    <div class="key" keycode="83">S</div>
+    <div class="key" keycode="68">D</div>
+    <div class="key" keycode="70">F</div>
+    <div class="key" keycode="71" binds="flight:bhop:keybindthing">G</div>
+    <div class="key" keycode="72">H</div>
+    <div class="key" keycode="74">J</div>
+    <div class="key" keycode="75">K</div>
+    <div class="key" keycode="76">L</div>
+    <div class="key" keycode="186">:<br>;</div>
+    <div class="key" keycode="222">"<br>'</div>
+    <div class="key-large key" keycode="13">Enter</div>
+    <div class="key-large key" keycode="16">Shift</div>
+    <div class="key" keycode="90">Z</div>
+    <div class="key" keycode="88">X</div>
+    <div class="key" keycode="67">C</div>
+    <div class="key" keycode="86">V</div>
+    <div class="key" keycode="66">B</div>
+    <div class="key" keycode="78">N</div>
+    <div class="key" keycode="77">M</div>
+    <div class="key" keycode="188">,<br>&lt;</div>
+    <div class="key" keycode="190">.<br>></div>
+    <div class="key" keycode="191">?<br>/</div>
+    <div class="key-large key" keycode="16">Shift</div>
+    <div class="key" keycode="17">Ctrl</div>
+    <div class="key" keycode="91">Win</div>
+    <div class="key" keycode="18">Alt</div>
+    <div class="key-extra-large key" keycode="32">Space</div>
+    <div class="key" keycode="18">Alt</div>
+    <div class="key" keycode="null">Fn</div>
+    <div class="key" keycode="91" >≡</div>
+    <div class="key" keycode="17" >Ctrl</div>
+  </div>
+
+  
+  <div class="keyselection-box">
+    <h1 id="keyname">
+        Space
+    </h1>
+
+    <button onclick="openPopup()"><h3>Add Bind</h3></button>
+
+
+    <div id="binds-list">
+        <h3 class="bind-indicator">Flight</h3>
+        <h3 class="bind-indicator">Bhop</h3>
+    </div>
+
+  </div>
+
+  <div class="overlay" onclick="closePopup()" style="display:block;"></div>
+  <div class="popup" style="display:block;">
+    <div class="search-bar">
+      <input type="text" placeholder="Search...">
+    </div>
+  </div>
+
+</body>
+
+<script>
+    for(let key of document.querySelectorAll(".key")){
+    key.addEventListener('click', function(event){
+        updateKey(key);
+    })
+}
+    </script>
+</html>
