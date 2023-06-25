@@ -38,7 +38,7 @@ public class ExampleViewListener implements UltralightViewListener {
     @Override
     public void onAddConsoleMessage(MessageSource source, MessageLevel level, String message, long lineNumber, long columnNumber, String sourceId) {
         // log event from the browser engine
-        System.out.println(String.format("[ULTRALIGHT/JS/{}] ({}) {}   {}:{}.{}", level.name(), source.name(), message, sourceId, lineNumber, columnNumber));
+        System.out.println(String.format("[ULTRALIGHT/JS/%s] (%s) %s   %s:%s.%s", level.name(), source.name(), message, sourceId, lineNumber, columnNumber));
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.tungsten.client.initializer;
 
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
+import org.tungsten.client.feature.module.ModuleTypeManager;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.util.ModuleClassLoader;
 import org.tungsten.client.util.Utils;
@@ -62,6 +63,7 @@ public class ModuleInitializer {
             System.out.println("[TUNGSTEN] Loaded module " + moduleInstance.getName());
 
             ModuleRegistry.addModule(moduleInstance);
+            ModuleTypeManager.subscribeModuleType(moduleInstance.getType());
         }
     }
 }
