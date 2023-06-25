@@ -5,9 +5,9 @@ function instanceHWND(title){
     const newWindow = document.createElement("div");
     newWindow.classList.add("hwnd-window");
     newWindow.setAttribute("category", title);
-    newWindow.style.top = 0;
-    newWindow.style.left = 0;
-
+    newWindow.style.top = tungstenBridge.getWindowY(title) + "px";
+    newWindow.style.left = tungstenBridge.getWindowX(title) + "px";
+    
     newWindow.innerHTML = `
     <div class="hwnd-head">
       <h3 class="title">${title}</h3>
@@ -18,7 +18,7 @@ function instanceHWND(title){
     `;
 
     document.body.appendChild(newWindow);
-    finishSetupWindow(newWindow);
+    finishSetupWindow(newWindow, title);
 }
 
 async function toggle(element){
@@ -38,11 +38,12 @@ function sleep(ms) {
 
 document.addEventListener('contextmenu', function(event) {event.preventDefault()})
 
-function finishSetupWindow(element) {
+function finishSetupWindow(element, title) {
     let pos1 = 0,
         pos2 = 0,
         pos3 = 0,
         pos4 = 0;
+
 
     element.querySelector(".hwnd-head").onmousedown = dragMouseDown;
     element.querySelector(".hwnd-head").addEventListener('contextmenu', function(event) {event.preventDefault()})
@@ -71,6 +72,7 @@ function finishSetupWindow(element) {
       pos4 = e.clientY;
       element.style.top = element.offsetTop - pos2 + "px";
       element.style.left = element.offsetLeft - pos1 + "px";
+      tungstenBridge.setWindowPosition(title, element.offsetLeft - pos1, element.offsetTop - pos2);
     }
 
     function closeDragElement() {
@@ -149,6 +151,13 @@ function instanceModule(parent_category, module_name){
   module.innerHTML = html;
 
   document.querySelector(`div[category=${parent_category}]`).querySelector(".hwnd-content").appendChild(module);
+
+  let settings = tungstenBridge.getSettingHTML(module_name);
+  for(let setting of settings){
+    let div = document.createElement("div");
+    div.innerHTML = setting;
+    module.querySelector(".body").appendChild(div);
+  }
 
   module.onmouseup = function(event) {
 

@@ -1,0 +1,42 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px)
+  }
+  
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #585858;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 8px 0 rgba(255, 255, 255, 0.3);
+  }
+  
+  .search-bar {
+    text-align: center;
+  }
+  
+  .search-bar input[type="text"] {
+    width: 300px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    outline:none;
+    background-color:#292929;
+    color:white;
+    font-size:bigger;
+  }
