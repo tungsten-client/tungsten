@@ -67,12 +67,30 @@ public class Tungsten implements ClientModInitializer {
 
     private void setupUltraliteGUISystem(){
         try {
-            FileUtils.copyDirectory(new File(Tungsten.class.getClassLoader().getResource("gui").toURI()), new File(Tungsten.APPDATA, "gui"));
+            FileUtils.copyDirectory(getGUI(), new File(Tungsten.APPDATA, "gui"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    private File getGUI() throws IOException, URISyntaxException{
+        URI uri = Tungsten.class.getClassLoader().getResource("gui").toURI();
+        Path path;
+        FileSystem c = null;
+        if (uri.getScheme().equals("jar")) {
+            try {
+                c = FileSystems.newFileSystem(uri, Collections.emptyMap());
+            } catch (FileSystemAlreadyExistsException e) {
+                c = FileSystems.getFileSystem(uri);
+            }
+            path = c.getPath("natives");
+        } else {
+            path = Paths.get(uri);
+        }
+        return new File(path.toUri());
     }
 
     private Stream<Path> findNatives() throws IOException, URISyntaxException {
