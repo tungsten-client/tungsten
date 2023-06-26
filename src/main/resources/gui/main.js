@@ -195,8 +195,8 @@ function instanceModule(parent_category, module_name){
 
 
 async function setup(){
-  await sleep(100);
-  tungstenBridge.print("Hello world");
+  await sleep(50);
+  tungstenBridge.print("Hello from Tungstenbridge");
   for(let moduleType of tungstenBridge.getModuleTypes()){
     tungstenBridge.print(moduleType);
     instanceHWND(moduleType);
