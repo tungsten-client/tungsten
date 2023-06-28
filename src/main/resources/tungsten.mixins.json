@@ -4,9 +4,11 @@
   "package": "org.tungsten.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "TitleScreenMixin"
   ],
   "client": [
+    "KeyboardMixin",
+    "MinecraftClientMixin",
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

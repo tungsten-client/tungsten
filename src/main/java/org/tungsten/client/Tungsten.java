@@ -1,5 +1,6 @@
 package org.tungsten.client;
 
+import me.x150.MessageManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,6 +11,7 @@ import com.labymedia.ultralight.UltralightJava;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
+import org.tungsten.client.util.WebUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.*;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,12 +28,16 @@ import java.util.stream.Stream;
 @Environment(EnvType.CLIENT)
 public class Tungsten implements ClientModInitializer {
 
+    public static MessageManager eventManager = new MessageManager();
+
     public static final MinecraftClient client = MinecraftClient.getInstance();
     public static final File RUNDIR = new File(MinecraftClient.getInstance().runDirectory, "tungsten"); //PLEASE USE THIS DIRECTORY TO SAVE ALL CONFIGURATION FILES, EVERYTHING
     public static final File APPDATA = new File(RUNDIR, "appdata"); //use this for the temporary creation and storing of files that are needed for the launch of the client, e.g. compiled class files for modules, etc...
     public static final File LIBS = new File(Tungsten.APPDATA, "libs"); //used to store downloaded libraries / the jdk
 
     public static final File ULTRALIGHT = new File(Tungsten.APPDATA, "ultralight");
+
+    private static final String NATIVES_URL = "https://cdn.discordapp.com/attachments/1121169365883166790/1123366568903061634/natives.zip";
 
 
     public static Path ulNatives;
@@ -65,9 +72,26 @@ public class Tungsten implements ClientModInitializer {
         }
     }
 
-    private void setupUltraliteGUISystem(){
+    private void setupUltraliteGUISystem() {
         try {
-            FileUtils.copyDirectory(getGUI(), new File(Tungsten.APPDATA, "gui"));
+            Utils.ensureDirectoryIsCreated(new File(Tungsten.APPDATA, "gui"));
+            //FileUtils.copyDirectory(getGUI(), new File(Tungsten.APPDATA, "gui"));
+            Iterator<Path> iterator = getGUIComponents().iterator();
+            while (iterator.hasNext()) {
+                Path path = iterator.next();
+                if (Files.isDirectory(path)) continue; // dont need
+                String s = path.getFileName().toString();
+                Path tf = Path.of(new File(Tungsten.APPDATA, "gui").toURI()).resolve(s);
+                System.out.println(path + " -> " + tf);
+                new File(tf.toUri()).createNewFile();
+                try (InputStream fis = Files.newInputStream(path); OutputStream fos = Files.newOutputStream(tf)) {
+                    byte[] buffer = new byte[512];
+                    int r;
+                    while ((r = fis.read(buffer, 0, buffer.length)) != -1) {
+                        fos.write(buffer, 0, r);
+                    }
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
@@ -75,26 +99,8 @@ public class Tungsten implements ClientModInitializer {
         }
     }
 
-
-    private File getGUI() throws IOException, URISyntaxException{
+    private Stream<Path> getGUIComponents() throws IOException, URISyntaxException {
         URI uri = Tungsten.class.getClassLoader().getResource("gui").toURI();
-        Path path;
-        FileSystem c = null;
-        if (uri.getScheme().equals("jar")) {
-            try {
-                c = FileSystems.newFileSystem(uri, Collections.emptyMap());
-            } catch (FileSystemAlreadyExistsException e) {
-                c = FileSystems.getFileSystem(uri);
-            }
-            path = c.getPath("natives");
-        } else {
-            path = Paths.get(uri);
-        }
-        return new File(path.toUri());
-    }
-
-    private Stream<Path> findNatives() throws IOException, URISyntaxException {
-        URI uri = Tungsten.class.getClassLoader().getResource("natives").toURI();
         Path myPath;
         FileSystem c = null;
         if (uri.getScheme().equals("jar")) {
@@ -103,7 +109,7 @@ public class Tungsten implements ClientModInitializer {
             } catch (FileSystemAlreadyExistsException e) {
                 c = FileSystems.getFileSystem(uri);
             }
-            myPath = c.getPath("natives");
+            myPath = c.getPath("gui");
         } else {
             myPath = Paths.get(uri);
         }
@@ -148,23 +154,17 @@ public class Tungsten implements ClientModInitializer {
         }
         System.setProperty("java.library.path", libpath);
 
-        Iterator<Path> iterator = findNatives().iterator();
-        while (iterator.hasNext()) {
-            Path path = iterator.next();
-            if (Files.isDirectory(path)) continue; // dont need
-            String s = path.getFileName().toString();
-            Path tf = ulNatives.resolve(s);
-            System.out.println(path + " -> " + tf);
-            try (InputStream fis = Files.newInputStream(path); OutputStream fos = Files.newOutputStream(tf)) {
-                byte[] buffer = new byte[512];
-                int r;
-                while ((r = fis.read(buffer, 0, buffer.length)) != -1) {
-                    fos.write(buffer, 0, r);
-                }
-            }
+        File natives = new File(ulNatives.toUri());
+        if(Utils.isDirectoryEmpty(natives)){
+            File natives_zip = new File(natives, "natives.zip");
+            WebUtils.downloadURLToPath(NATIVES_URL, natives_zip);
+            Utils.unzip(natives_zip, natives);
+            natives_zip.delete();
         }
 
-        iterator = findUlResources().iterator();
+
+
+        Iterator<Path> iterator = findUlResources().iterator();
         while (iterator.hasNext()) {
             Path path = iterator.next();
             if (Files.isDirectory(path)) continue; // dont need

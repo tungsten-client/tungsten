@@ -39,7 +39,7 @@ dependencies {
 
     configurations.libImpl.dependencies.each {
         implementation(it)
-//		include(it)
+		include(it)
     }
 }
 

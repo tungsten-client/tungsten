@@ -1,7 +1,9 @@
 package org.tungsten.client.util;
 
-import java.io.File;
+import java.io.*;
 import java.util.Arrays;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class Utils {
 
@@ -13,6 +15,15 @@ public class Utils {
             cSigP[i] = Byte.toUnsignedInt(cSig[i]);
         }
         return !Arrays.equals(cSigP, EXPECTED_CLASS_SIGNATURE);
+    }
+
+    public static boolean isDirectoryEmpty(File directory) {
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("Path is not a directory.");
+        }
+
+        String[] files = directory.list();
+        return files == null || files.length == 0;
     }
 
     public static void ensureDirectoryIsCreated(File directory){
@@ -62,6 +73,35 @@ public class Utils {
                 if(file.isDirectory()){
                     deleteAllFiles(file);
                 }
+            }
+        }
+    }
+
+    public static void unzip(File zipFile, File folder) throws IOException {
+        byte[] buffer = new byte[1024];
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile))) {
+            ZipEntry zipEntry = zipInputStream.getNextEntry();
+            while (zipEntry != null) {
+                String fileName = zipEntry.getName();
+                File newFile = new File(folder, fileName);
+                if (zipEntry.isDirectory()) {
+                    newFile.mkdirs();
+                } else {
+                    new File(newFile.getParent()).mkdirs();
+
+                    try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(newFile))) {
+                        int length;
+                        while ((length = zipInputStream.read(buffer)) > 0) {
+                            outputStream.write(buffer, 0, length);
+                        }
+                    }
+                }
+
+                zipEntry = zipInputStream.getNextEntry();
             }
         }
     }

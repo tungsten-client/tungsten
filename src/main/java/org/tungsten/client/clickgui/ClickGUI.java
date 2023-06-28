@@ -32,7 +32,7 @@ public class ClickGUI extends HtmlScreen {
 
     static boolean ctx_setup = false;
 
-    public static ClickGUI instance(){
+    public static ClickGUI create(){
         ctx_setup = false;
         return new ClickGUI();
     }
