@@ -14,7 +14,7 @@ public class KeyboardEvent extends Event{
     }
 
     public int getKeycode(){
-        return this.action;
+        return this.keycode;
     }
 
     public int getModifiers(){

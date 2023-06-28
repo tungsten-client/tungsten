@@ -75,20 +75,16 @@ public abstract class GenericModule {
 
     public void toggle(){
         enabled = !enabled;
-        if(enabled){
-            this.enable();
-        }else{
-            this.disable();
-        }
+        setEnabled(enabled);
     }
 
     public void setEnabled(boolean state){
-        if(enabled != state){
-            if(state){
-                this.enable();
-            }else{
-                this.disable();
-            }
+        if(state){
+            Tungsten.eventManager.registerSubscribers(this);
+            this.enable();
+        }else{
+            Tungsten.eventManager.unregister(this);
+            this.disable();
         }
         enabled = state;
 
