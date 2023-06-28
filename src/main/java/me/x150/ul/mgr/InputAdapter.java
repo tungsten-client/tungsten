@@ -37,7 +37,7 @@ public class InputAdapter {
     /**
      * Called by GLFW then the content scale (DPI ratio) changes.
      *
-     * @param window The window that caused the event
+     * @param window The window that caused the org.tungsten.client.event
      * @param xScale The new x scale
      * @param yScale The new y scale
      */
@@ -49,7 +49,7 @@ public class InputAdapter {
     /**
      * Called by GLFW when a key is pressed.
      *
-     * @param window   The window that caused the event
+     * @param window   The window that caused the org.tungsten.client.event
      * @param key      The GLFW keycode
      * @param scancode The keyboard scancode
      * @param action   The GLFW action
@@ -58,14 +58,14 @@ public class InputAdapter {
     public void keyCallback(long window, int key, int scancode, int action, int mods) {
         UltralightKey translatedKey = glfwToUltralightKey(key);
 
-        // Build the event
+        // Build the org.tungsten.client.event
         UltralightKeyEvent event = new UltralightKeyEvent().type(action == GLFW_PRESS || action == GLFW_REPEAT ? UltralightKeyEventType.RAW_DOWN : UltralightKeyEventType.UP)
             .virtualKeyCode(translatedKey)
             .nativeKeyCode(scancode)
             .keyIdentifier(UltralightKeyEvent.getKeyIdentifierFromVirtualKeyCode(translatedKey))
             .modifiers(glfwToUltralightModifiers(mods));
 
-        // Send the event
+        // Send the org.tungsten.client.event
         view.fireKeyEvent(event);
 
         if ((action == GLFW_PRESS || action == GLFW_REPEAT) && (key == GLFW_KEY_ENTER || key == GLFW_KEY_TAB)) {
@@ -73,7 +73,7 @@ public class InputAdapter {
             String text = key == GLFW_KEY_ENTER ? "\r" : "\t";
             UltralightKeyEvent extraEvent = new UltralightKeyEvent().type(UltralightKeyEventType.CHAR).text(text).unmodifiedText(text);
 
-            // Fire the event
+            // Fire the org.tungsten.client.event
             view.fireKeyEvent(extraEvent);
         }
     }
@@ -81,32 +81,32 @@ public class InputAdapter {
     /**
      * Called by GLFW when a char is input.
      *
-     * @param window    The window that caused the event
+     * @param window    The window that caused the org.tungsten.client.event
      * @param codepoint The unicode char that has been input
      */
     public void charCallback(long window, int codepoint) {
         // Convert the unicode code point to a UTF-16 string
         String text = new String(Character.toChars(codepoint));
 
-        // Create the event
+        // Create the org.tungsten.client.event
         UltralightKeyEvent event = new UltralightKeyEvent().type(UltralightKeyEventType.CHAR).text(text).unmodifiedText(text);
 
-        // Fire the event
+        // Fire the org.tungsten.client.event
         view.fireKeyEvent(event);
     }
 
     /**
      * Called by GLFW when the mouse moves.
      *
-     * @param window The window that caused the event
+     * @param window The window that caused the org.tungsten.client.event
      * @param x      The new x position of the cursor
      * @param y      The new y position of the cursor
      */
     public void cursorPosCallback(long window, double x, double y) {
-        // Create the event
+        // Create the org.tungsten.client.event
         UltralightMouseEvent event = new UltralightMouseEvent().x((int) (x * xScale)).y((int) (y * yScale)).type(UltralightMouseEventType.MOVED);
 
-        // Translate the mouse state to the event
+        // Translate the mouse state to the org.tungsten.client.event
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
             event.button(UltralightMouseEventButton.LEFT);
         } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
@@ -115,14 +115,14 @@ public class InputAdapter {
             event.button(UltralightMouseEventButton.RIGHT);
         }
 
-        // Fire the event
+        // Fire the org.tungsten.client.event
         view.fireMouseEvent(event);
     }
 
     /**
      * Called by GLFW when a mouse button changes its state.
      *
-     * @param window The window that caused the event
+     * @param window The window that caused the org.tungsten.client.event
      * @param button the button that changed its state
      * @param action The new state of the button
      * @param mods   The mouse modifiers
@@ -143,7 +143,7 @@ public class InputAdapter {
             y = buffer.get(1);
         }
 
-        // Create the event
+        // Create the org.tungsten.client.event
         UltralightMouseEvent event = new UltralightMouseEvent().x((int) (x))
             .y((int) (y))
             .type(action == GLFW_PRESS ? UltralightMouseEventType.DOWN : UltralightMouseEventType.UP);
@@ -155,29 +155,29 @@ public class InputAdapter {
             case GLFW_MOUSE_BUTTON_RIGHT -> event.button(UltralightMouseEventButton.RIGHT);
         }
 
-        // Fire the event
+        // Fire the org.tungsten.client.event
         view.fireMouseEvent(event);
     }
 
     /**
      * Called by GLFW when the user scrolls within the window.
      *
-     * @param window The window that caused the event
+     * @param window The window that caused the org.tungsten.client.event
      * @param xDelta The x scroll delta
      * @param yDelta The y scroll delta
      */
     public void scrollCallback(long window, double xDelta, double yDelta) {
-        // Create the event
+        // Create the org.tungsten.client.event
         UltralightScrollEvent event = new UltralightScrollEvent().deltaX((int) xDelta * 32).deltaY((int) yDelta * 32).type(UltralightScrollEventType.BY_PIXEL);
 
-        // Fire the event
+        // Fire the org.tungsten.client.event
         view.fireScrollEvent(event);
     }
 
     /**
      * Called by GLFW when the window gains or looses focus.
      *
-     * @param window The window that caused the event
+     * @param window The window that caused the org.tungsten.client.event
      * @param focus  Whether the window gained focus
      */
     public void focusCallback(long window, boolean focus) {

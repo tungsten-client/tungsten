@@ -19,18 +19,17 @@ import java.net.URISyntaxException;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
-    private static HtmlScreen inst;
 
     protected TitleScreenMixin(Text title) {
         super(title);
     }
 
     @Inject(method = "init", at = @At("TAIL"))
-    void postTitle(CallbackInfo ci) {
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("ULTRALIGHT: GUI"), button -> {
-            ClickGUI gui = ClickGUI.instance();
+    void onInit(CallbackInfo ci) {
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("GUI"), button -> {
+            ClickGUI gui = ClickGUI.create();
             this.client.setScreen(gui);
             gui.reload();
-        }).dimensions(5, 30, 100, 20).build());
+        }).dimensions(5, 5, 100, 20).build());
     }
 }
