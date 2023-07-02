@@ -136,6 +136,30 @@ function initModule(module){
   };
 }
 
+function setup_textbox(name, module, element){
+  element.addEventListener('input', (event) => {
+    tungstenBridge.broadcastTextboxUpdate(name, module, event.target.value)
+  })
+}
+
+function setup_button(name, module, element){
+  element.addEventListener('click', (event) => {
+    tungstenBridge.broadcastButtonClick(name, module)
+  })
+}
+
+function setup_slider(name, module, element){
+  element.addEventListener('input', (event) => {
+    tungstenBridge.broadcastSliderUpdate(name, module, event.target.value)
+  })
+}
+
+function setup_checkbox(name, module, element){
+  element.addEventListener('change', (event) => {
+    tungstenBridge.broadcastCheckboxUpdate(name, module, event.target.checked)
+  })
+}
+
 function instanceModule(parent_category, module_name){
 
   let module = document.createElement("div");
@@ -157,6 +181,31 @@ function instanceModule(parent_category, module_name){
     let div = document.createElement("div");
     div.innerHTML = setting;
     module.querySelector(".body").appendChild(div);
+  }
+
+  let bodyr = module.querySelector(".body");
+  for(let i = 1; i < bodyr.children.length; i++){
+    let setting = bodyr.children[i];
+    let element_descriptor = setting.children[0];
+    let body = setting.children[1];
+    let setting_name = element_descriptor.innerHTML;
+    tungstenBridge.print(body.tagName);
+    if(body.tagName.toLowerCase()=="button"){
+      setup_button(setting_name, module_name, body);
+    }else if(body.tagName.toLowerCase()=="input"){
+      switch(body.getAttribute("type").toLowerCase()){
+        case "text":
+          setup_textbox(setting_name, module_name, body);
+        break;
+
+        case "range":
+          setup_slider(setting_name, module_name, body);
+        break;
+      }
+    }else if(body.tagName.toLowerCase()=="label"){
+      let checkbox = body.children[0];
+      setup_checkbox(setting_name, module_name, checkbox);
+    }
   }
 
   module.onmouseup = function(event) {

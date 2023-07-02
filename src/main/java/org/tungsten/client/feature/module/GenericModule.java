@@ -7,6 +7,7 @@ import org.tungsten.client.feature.module.config.GenericSetting;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class GenericModule {
 
@@ -26,6 +27,15 @@ public abstract class GenericModule {
         this.name = name;
         this.description = description;
         this.moduleType = moduleType;
+    }
+
+    public GenericSetting<?> getSettingByName(String name){
+        for(GenericSetting<?> gs : settings){
+            if(gs.getName().equals(name)){
+                return gs;
+            }
+        }
+        return null;
     }
 
     public List<GenericSetting<?>> getSettings(){
