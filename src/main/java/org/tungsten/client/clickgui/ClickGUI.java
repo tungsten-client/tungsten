@@ -48,6 +48,4 @@ public class ClickGUI extends HtmlScreen {
         System.out.println("set up context");
     }
 
-
-
 }
