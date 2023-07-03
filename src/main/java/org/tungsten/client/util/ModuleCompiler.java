@@ -64,7 +64,6 @@ public class ModuleCompiler {
 
         String libraries = mapped.getAbsolutePath() + ";" + unmapped.getAbsolutePath() + ";" + self.getAbsolutePath();
         if(compiler != null){
-            compiler.run(null, null, errorStream, "-cp", libraries, "-d", module.getAbsolutePath(), output.getAbsolutePath());
             int compilerStatus = compiler.run(null, null, errorStream, "-cp", libraries, module.getAbsolutePath());
 
             if(compilerStatus == 0){
