@@ -56,7 +56,6 @@ public class TungstenBridge {
     }
 
     public void broadcastTextboxUpdate(String name, String module, String value){
-        System.out.println(value);
         GenericModule mod = ModuleRegistry.getByName(module);
         if(mod != null){
             GenericSetting<?> mms = mod.getSettingByName(name);
@@ -67,7 +66,6 @@ public class TungstenBridge {
     }
 
     public void broadcastButtonClick(String name, String module){
-        System.out.println("click!");
         GenericModule mod = ModuleRegistry.getByName(module);
         if(mod != null){
             GenericSetting<?> mms = mod.getSettingByName(name);
@@ -78,7 +76,6 @@ public class TungstenBridge {
     }
 
     public void broadcastSliderUpdate(String name, String module, String value){
-        System.out.println(value);
         GenericModule mod = ModuleRegistry.getByName(module);
         if(mod != null){
             GenericSetting<?> mms = mod.getSettingByName(name);
@@ -89,7 +86,6 @@ public class TungstenBridge {
     }
 
     public void broadcastCheckboxUpdate(String name, String module, boolean value){
-        System.out.println("REAL" + value);
         GenericModule mod = ModuleRegistry.getByName(module);
         if(mod != null){
             GenericSetting<?> mms = mod.getSettingByName(name);

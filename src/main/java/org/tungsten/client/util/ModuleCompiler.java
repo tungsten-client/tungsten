@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 public class ModuleCompiler {
 
@@ -52,14 +53,27 @@ public class ModuleCompiler {
         }
     }
 
-    private static void compileModule(File module) {
+    private static void compileModule(File module) throws IOException {
+        System.out.println("compileModule called on " + module.getName());
+
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        File output = new File(ModuleInitializer.MODULES_COMPILED, module.getName());
+        File output = new File(ModuleInitializer.MODULES_COMPILED, module.getName().replace(".java", ".class"));
         PrintStream errorStream = new PrintStream(stream);
+
         String libraries = mapped.getAbsolutePath() + ";" + unmapped.getAbsolutePath() + ";" + self.getAbsolutePath();
         if(compiler != null){
             compiler.run(null, null, errorStream, "-cp", libraries, "-d", module.getAbsolutePath(), output.getAbsolutePath());
+            int compilerStatus = compiler.run(null, null, errorStream, "-cp", libraries, module.getAbsolutePath());
+
+            if(compilerStatus == 0){
+                Files.move(new File(new File(Tungsten.RUNDIR, "modules"), module.getName().replace(".java", ".class")).toPath(), output.toPath());
+            }else{
+                System.out.println("ERROR IN COMPILATION OF MODULE " + module.getName());
+                System.out.println(stream);
+                errorStream.close();
+            }
         }
     }
 
