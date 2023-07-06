@@ -6,4 +6,8 @@ public class Event {
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
+    public boolean getCancelled() {
+        return
+        this.cancelled;
+    }
 }
