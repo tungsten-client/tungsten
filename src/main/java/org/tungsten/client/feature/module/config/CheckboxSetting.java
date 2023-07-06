@@ -8,7 +8,7 @@ public class CheckboxSetting extends GenericSetting<Boolean>{
 
     @Override
     public String toHTML(){
-        return this.getDescriptor() + "\n" + "<label class=\"checkbox-container\">"+this.getName()+"<input type=\"checkbox\"><span class=\"checkmark\"></span></label>";
+        return this.getDescriptor() + "\n" + "<label class=\"checkbox-container\">"+this.getName()+"<input type=\"checkbox\" "+ (this.getValue() ? "checked" : "") +"><span class=\"checkmark\"></span></label>";
     }
 
 

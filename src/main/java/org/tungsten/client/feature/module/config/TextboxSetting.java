@@ -5,12 +5,12 @@ public class TextboxSetting extends GenericSetting<String>{
 
 
 
-    public TextboxSetting(String defaultValue, String name, String description) {
-        super(defaultValue, name, description);
+    public TextboxSetting(String defaultValue, String name, String prompt) {
+        super(defaultValue, name, prompt);
     }
 
     @Override
     public String toHTML() {
-        return this.getDescriptor() + "\n" + "<input type=\"text\" class=\"textbox\" placeholder=\"" + this.defaultValue+ "\">";
+        return this.getDescriptor() + "\n" + "<input type=\"text\" class=\"textbox\" placeholder=\"" + this.description+ "\" value=\""+this.getValue()+"\">";
     }
 }

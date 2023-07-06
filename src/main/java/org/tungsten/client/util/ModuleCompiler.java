@@ -33,6 +33,7 @@ public class ModuleCompiler {
 
 
     private static void searchAndCompileModules(File path) {
+        Utils.deleteAllFiles(ModuleInitializer.MODULES_COMPILED);
         if(path != null){
             File[] files = path.listFiles();
             if(files != null){

@@ -28,7 +28,7 @@ public class SliderSetting extends GenericSetting<Double>{
 
     @Override
     public String toHTML(){
-        return this.getDescriptor() + "\n" + "<input type=\"range\" min=\""+this.min+"\" max=\""+this.max+"\" step=\"1\">";
+        return this.getDescriptor() + "\n" + "<input type=\"range\" min=\""+this.min+"\" max=\""+this.max+"\" step=\"1\" value=\""+this.getValue().toString()+"\">";
     }
 
 }
