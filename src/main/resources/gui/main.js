@@ -150,6 +150,9 @@ function setup_button(name, module, element){
 
 function setup_slider(name, module, element){
   element.addEventListener('input', (event) => {
+    const elemdesc = event.target.parentNode.querySelector(".element-descriptor") 
+    const inner = elemdesc.innerHTML;
+    elemdesc.innerHTML = inner.substring(0, inner.indexOf("[")) + "[" + event.target.value + "]"
     tungstenBridge.broadcastSliderUpdate(name, module, event.target.value)
   })
 }
@@ -199,6 +202,7 @@ function instanceModule(parent_category, module_name){
         break;
 
         case "range":
+          element_descriptor.innerHTML = element_descriptor.innerHTML + " [" + body.value + "]"
           setup_slider(setting_name, module_name, body);
         break;
       }
