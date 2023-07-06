@@ -46,11 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const mod = document.createElement("div");
             mod.innerHTML = `<h3 class="rj">${module}</h3>`
             mod.classList.add("module");
-            mod.addEventListener('click', (event_t) => {
-                tungstenBridge.updateKeybind(event_t.target.querySelector(".rj").innerHTML, window.currentkey);
-                event_t.target.classList.add("clicked");
-            })
             search_results.appendChild(mod);
+            mod.setAttribute("ng_modulename", module);
+            mod.addEventListener('click', (event_t) => {
+                tungstenBridge.updateKeybind(mod.getAttribute("ng_modulename"), parseInt(window.currentkey));
+                mod.classList.add("clicked");
+            });
         }
     })
 })

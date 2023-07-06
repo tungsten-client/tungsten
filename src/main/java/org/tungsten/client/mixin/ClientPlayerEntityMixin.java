@@ -25,11 +25,6 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implemen
         super(world, profile);
     }
 
-//    @Inject(method = "tick", at = @At("HEAD"))
-//    void tungsten_onPlayerTick(CallbackInfo ci) {
-//        Events.emitEvent(PlayerTickEvent.INSTANCE);
-//    }
-
     @Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getYaw()F"))
     float tungsten_replaceMovementPacketYaw(ClientPlayerEntity instance) {
 

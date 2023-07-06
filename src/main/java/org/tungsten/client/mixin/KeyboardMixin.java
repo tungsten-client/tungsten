@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.KeyboardEvent;
+import org.tungsten.client.feature.module.GenericModule;
+import org.tungsten.client.feature.registry.ModuleRegistry;
 
 
 @Mixin(Keyboard.class)
@@ -23,6 +25,15 @@ public class KeyboardMixin {
     void onOnKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         KeyboardEvent ke = new KeyboardEvent(key, modifiers, action);
         Tungsten.eventManager.send(ke);
+        if(action == 1){
+            if(client.player != null && client != null){
+                for(GenericModule m : ModuleRegistry.modules){
+                    if(m.getKeybind() == key){
+                        m.toggle();
+                    }
+                }
+            }
+        }
     }
 
 
