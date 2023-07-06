@@ -1,4 +1,4 @@
-package org.tungsten.client.clickgui;
+package org.tungsten.client.gui;
 
 import com.labymedia.ultralight.databind.Databind;
 import com.labymedia.ultralight.databind.DatabindConfiguration;
@@ -7,8 +7,6 @@ import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
 
 public class ClickGUI extends HtmlScreen {
-
-    private static ClickGUI instance;
 
 
     public ClickGUI() {

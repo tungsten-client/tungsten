@@ -1,4 +1,5 @@
 document.addEventListener('keydown', function(event) {
+    if(document.activeElement === document.getElementById("search-bar")) return;
     let keycode = event.which;
     for(let key of document.querySelectorAll(".key")){
         if(key.getAttribute("keycode") == keycode){
@@ -30,16 +31,29 @@ function closePopup() {
     popup.style.display = 'block';
     var popup = document.querySelector('.overlay');
     popup.style.display = 'block';
+    document.getElementById('search-bar').value = ""
   }
 
 
-let currentkey = null;
 
-function addbind(){
-    if(currentkey != null){
 
-    }
-}
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("search-bar").addEventListener('input', (event) => {
+        const modules = tungstenBridge.getFilteredModulesByPartialName(event.target.value)
+        const search_results = document.getElementById("body-elements");
+        search_results.innerHTML = ""
+        for(const module of modules){
+            const mod = document.createElement("div");
+            mod.innerHTML = `<h3 class="rj">${module}</h3>`
+            mod.classList.add("module");
+            mod.addEventListener('click', (event_t) => {
+                tungstenBridge.updateKeybind(event_t.target.querySelector(".rj").innerHTML, window.currentkey);
+                event_t.target.classList.add("clicked");
+            })
+            search_results.appendChild(mod);
+        }
+    })
+})
 
 function updateKey(key){
     const blist = document.getElementById("binds-list");
@@ -47,8 +61,9 @@ function updateKey(key){
     document.getElementById("keyname").innerHTML = key.innerHTML;
 
     blist.innerHTML = "";
+    window.currentkey = key.getAttribute("keycode");
 
-    let binds = key.getAttribute("binds").split(":");
+    let binds = tungstenBridge.getModulesByKeycode(parseInt(key.getAttribute("keycode")));
     console.log(binds);
 
     for(let bind of binds){
@@ -58,6 +73,5 @@ function updateKey(key){
         blist.appendChild(bind_element);
     }
 
-    currentkey = key;
 }
 

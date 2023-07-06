@@ -1,4 +1,4 @@
-package org.tungsten.client.clickgui;
+package org.tungsten.client.gui;
 
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
@@ -112,6 +112,29 @@ public class TungstenBridge {
             return null;
         }
 
+    }
+
+
+
+
+
+
+    public void updateKeybind(String module, int keycode){
+        System.out.println("Updated keybind for " + module + " to " + keycode);
+        ModuleRegistry.getByName(module).updateKeybind(keycode);
+    }
+
+    public int getKeybind(String module){
+        return ModuleRegistry.getByName(module).getKeybind();
+    }
+
+    public String[] getModulesByKeycode(int keycode){
+        return ModuleRegistry.modules.stream().filter(mkc -> mkc.getKeybind() == keycode).map(GenericModule::getName).toArray(String[]::new);
+    }
+
+    public String[] getFilteredModulesByPartialName(String partialName){
+        if(partialName.equals("")) return new String[]{}; //if it is the empty string we will return the empty set to prevent a crashing, may remove later
+        return ModuleRegistry.modules.stream().map(GenericModule::getName).filter(name -> name.toLowerCase().contains(partialName.toLowerCase())).toArray(String[]::new);
     }
 
 

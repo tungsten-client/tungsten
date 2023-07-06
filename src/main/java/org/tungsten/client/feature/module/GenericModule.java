@@ -18,6 +18,8 @@ public abstract class GenericModule {
 
     private final String moduleType;
 
+    private int keybind;
+
     private boolean enabled = false;
 
     final List<GenericSetting<?>> settings = new ArrayList<>();
@@ -36,6 +38,14 @@ public abstract class GenericModule {
             }
         }
         return null;
+    }
+
+    public int getKeybind(){
+        return this.keybind;
+    }
+
+    public void updateKeybind(int keybind){
+        this.keybind = keybind;
     }
 
     public List<GenericSetting<?>> getSettings(){
