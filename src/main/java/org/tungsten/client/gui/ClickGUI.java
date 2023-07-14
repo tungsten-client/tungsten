@@ -24,6 +24,7 @@ public class ClickGUI extends HtmlScreen {
         if(!ctx_setup){
             this.setupContext();
             ctx_setup = true;
+
         }
     }
 
