@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
 
+//please mark this mixin as soon to be unused, this will be overriden and replaced by the screens api in a future update
 @Mixin(BeaconScreen.class)
 public abstract class BeaconScreenMixin extends HandledScreen {
     //used for beaconspoofer modules.

@@ -6,6 +6,7 @@
   "mixins": [
   ],
   "client": [
+    "ClientOptionsMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
     "TitleScreenMixin"

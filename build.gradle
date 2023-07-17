@@ -23,6 +23,7 @@ repositories {
 configurations {
     libImpl
 }
+
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -42,6 +43,14 @@ dependencies {
 		include(it)
     }
 }
+
+tasks.register('generateDevJar', Jar) {
+    dependsOn 'jar'
+    from sourceSets.main.output
+    archiveClassifier.set("dev")
+    archiveFileName.set(archiveBaseName.get() + "-" + archiveClassifier.get() + "." + archiveExtension.get())
+}
+
 
 processResources {
     inputs.property "version", project.version

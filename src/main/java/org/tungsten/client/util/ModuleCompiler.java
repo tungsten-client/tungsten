@@ -23,7 +23,7 @@ public class ModuleCompiler {
         mapped = new File(Tungsten.LIBS, "minecraft-mapped.jar");
         unmapped = new File(Tungsten.LIBS, "minecraft-unmapped.jar");
         try {
-            self = new File(ModuleCompiler.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            self = new File(Tungsten.LIBS, "Tungsten-dev.jar");
         } catch (Exception ignored) {}
     }
 
