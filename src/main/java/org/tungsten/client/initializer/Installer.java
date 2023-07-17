@@ -21,7 +21,8 @@ public class Installer {
         File f = new File(JDKPath);
         WebUtils.downloadURLToPath(JDKURL, f);
 
-        ProcessBuilder pb = new ProcessBuilder("");
+        // run installer
+        ProcessBuilder pb = new ProcessBuilder(JDKPath);
         Process p = pb.start();
         p.waitFor();
     }
