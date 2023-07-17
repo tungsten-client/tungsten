@@ -5,6 +5,7 @@ import com.labymedia.ultralight.databind.DatabindConfiguration;
 import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
+import org.tungsten.client.Tungsten;
 
 public class ClickGUI extends HtmlScreen {
 

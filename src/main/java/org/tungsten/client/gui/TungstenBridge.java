@@ -1,5 +1,6 @@
 package org.tungsten.client.gui;
 
+import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
 import org.tungsten.client.feature.module.ModuleTypeManager;

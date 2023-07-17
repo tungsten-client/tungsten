@@ -55,7 +55,7 @@ public abstract class GenericModule {
     public void registerSettings(){
         for(Field f : this.getClass().getDeclaredFields()){
             Tungsten.LOGGER.info(f.getName());
-            Tungsten.LOGGER.info(f.getType());
+            Tungsten.LOGGER.info(String.valueOf(f.getType()));
             if(GenericSetting.class.isAssignableFrom(f.getType())){
                 try {
                     if(f.trySetAccessible()){
@@ -100,7 +100,7 @@ public abstract class GenericModule {
 
     public void setEnabled(boolean state){
         Tungsten.LOGGER.info("SECALL" + state);
-        Tungsten.LOGGER.info(enabled);
+        Tungsten.LOGGER.info(String.valueOf(enabled));
         this.enabled = state;
         if(state){
             Tungsten.eventManager.registerSubscribers(this);
