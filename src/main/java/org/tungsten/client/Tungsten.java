@@ -8,6 +8,7 @@ import net.minecraft.client.MinecraftClient;
 import org.apache.commons.io.FileUtils;
 import org.tungsten.client.initializer.CommandInitializer;
 import com.labymedia.ultralight.UltralightJava;
+import org.tungsten.client.initializer.Installer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
@@ -57,8 +58,9 @@ public class Tungsten implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         try {
+            Installer.run();
             ModuleCompiler.setupCompilerEnvironment();
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         ModuleCompiler.compileModules();
