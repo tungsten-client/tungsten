@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(GameOptions.class)
 public class ClientOptionsMixin {
     public boolean isFullbright;
-    double setBrightnessLevel;
+    public double setBrightnessLevel;
 
     @Inject(method="getGamma", at=@At("HEAD"))
     void onGetGamma(CallbackInfoReturnable<SimpleOption<Double>> cir){

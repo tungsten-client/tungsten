@@ -1,8 +1,11 @@
 package org.tungsten.client.mixin;
 
+import net.minecraft.block.NoteBlock;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.network.NetworkState;
+import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,8 +28,6 @@ public class TitleScreenMixin extends Screen {
             this.client.setScreen(gui);
             gui.reload();
         }).dimensions(5, 5, 100, 20).build());
-
-
         this.addDrawableChild(ButtonWidget.builder(Text.literal("KEYBINDS"), button -> {
             KeybindsMenu kbm = KeybindsMenu.create();
             this.client.setScreen(kbm);
