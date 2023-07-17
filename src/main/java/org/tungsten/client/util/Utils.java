@@ -36,7 +36,7 @@ public class Utils {
     public static void deleteFilesExcept(File directory, String... filenames) {
 
         if (!directory.isDirectory()) {
-            Tungsten.LOGGER.error("Invalid directory path: " + directory.getAbsolutePath());
+            Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
             return;
         }
 
@@ -57,7 +57,7 @@ public class Utils {
     public static void deleteAllFiles(File directory) {
 
         if (!directory.isDirectory()) {
-            Tungsten.LOGGER.error("Invalid directory path: " + directory.getAbsolutePath());
+            Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
             return;
         }
 
