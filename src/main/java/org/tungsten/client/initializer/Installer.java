@@ -7,6 +7,7 @@ import org.tungsten.client.util.WebUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class Installer {
     // prob really unsafe to use; Oracle site only does base part, not 17.0.1 or whatever, so this was the best implementation i saw.
@@ -25,7 +26,9 @@ public class Installer {
             ProcessBuilder pb = new ProcessBuilder("javac -version");
             Process p = pb.start();
             p.waitFor();
-            return;
+            
+            // check if version matches
+            if(Arrays.toString(p.getInputStream().readAllBytes()).startsWith(JavaVersion)) return;
         } catch(IOException ignored) {}
 
 
