@@ -22,9 +22,7 @@ public class ModuleCompiler {
     static {
         mapped = new File(Tungsten.LIBS, "minecraft-mapped.jar");
         unmapped = new File(Tungsten.LIBS, "minecraft-unmapped.jar");
-        try {
-            self = new File(Tungsten.LIBS, "Tungsten-dev.jar");
-        } catch (Exception ignored) {}
+        self = new File(Tungsten.LIBS, "Tungsten-dev.jar");
     }
 
     public static void compileModules(){
@@ -81,9 +79,14 @@ public class ModuleCompiler {
     public static void setupCompilerEnvironment() throws IOException, URISyntaxException {
         File mapped = new File(Tungsten.LIBS, "minecraft-mapped.jar");
         File unmapped = new File(Tungsten.LIBS, "minecraft-unmapped.jar");
-        File self = new File(ModuleCompiler.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-        WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar", mapped);
-        WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar", unmapped);
+        File self = new File(Tungsten.LIBS, "Tungsten-dev.jar");
+        if(!mapped.exists())
+            WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar", mapped);
+        if(!unmapped.exists())
+            WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar", unmapped);
+        if(!self.exists()){
+            WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1130395140884791296/Tungsten-dev.jar", self);
+        }
     }
 
 }

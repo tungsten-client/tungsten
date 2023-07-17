@@ -1,7 +1,9 @@
 /* Styling for the main screen */
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #1E1E1E;
+  min-height: 100vh;
+  overflow:hidden;
+  background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
@@ -45,7 +47,7 @@ body {
   background-color: transparent; /* Set the background color of the scrollbar track */
 }
 
-.hwnd-content::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background-color: #4A4A4A; /* Set the color of the scrollbar thumb */
   border-radius: 5px; /* Adjust the border-radius to make it rounded */
 }

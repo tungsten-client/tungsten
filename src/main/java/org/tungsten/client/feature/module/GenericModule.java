@@ -99,6 +99,9 @@ public abstract class GenericModule {
     }
 
     public void setEnabled(boolean state){
+        System.out.println("SECALL" + state);
+        System.out.println(enabled);
+        this.enabled = state;
         if(state){
             Tungsten.eventManager.registerSubscribers(this);
             this.enable();
@@ -106,8 +109,6 @@ public abstract class GenericModule {
             Tungsten.eventManager.unregister(this);
             this.disable();
         }
-        enabled = state;
-
     }
 
     public boolean isEnabled(){
