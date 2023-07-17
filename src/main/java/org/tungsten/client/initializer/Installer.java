@@ -18,9 +18,16 @@ public class Installer {
     final static String JDKURL = String.format("https://download.oracle.com/java/%s/latest/%s", JavaVersion, JDKFileName);
     final static String JDKPath = Paths.get(TMP, JDKFileName).toString();
 
-    public static void run() throws Exception { // stupid RootExecutor returns base Exception, had to do this awful throw
-        Tungsten.LOGGER.info(String.format("Checking for JDK %s...", JavaVersion));
-        // TODO check if jdk exists and return if it does
+    public static void run() throws Exception { // stupid RootExecutor returns base Exception, had to do this awful throw statement
+        Tungsten.LOGGER.info(String.format("Checking for JDK '%s'...", JavaVersion));
+
+        try {
+            ProcessBuilder pb = new ProcessBuilder("javac -version");
+            Process p = pb.start();
+            p.waitFor();
+            return;
+        } catch(IOException ignored) {}
+
 
         // if jdk not found, install
         Tungsten.LOGGER.info("JDK not found, starting installation process...");
