@@ -6,8 +6,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tungsten.client.initializer.CommandInitializer;
 import com.labymedia.ultralight.UltralightJava;
+import org.tungsten.client.initializer.Installer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
@@ -35,6 +38,8 @@ public class Tungsten implements ClientModInitializer {
     public static final File APPDATA = new File(RUNDIR, "appdata"); //use this for the temporary creation and storing of files that are needed for the launch of the client, e.g. compiled class files for modules, etc...
     public static final File LIBS = new File(Tungsten.APPDATA, "libs"); //used to store downloaded libraries / the jdk
 
+    public final static Logger LOGGER = LoggerFactory.getLogger("Tungsten");
+
     public static final File ULTRALIGHT = new File(Tungsten.APPDATA, "ultralight");
 
     private static final String NATIVES_URL = "https://cdn.discordapp.com/attachments/1121169365883166790/1123366568903061634/natives.zip";
@@ -57,8 +62,9 @@ public class Tungsten implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         try {
+            Installer.run();
             ModuleCompiler.setupCompilerEnvironment();
-        } catch (IOException | URISyntaxException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         ModuleCompiler.compileModules();
