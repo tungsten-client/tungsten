@@ -6,6 +6,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tungsten.client.initializer.CommandInitializer;
 import com.labymedia.ultralight.UltralightJava;
 import org.tungsten.client.initializer.Installer;
@@ -35,6 +37,8 @@ public class Tungsten implements ClientModInitializer {
     public static final File RUNDIR = new File(MinecraftClient.getInstance().runDirectory, "tungsten"); //PLEASE USE THIS DIRECTORY TO SAVE ALL CONFIGURATION FILES, EVERYTHING
     public static final File APPDATA = new File(RUNDIR, "appdata"); //use this for the temporary creation and storing of files that are needed for the launch of the client, e.g. compiled class files for modules, etc...
     public static final File LIBS = new File(Tungsten.APPDATA, "libs"); //used to store downloaded libraries / the jdk
+
+    public final static Logger LOGGER = LoggerFactory.getLogger("Tungsten");
 
     public static final File ULTRALIGHT = new File(Tungsten.APPDATA, "ultralight");
 
