@@ -21,15 +21,8 @@ public class Installer {
 
     public static void run() throws Exception { // stupid RootExecutor returns base Exception, had to do this awful throw statement
         Tungsten.LOGGER.info(String.format("Checking for JDK '%s'...", JavaVersion));
-
-        try {
-            ProcessBuilder pb = new ProcessBuilder("javac -version");
-            Process p = pb.start();
-            p.waitFor();
-            
-            // check if version matches
-            if(Arrays.toString(p.getInputStream().readAllBytes()).startsWith(JavaVersion)) return;
-        } catch(IOException ignored) {}
+        String path = System.getProperty("sun.boot.library.path");
+        if(path != null && path.contains("jdk")) return;
 
 
         // if jdk not found, install
