@@ -36,14 +36,14 @@ dependencies {
 
     libImpl("com.labymedia:ultralight-java-base:0.4.6")
     libImpl("com.labymedia:ultralight-java-databind:0.4.6")
-
+    libImpl("com.github.dyorgio.runtime:run-as-root:1.2.3")
 
     configurations.libImpl.dependencies.each {
         implementation(it)
 		include(it)
     }
 
-    implementation "com.github.dyorgio.runtime:run-as-root:1.2.3"
+
 }
 
 tasks.register('generateDevJar', Jar) {
