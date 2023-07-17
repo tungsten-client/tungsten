@@ -7,6 +7,7 @@ import com.labymedia.ultralight.plugin.view.MessageLevel;
 import com.labymedia.ultralight.plugin.view.MessageSource;
 import com.labymedia.ultralight.plugin.view.UltralightViewListener;
 import me.x150.ul.CursorAdapter;
+import org.tungsten.client.Tungsten;
 
 public class ExampleViewListener implements UltralightViewListener {
     CursorAdapter ca;

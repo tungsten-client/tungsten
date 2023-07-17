@@ -1,6 +1,7 @@
 package me.x150.ul.mgr;
 
 import com.labymedia.ultralight.plugin.filesystem.UltralightFileSystem;
+import org.tungsten.client.Tungsten;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
