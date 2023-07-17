@@ -64,7 +64,7 @@ public class Tungsten implements ClientModInitializer {
         try {
             Installer.run();
             ModuleCompiler.setupCompilerEnvironment();
-        } catch (IOException | URISyntaxException | InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         ModuleCompiler.compileModules();

@@ -1,11 +1,11 @@
 package org.tungsten.client.initializer;
 
+import dyorgio.runtime.run.as.root.RootExecutor;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.util.WebUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Installer {
@@ -18,7 +18,7 @@ public class Installer {
     final static String JDKURL = String.format("https://download.oracle.com/java/%s/latest/%s", JavaVersion, JDKFileName);
     final static String JDKPath = Paths.get(TMP, JDKFileName).toString();
 
-    public static void run() throws IOException, InterruptedException {
+    public static void run() throws Exception { // stupid RootExecutor returns base Exception, had to do this awful throw
         Tungsten.LOGGER.info(String.format("Checking for JDK %s...", JavaVersion));
         // TODO check if jdk exists and return if it does
 
@@ -30,10 +30,18 @@ public class Installer {
         WebUtils.downloadURLToPath(JDKURL, f);
 
         // run installer
+        Tungsten.LOGGER.info("Requesting root elevation...");
+        RootExecutor re = new RootExecutor(); // elevate to root perms for task
 
         Tungsten.LOGGER.info("Running JDK installer executable...");
-        ProcessBuilder pb = new ProcessBuilder(JDKPath);
-        Process p = pb.start();
-        p.waitFor();
+        re.run(() -> {
+            ProcessBuilder pb = new ProcessBuilder(JDKPath);
+            try {
+                Process p = pb.start();
+                p.waitFor();
+            } catch(InterruptedException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

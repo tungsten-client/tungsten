@@ -42,6 +42,8 @@ dependencies {
         implementation(it)
 		include(it)
     }
+
+    implementation "com.github.dyorgio.runtime:run-as-root:1.2.3"
 }
 
 tasks.register('generateDevJar', Jar) {
@@ -105,5 +107,6 @@ publishing {
         // Notice: This block does NOT have the same function as the block in the top level.
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
+        mavenCentral()
     }
 }
