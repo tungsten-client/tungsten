@@ -60,7 +60,7 @@ public class ModuleInitializer {
         if(GenericModule.class.isAssignableFrom(loadedModule)){
             Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
             GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();
-            System.out.println("[TUNGSTEN] Loaded module " + moduleInstance.getName());
+            Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + moduleInstance.getName());
 
             ModuleRegistry.addModule(moduleInstance);
             ModuleTypeManager.subscribeModuleType(moduleInstance.getType());

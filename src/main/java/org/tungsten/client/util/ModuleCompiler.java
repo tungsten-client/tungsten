@@ -53,7 +53,7 @@ public class ModuleCompiler {
     }
 
     private static void compileModule(File module) throws IOException {
-        System.out.println("compileModule called on " + module.getName());
+        Tungsten.LOGGER.info("compileModule called on " + module.getName());
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -68,8 +68,8 @@ public class ModuleCompiler {
             if(compilerStatus == 0){
                 Files.move(new File(new File(Tungsten.RUNDIR, "modules"), module.getName().replace(".java", ".class")).toPath(), output.toPath());
             }else{
-                System.out.println("ERROR IN COMPILATION OF MODULE " + module.getName());
-                System.out.println(stream);
+                Tungsten.LOGGER.error("ERROR IN COMPILATION OF MODULE " + module.getName());
+                Tungsten.LOGGER.error(String.valueOf(stream));
                 errorStream.close();
             }
         }

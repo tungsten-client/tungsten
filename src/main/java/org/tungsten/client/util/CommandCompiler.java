@@ -55,7 +55,7 @@ public class CommandCompiler {
     }
 
     private static void compileCommand(File command) throws IOException {
-        System.out.println("compileCommand called on " + command.getName());
+        Tungsten.LOGGER.info("compileCommand called on " + command.getName());
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -70,8 +70,8 @@ public class CommandCompiler {
             if(compilerStatus == 0){
                 Files.move(new File(new File(Tungsten.RUNDIR, "commands"), command.getName().replace(".java", ".class")).toPath(), output.toPath());
             }else{
-                System.out.println("ERROR IN COMPILATION OF COMMAND " + command.getName());
-                System.out.println(stream);
+                Tungsten.LOGGER.error("ERROR IN COMPILATION OF COMMAND " + command.getName());
+                Tungsten.LOGGER.error(String.valueOf(stream));
                 errorStream.close();
             }
         }

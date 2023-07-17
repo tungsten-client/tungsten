@@ -1,5 +1,7 @@
 package org.tungsten.client.util;
 
+import org.tungsten.client.Tungsten;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.zip.ZipEntry;
@@ -34,14 +36,14 @@ public class Utils {
     public static void deleteFilesExcept(File directory, String... filenames) {
 
         if (!directory.isDirectory()) {
-            System.out.println("Invalid directory path: " + directory.getAbsolutePath());
+            Tungsten.LOGGER.error("Invalid directory path: " + directory.getAbsolutePath());
             return;
         }
 
         File[] files = directory.listFiles();
 
         if (files == null) {
-            System.out.println("An error occurred while retrieving files from the directory.");
+            Tungsten.LOGGER.error("An error occurred while retrieving files from the directory.");
             return;
         }
 
@@ -55,14 +57,14 @@ public class Utils {
     public static void deleteAllFiles(File directory) {
 
         if (!directory.isDirectory()) {
-            System.out.println("Invalid directory path: " + directory.getAbsolutePath());
+            Tungsten.LOGGER.error("Invalid directory path: " + directory.getAbsolutePath());
             return;
         }
 
         File[] files = directory.listFiles();
 
         if (files == null) {
-            System.out.println("An error occurred while retrieving files from the directory.");
+            Tungsten.LOGGER.error("An error occurred while retrieving files from the directory.");
             return;
         }
 

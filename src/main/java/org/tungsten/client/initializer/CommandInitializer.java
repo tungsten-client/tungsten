@@ -63,7 +63,7 @@ public class CommandInitializer {
         if(GenericCommand.class.isAssignableFrom(loadedCommand)){
             Class<GenericCommand> loadedCommandClass = (Class<GenericCommand>) loadedCommand;
             GenericCommand commandInstance = loadedCommandClass.getDeclaredConstructor().newInstance();
-            System.out.println("Loaded module " + commandInstance.getName());
+            Tungsten.LOGGER.info("Loaded module " + commandInstance.getName());
             CommandRegistry.addCommand(commandInstance);
         }
     }

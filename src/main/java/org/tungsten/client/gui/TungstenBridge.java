@@ -48,7 +48,7 @@ public class TungstenBridge {
     }
 
     public void print(String real){
-        System.out.println(real);
+        Tungsten.LOGGER.info(real);
     }
 
     public String getDescription(String module){
@@ -97,18 +97,18 @@ public class TungstenBridge {
 
 
     public String[] getSettingHTML(String module){
-        System.out.println("REAL");
-        System.out.println(module);
+        Tungsten.LOGGER.info("REAL");
+        Tungsten.LOGGER.info(module);
         GenericModule xz = ModuleRegistry.getByName(module);
         if(xz != null) {
-            System.out.println("was not null");
+            Tungsten.LOGGER.info("was not null");
             String[] real = xz.getSettings().stream().map(GenericSetting::toHTML).toArray(String[]::new);
-            System.out.println(Arrays.toString(real));
-            System.out.println("DONE");
+            Tungsten.LOGGER.info(Arrays.toString(real));
+            Tungsten.LOGGER.info("DONE");
             return real;
         }else{
-            System.out.println("Was null");
-            System.out.println("DONE");
+            Tungsten.LOGGER.info("Was null");
+            Tungsten.LOGGER.info("DONE");
             return null;
         }
 
@@ -120,7 +120,7 @@ public class TungstenBridge {
 
 
     public void updateKeybind(String module, int keycode){
-        System.out.println("Updated keybind for " + module + " to " + keycode);
+        Tungsten.LOGGER.info("Updated keybind for " + module + " to " + keycode);
         ModuleRegistry.getByName(module).updateKeybind(keycode);
     }
 

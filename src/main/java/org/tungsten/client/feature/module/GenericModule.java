@@ -54,15 +54,15 @@ public abstract class GenericModule {
 
     public void registerSettings(){
         for(Field f : this.getClass().getDeclaredFields()){
-            System.out.println(f.getName());
-            System.out.println(f.getType());
+            Tungsten.LOGGER.info(f.getName());
+            Tungsten.LOGGER.info(f.getType());
             if(GenericSetting.class.isAssignableFrom(f.getType())){
                 try {
                     if(f.trySetAccessible()){
                         f.setAccessible(true);
                         GenericSetting<?> setting = (GenericSetting<?>) f.get(this);
                         if(setting != null){
-                            System.out.println("Setup setting " + setting.getName()) ;
+                            Tungsten.LOGGER.info("Setup setting " + setting.getName()) ;
                             settings.add(setting);
                         }
                     }else{
@@ -99,8 +99,8 @@ public abstract class GenericModule {
     }
 
     public void setEnabled(boolean state){
-        System.out.println("SECALL" + state);
-        System.out.println(enabled);
+        Tungsten.LOGGER.info("SECALL" + state);
+        Tungsten.LOGGER.info(enabled);
         this.enabled = state;
         if(state){
             Tungsten.eventManager.registerSubscribers(this);

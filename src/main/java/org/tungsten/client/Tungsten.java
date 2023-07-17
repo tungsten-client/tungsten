@@ -88,7 +88,7 @@ public class Tungsten implements ClientModInitializer {
                 if (Files.isDirectory(path)) continue; // dont need
                 String s = path.getFileName().toString();
                 Path tf = Path.of(new File(Tungsten.APPDATA, "gui").toURI()).resolve(s);
-                System.out.println(path + " -> " + tf);
+                Tungsten.LOGGER.info(path + " -> " + tf);
                 new File(tf.toUri()).createNewFile();
                 try (InputStream fis = Files.newInputStream(path); OutputStream fos = Files.newOutputStream(tf)) {
                     byte[] buffer = new byte[512];
@@ -143,7 +143,7 @@ public class Tungsten implements ClientModInitializer {
 
 
     public void startUltralight() throws Exception{
-        System.out.println("Initializing Ultralight");
+        Tungsten.LOGGER.info("Initializing Ultralight");
         setupUltraliteGUISystem();
         ulNatives = new File(ULTRALIGHT, "natives").toPath();
         Utils.ensureDirectoryIsCreated(new File(ULTRALIGHT, "natives"));
@@ -176,7 +176,7 @@ public class Tungsten implements ClientModInitializer {
             if (Files.isDirectory(path)) continue; // dont need
             String s = path.getFileName().toString();
             Path tf = ulResources.resolve(s);
-            System.out.println(path + " -> " + tf);
+            Tungsten.LOGGER.info(path + " -> " + tf);
             try (InputStream fis = Files.newInputStream(path); OutputStream fos = Files.newOutputStream(tf)) {
                 byte[] buffer = new byte[512];
                 int r;
@@ -186,12 +186,12 @@ public class Tungsten implements ClientModInitializer {
             }
         }
 
-        System.out.println("Extracting UltralightJava");
+        Tungsten.LOGGER.info("Extracting UltralightJava");
         UltralightJava.extractNativeLibrary(ulNatives);
 
-        System.out.println("Loading");
+        Tungsten.LOGGER.info("Loading");
         UltralightJava.load(ulNatives);
 
-        System.out.println("OK");
+        Tungsten.LOGGER.info("OK");
     }
 }

@@ -54,7 +54,7 @@ public class WebController {
     public void initView() {
         platform.getRenderer().logMemoryUsage();
 
-        System.out.println("Creating View");
+        Tungsten.LOGGER.info("Creating View");
         this.view = platform.getRenderer()
             .createView(300, 300, new UltralightViewConfig().initialDeviceScale(1.0).isTransparent(true).enableJavascript(true).initialFocus(true));
         ExampleViewListener viewListener = new ExampleViewListener(this.cursorManager);

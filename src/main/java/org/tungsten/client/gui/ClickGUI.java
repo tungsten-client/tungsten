@@ -44,7 +44,7 @@ public class ClickGUI extends HtmlScreen {
         ctx.getGlobalContext().getGlobalObject().setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, new TungstenBridge()), 0);
         ctxl.unlock();
         ctxl.close();
-        System.out.println("set up context");
+        Tungsten.LOGGER.info("set up context");
     }
 
 }

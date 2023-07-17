@@ -5,6 +5,7 @@ import com.labymedia.ultralight.databind.DatabindConfiguration;
 import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
+import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 
@@ -44,7 +45,7 @@ public class KeybindsMenu extends HtmlScreen {
         ctx.getGlobalContext().getGlobalObject().setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, new TungstenBridge()), 0);
         ctxl.unlock();
         ctxl.close();
-        System.out.println("set up context");
+        Tungsten.LOGGER.info("set up context");
     }
 
 

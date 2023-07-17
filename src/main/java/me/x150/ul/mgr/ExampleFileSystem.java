@@ -227,9 +227,9 @@ public class ExampleFileSystem implements UltralightFileSystem {
     private void log(boolean error, String fmt, Object... args) {
         String message = String.format(fmt, args);
         if (error) {
-            System.out.println("(FileSystem) " + message);
+            Tungsten.LOGGER.info("(FileSystem) " + message);
         } else {
-            System.out.println("(FileSystem) " + message);
+            Tungsten.LOGGER.info("(FileSystem) " + message);
         }
     }
 }

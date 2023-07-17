@@ -12,7 +12,7 @@ import me.x150.MessageSubscription;
  * <blockquote><pre>
  *    {@literal @}MessageSubscription
  *     void handle(Message message) {
- *         System.out.println("Received message " + message);
+ *         Tungsten.LOGGER.info("Received message " + message);
  *     }
  * </pre></blockquote>
  */
