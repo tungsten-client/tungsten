@@ -1,5 +1,7 @@
 package org.tungsten.client.util;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
 import java.io.*;
@@ -19,7 +21,7 @@ public class Utils {
         return !Arrays.equals(cSigP, EXPECTED_CLASS_SIGNATURE);
     }
 
-    public static boolean isDirectoryEmpty(File directory) {
+    public static boolean isDirectoryEmpty(@NotNull File directory) {
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException("Path is not a directory.");
         }
@@ -28,12 +30,12 @@ public class Utils {
         return files == null || files.length == 0;
     }
 
-    public static void ensureDirectoryIsCreated(File directory){
+    public static void ensureDirectoryIsCreated(@NotNull File directory){
         if (!directory.isDirectory()) directory.delete();
         if (!directory.exists()) directory.mkdir();
     }
 
-    public static void deleteFilesExcept(File directory, String... filenames) {
+    public static void deleteFilesExcept(@NotNull File directory, String... filenames) {
 
         if (!directory.isDirectory()) {
             Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
@@ -54,7 +56,7 @@ public class Utils {
         }
     }
 
-    public static void deleteAllFiles(File directory) {
+    public static void deleteAllFiles(@NotNull File directory) {
 
         if (!directory.isDirectory()) {
             Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
@@ -79,7 +81,7 @@ public class Utils {
         }
     }
 
-    public static void unzip(File zipFile, File folder) throws IOException {
+    public static void unzip(File zipFile, @NotNull File folder) throws IOException {
         byte[] buffer = new byte[1024];
         if (!folder.exists()) {
             folder.mkdir();
@@ -110,7 +112,8 @@ public class Utils {
 
 
 
-    private static boolean containsFilename(String[] filenames, String filename) {
+    @Contract(pure = true)
+    private static boolean containsFilename(String @NotNull [] filenames, String filename) {
         for (String name : filenames) {
             if (name.equals(filename)) {
                 return true;
