@@ -2,9 +2,18 @@ document.addEventListener('keydown', function(event) {
     if(document.activeElement === document.getElementById("search-bar")) return;
     let keycode = event.which;
     for(let key of document.querySelectorAll(".key")){
-        if(key.getAttribute("keycode") == keycode){
-            key.classList.add("darker");
-            updateKey(key)
+        if(parseInt(key.getAttribute("keycode")) == keycode){
+            //console.log(event.location + " " + key.getAttribute("location"));
+            if(event.location === KeyboardEvent.DOM_KEY_LOCATION_LEFT && key.getAttribute("location") === "l") {
+                key.classList.add("darker");
+                updateKey(key)
+            } else if(event.location === KeyboardEvent.DOM_KEY_LOCATION_RIGHT && key.getAttribute("location") === "r") {
+                key.classList.add("darker");
+                updateKey(key)
+            } else if(event.location === KeyboardEvent.DOM_KEY_LOCATION_STANDARD && key.getAttribute("location") === null) {
+                key.classList.add("darker");
+                updateKey(key)
+            }
         }
     }
 })
@@ -56,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-function updateKey(key){
+function updateKey(key) {
     const blist = document.getElementById("binds-list");
 
     document.getElementById("keyname").innerHTML = key.innerHTML;
@@ -64,7 +73,7 @@ function updateKey(key){
     blist.innerHTML = "";
     window.currentkey = key.getAttribute("keycode");
 
-    let binds = tungstenBridge.getModulesByKeycode(parseInt(key.getAttribute("keycode")));
+    let binds = tungstenBridge.getModulesByKeycode(parseInt(window.currentkey));
     console.log(binds);
 
     for(let bind of binds){

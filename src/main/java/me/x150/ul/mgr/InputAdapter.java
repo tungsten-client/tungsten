@@ -332,9 +332,12 @@ public class InputAdapter {
             case GLFW_KEY_KP_MULTIPLY -> UltralightKey.MULTIPLY;
             case GLFW_KEY_KP_SUBTRACT -> UltralightKey.SUBTRACT;
             case GLFW_KEY_KP_ADD -> UltralightKey.ADD;
-            case GLFW_KEY_LEFT_SHIFT, GLFW_KEY_RIGHT_SHIFT -> UltralightKey.SHIFT;
-            case GLFW_KEY_LEFT_CONTROL, GLFW_KEY_RIGHT_CONTROL -> UltralightKey.CONTROL;
-            case GLFW_KEY_LEFT_ALT, GLFW_KEY_RIGHT_ALT -> UltralightKey.MENU;
+            case GLFW_KEY_LEFT_SHIFT -> UltralightKey.LSHIFT;
+            case GLFW_KEY_RIGHT_SHIFT -> UltralightKey.RSHIFT;
+            case GLFW_KEY_LEFT_CONTROL -> UltralightKey.LCONTROL;
+            case GLFW_KEY_RIGHT_CONTROL -> UltralightKey.RCONTROL;
+            case GLFW_KEY_LEFT_ALT -> UltralightKey.LMENU;
+            case GLFW_KEY_RIGHT_ALT -> UltralightKey.RMENU;
             case GLFW_KEY_LEFT_SUPER -> UltralightKey.LWIN;
             case GLFW_KEY_RIGHT_SUPER -> UltralightKey.RWIN;
             default -> UltralightKey.UNKNOWN;
