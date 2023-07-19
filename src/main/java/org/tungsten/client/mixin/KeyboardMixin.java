@@ -24,6 +24,7 @@ public class KeyboardMixin {
     @Inject(method = "onKey", at = @At("RETURN"))
     void onOnKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         KeyboardEvent ke = new KeyboardEvent(key, modifiers, action);
+        //Tungsten.LOGGER.info(key + " pressed");
         Tungsten.eventManager.send(ke);
         if(action == 1){
             if(client.player != null && client != null){
