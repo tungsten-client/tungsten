@@ -99,8 +99,6 @@ public abstract class GenericModule {
     }
 
     public void setEnabled(boolean state){
-        Tungsten.LOGGER.info("SECALL" + state);
-        Tungsten.LOGGER.info(String.valueOf(enabled));
         this.enabled = state;
         if(state){
             Tungsten.eventManager.registerSubscribers(this);

@@ -12,13 +12,14 @@ import java.util.Arrays;
 public class Installer {
     // prob really unsafe to use; Oracle site only does base part, not 17.0.1 or whatever, so this was the best implementation i saw.
     final static String JavaVersion = Runtime.version().toString().split("\\.")[0];
-    final static String TMP = System.getProperty("java.io.tmpdir");
+
+    //please use tungsten appdata instead of the windows TEMP folder, it doesn't get deleted -saturn
+    final static File TMP = new File(Tungsten.APPDATA, "libs");
 
     // likely should change these to work cross-platform but too lazy for now. just want a working installer first
     final static String JDKFileName = String.format("jdk-%s_windows-x64_bin.exe", JavaVersion);
     final static String JDKURL = String.format("https://download.oracle.com/java/%s/latest/%s", JavaVersion, JDKFileName);
-    final static String JDKPath = Paths.get(TMP, JDKFileName).toString();
-
+    final static String JDKPath = new File(TMP, JDKFileName).getAbsolutePath();
     public static void run() throws Exception { // stupid RootExecutor returns base Exception, had to do this awful throw statement
         Tungsten.LOGGER.info(String.format("Checking for JDK '%s'...", JavaVersion));
         String path = System.getProperty("sun.boot.library.path");

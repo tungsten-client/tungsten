@@ -3,8 +3,16 @@ document.addEventListener('keydown', function(event) {
     let keycode = event.which;
     for(let key of document.querySelectorAll(".key")){
         if(key.getAttribute("keycode") == keycode){
-            key.classList.add("darker");
-            updateKey(key)
+            if(event.location === KeyboardEvent.DOM_KEY_LOCATION_LEFT && key.getAttribute("location") == "l") {
+                key.classList.add("darker");
+                updateKey(key)
+            } else if(event.location === KeyboardEvent.DOM_KEY_LOCATION_RIGHT && key.getAttribute("location") == "r") {
+                key.classList.add("darker");
+                updateKey(key)
+            } else if(event.location === KeyboardEvent.DOM_KEY_LOCATION_STANDARD) {
+                key.classList.add("darker");
+                updateKey(key)
+            }
         }
     }
 })
