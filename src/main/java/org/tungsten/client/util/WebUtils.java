@@ -1,22 +1,32 @@
 package org.tungsten.client.util;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import lombok.SneakyThrows;
+
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class WebUtils {
-    public static void downloadURLToPath(String fileUrl, File savePath) throws IOException {
-        URL url = new URL(fileUrl);
-        try (BufferedInputStream in = new BufferedInputStream(url.openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(savePath)) {
+	static final HttpClient client = HttpClient.newHttpClient();
 
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(buffer, 0, 1024)) != -1) {
-                fileOutputStream.write(buffer, 0, bytesRead);
-            }
-        }
-    }
+	@SneakyThrows
+	public static void downloadURLToPath(String fileUrl, Path savePath) {
+		HttpRequest req = HttpRequest.newBuilder()
+				.uri(URI.create(fileUrl))
+				.build();
+		HttpResponse<InputStream> send = client.send(req, HttpResponse.BodyHandlers.ofInputStream());
+		try (InputStream body = send.body(); OutputStream out = Files.newOutputStream(savePath)) {
+			byte[] buffer = new byte[1024];
+			int c;
+			while ((c = body.read(buffer)) > 0) {
+				out.write(buffer, 0, c);
+			}
+		}
+	}
 }

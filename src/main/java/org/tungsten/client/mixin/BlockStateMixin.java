@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractBlockState.class)
 public class BlockStateMixin {
-    //Many block states to hook into. May take some time.
-    @Inject(at = @At("TAIL"), method = { "isFullCube" }, cancellable = true)
-    void onFullCube(BlockView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        //Yet to add codes here, sorry. -Lefty
-    }
+	//Many block states to hook into. May take some time.
+	@Inject(at = @At("TAIL"), method = {"isFullCube"}, cancellable = true)
+	void onFullCube(BlockView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+		//Yet to add codes here, sorry. -Lefty
+	}
 }
 

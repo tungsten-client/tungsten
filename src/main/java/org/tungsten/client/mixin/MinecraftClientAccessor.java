@@ -13,22 +13,22 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(MinecraftClient.class)
 public interface MinecraftClientAccessor {
 
-    @Mutable
-    @Accessor("session")
-    void setSession(Session newSession);
+	@Mutable
+	@Accessor("session")
+	void setSession(Session newSession);
 
-    @Accessor("renderTickCounter")
-    RenderTickCounter getRenderTickCounter();
+	@Accessor("renderTickCounter")
+	RenderTickCounter getRenderTickCounter();
 
-    @Mutable
-    @Accessor("profileKeys")
-    void setProfileKeys(ProfileKeys keys);
+	@Mutable
+	@Accessor("profileKeys")
+	void setProfileKeys(ProfileKeys keys);
 
-    @Mutable
-    @Accessor("userApiService")
-    void setUserApiService(UserApiService uas);
+	@Mutable
+	@Accessor("userApiService")
+	void setUserApiService(UserApiService uas);
 
-    @Accessor("authenticationService")
-    YggdrasilAuthenticationService getAuthenticationService();
+	@Accessor("authenticationService")
+	YggdrasilAuthenticationService getAuthenticationService();
 }
 

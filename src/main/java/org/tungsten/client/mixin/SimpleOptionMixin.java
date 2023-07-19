@@ -11,14 +11,10 @@ import java.util.Optional;
 
 @Mixin(SimpleOption.DoubleSliderCallbacks.class)
 public class SimpleOptionMixin {
-    public boolean fullbrightOption = false;
-    @Inject(method = "validate(Ljava/lang/Double;)Ljava/util/Optional;", at = @At("RETURN"), cancellable = true)
-    public void removeValidation(Double double_, CallbackInfoReturnable<Optional<Double>> cir) {
-        if(fullbrightOption) {
-            if(double_ == 69420.0) {
-                cir.setReturnValue(Optional.of(69420.0));
-            }
-        }
-    }
+	@Inject(method = "validate(Ljava/lang/Double;)Ljava/util/Optional;", at = @At("RETURN"), cancellable = true)
+	public void removeValidation(Double double_, CallbackInfoReturnable<Optional<Double>> cir) {
+		cir.setReturnValue(
+				Optional.of(double_)); // fuck all the validation regardless, we're here to do a little trolling
+	}
 }
 

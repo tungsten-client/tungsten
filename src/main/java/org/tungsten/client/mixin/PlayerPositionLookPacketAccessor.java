@@ -7,23 +7,23 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(PlayerPositionLookS2CPacket.class)
 public interface PlayerPositionLookPacketAccessor {
-    @Mutable
-    @Accessor("yaw")
-    void setYaw(float yaw);
+	@Mutable
+	@Accessor("yaw")
+	void setYaw(float yaw);
 
-    @Mutable
-    @Accessor("x")
-    void setX(double x);
+	@Mutable
+	@Accessor("x")
+	void setX(double x);
 
-    @Mutable
-    @Accessor("y")
-    void setY(double y);
+	@Mutable
+	@Accessor("y")
+	void setY(double y);
 
-    @Mutable
-    @Accessor("z")
-    void setZ(double z);
+	@Mutable
+	@Accessor("z")
+	void setZ(double z);
 
-    @Mutable
-    @Accessor("pitch")
-    void setPitch(float pitch);
+	@Mutable
+	@Accessor("pitch")
+	void setPitch(float pitch);
 }

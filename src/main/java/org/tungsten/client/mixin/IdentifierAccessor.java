@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Identifier.class)
 public interface IdentifierAccessor {
-    //oh allah
-    @Accessor("path")
-    void setPath(String path);
+	//oh allah
+	@Accessor("path")
+	void setPath(String path);
 }

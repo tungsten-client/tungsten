@@ -1,121 +1,135 @@
 package org.tungsten.client.util;
 
+import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Utils {
 
-    private static final int[] EXPECTED_CLASS_SIGNATURE = new int[] { 0xCA, 0xFE, 0xBA, 0xBE };
-    public static boolean checkSignature(byte[] classFile){
-        byte[] cSig = Arrays.copyOfRange(classFile, 0, 4);
-        int[] cSigP = new int[4];
-        for (int i = 0; i < cSig.length; i++) {
-            cSigP[i] = Byte.toUnsignedInt(cSig[i]);
+	private static final int[] EXPECTED_CLASS_SIGNATURE = new int[]{0xCA, 0xFE, 0xBA, 0xBE};
+
+	public static boolean checkSignature(byte[] classFile) {
+		byte[] cSig = Arrays.copyOfRange(classFile, 0, 4);
+		int[] cSigP = new int[4];
+		for (int i = 0; i < cSig.length; i++) {
+			cSigP[i] = Byte.toUnsignedInt(cSig[i]);
+		}
+		return !Arrays.equals(cSigP, EXPECTED_CLASS_SIGNATURE);
+	}
+
+	@SneakyThrows
+	public static boolean isDirectoryEmpty(Path directory) {
+        if (!Files.isDirectory(directory)) {
+            throw new IllegalArgumentException("Not a directory: " + directory.toAbsolutePath());
         }
-        return !Arrays.equals(cSigP, EXPECTED_CLASS_SIGNATURE);
-    }
+		try (Stream<Path> p = Files.list(directory)) {
+			return p.findAny().isEmpty();
+		}
+	}
 
-    public static boolean isDirectoryEmpty(File directory) {
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException("Path is not a directory.");
+	@SneakyThrows
+	public static void ensureDirectoryIsCreated(Path directory) {
+        if (Files.exists(directory) && !Files.isDirectory(directory)) {
+            Files.delete(directory);
         }
-
-        String[] files = directory.list();
-        return files == null || files.length == 0;
-    }
-
-    public static void ensureDirectoryIsCreated(File directory){
-        if (!directory.isDirectory()) directory.delete();
-        if (!directory.exists()) directory.mkdir();
-    }
-
-    public static void deleteFilesExcept(File directory, String... filenames) {
-
-        if (!directory.isDirectory()) {
-            Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
-            return;
+        if (!Files.exists(directory)) {
+            Files.createDirectory(directory);
         }
+	}
 
-        File[] files = directory.listFiles();
+	public static void deleteFilesExcept(File directory, String... filenames) {
 
-        if (files == null) {
-            Tungsten.LOGGER.error("An error occurred while retrieving files from the directory.");
-            return;
-        }
+		if (!directory.isDirectory()) {
+			Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
+			return;
+		}
 
-        for (File file : files) {
-            if (file.isFile() && !containsFilename(filenames, file.getName())) {
-                file.delete();
-            }
-        }
-    }
+		File[] files = directory.listFiles();
 
-    public static void deleteAllFiles(File directory) {
+		if (files == null) {
+			Tungsten.LOGGER.error("An error occurred while retrieving files from the directory.");
+			return;
+		}
 
-        if (!directory.isDirectory()) {
-            Tungsten.LOGGER.warn("Invalid directory path: " + directory.getAbsolutePath());
-            return;
-        }
+		for (File file : files) {
+			if (file.isFile() && !arrayContains(filenames, file.getName())) {
+				file.delete();
+			}
+		}
+	}
 
-        File[] files = directory.listFiles();
+	@SneakyThrows
+	public static void rmDirectoryTree(Path directory) {
+		if (!Files.isDirectory(directory)) {
+			Tungsten.LOGGER.warn("Invalid directory path: " + directory.toAbsolutePath());
+			return;
+		}
+		Files.walkFileTree(directory, new FileVisitor<>() {
+			@Override
+			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+				return FileVisitResult.CONTINUE;
+			}
 
-        if (files == null) {
-            Tungsten.LOGGER.error("An error occurred while retrieving files from the directory.");
-            return;
-        }
+			@Override
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+				Files.delete(file);
+				return FileVisitResult.CONTINUE;
+			}
 
-        for (File file : files) {
-            if (file.isFile()) {
-                file.delete();
-            }else{
-                if(file.isDirectory()){
-                    deleteAllFiles(file);
-                }
-            }
-        }
-    }
+			@Override
+			public FileVisitResult visitFileFailed(Path file, IOException exc) {
+				return FileVisitResult.CONTINUE;
+			}
 
-    public static void unzip(File zipFile, File folder) throws IOException {
-        byte[] buffer = new byte[1024];
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
+			@Override
+			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+				Files.delete(dir);
+				return FileVisitResult.CONTINUE;
+			}
+		});
+	}
 
-        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile))) {
-            ZipEntry zipEntry = zipInputStream.getNextEntry();
-            while (zipEntry != null) {
-                String fileName = zipEntry.getName();
-                File newFile = new File(folder, fileName);
-                if (zipEntry.isDirectory()) {
-                    newFile.mkdirs();
-                } else {
-                    new File(newFile.getParent()).mkdirs();
+	public static void unzip(Path zipFile, Path folder) throws IOException {
+		byte[] buffer = new byte[1024];
+		ensureDirectoryIsCreated(folder);
 
-                    try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(newFile))) {
-                        int length;
-                        while ((length = zipInputStream.read(buffer)) > 0) {
-                            outputStream.write(buffer, 0, length);
-                        }
-                    }
-                }
+		try (ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(zipFile))) {
+			ZipEntry ze;
+			while ((ze = zipInputStream.getNextEntry()) != null) {
+				String entryName = ze.getName();
+				Path p = folder.resolve(entryName).toAbsolutePath().normalize();
+				if (!p.startsWith(folder.toAbsolutePath().normalize())) {
+					throw new IllegalStateException(
+							"Probable path traversal attempt: Zip entry '" + entryName + "' in zip file '" + zipFile.toAbsolutePath() + "' resolved to '" + p + "'");
+				}
+				if (!ze.isDirectory()) {
+					Files.createDirectories(p.getParent());
+					try (OutputStream fout = Files.newOutputStream(p)) {
+						int c;
+						while ((c = zipInputStream.read(buffer)) > 0) {
+							fout.write(buffer, 0, c);
+						}
+					}
+				}
+				zipInputStream.closeEntry();
+			}
+		}
+	}
 
-                zipEntry = zipInputStream.getNextEntry();
-            }
-        }
-    }
 
-
-
-    private static boolean containsFilename(String[] filenames, String filename) {
-        for (String name : filenames) {
-            if (name.equals(filename)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	private static <T> boolean arrayContains(T[] array, T element) {
+		return Arrays.asList(array).contains(element);
+	}
 }

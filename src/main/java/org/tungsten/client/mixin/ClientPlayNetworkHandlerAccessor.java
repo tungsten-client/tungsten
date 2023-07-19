@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public interface ClientPlayNetworkHandlerAccessor {
-    @Accessor("lastSeenMessagesCollector")
-    LastSeenMessagesCollector getLastSeenMessages();
+	@Accessor("lastSeenMessagesCollector")
+	LastSeenMessagesCollector getLastSeenMessages();
 
-    @Accessor("messagePacker")
-    MessageChain.Packer getMessagePacker();
+	@Accessor("messagePacker")
+	MessageChain.Packer getMessagePacker();
 }

@@ -24,8 +24,8 @@ public class PlatformManager {
 
     private PlatformManager() {
         this.platform = UltralightPlatform.instance(); // this breaks when called more than once
-        tempDirectory = new File(Tungsten.ULTRALIGHT, "temp").toPath();
-        Utils.ensureDirectoryIsCreated(new File(Tungsten.ULTRALIGHT, "temp"));
+        tempDirectory = Tungsten.ULTRALIGHT.resolve("temp");
+        Utils.ensureDirectoryIsCreated(tempDirectory);
         this.platform.setConfig( // this also breaks when called more than once
             new UltralightConfig().cachePath(tempDirectory.toString()).fontHinting(FontHinting.SMOOTH).resourcePath(Tungsten.ulResources.toString()));
         this.platform.usePlatformFontLoader();

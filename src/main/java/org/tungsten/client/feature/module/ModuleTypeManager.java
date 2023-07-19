@@ -5,21 +5,21 @@ import java.util.List;
 
 public class ModuleTypeManager {
 
-    private static List<ModuleType> moduleTypes = new ArrayList<ModuleType>();
+	private static final List<ModuleType> moduleTypes = new ArrayList<>();
 
 
-    public static void subscribeModuleType(String moduleType){
-        if(!moduleTypes.stream().map(ModuleType::getName).toList().contains(moduleType)){
-            moduleTypes.add(new ModuleType(moduleType));
-        }
-    }
+	public static void subscribeModuleType(String moduleType) {
+		if (!moduleTypes.stream().map(ModuleType::getName).toList().contains(moduleType)) {
+			moduleTypes.add(new ModuleType(moduleType));
+		}
+	}
 
-    public static ModuleType getByName(String name){
-        return moduleTypes.stream().filter(moduleType -> moduleType.getName().equals(name)).findFirst().get();
-    }
+	public static ModuleType getByName(String name) {
+		return moduleTypes.stream().filter(moduleType -> moduleType.getName().equals(name)).findFirst().orElseThrow();
+	}
 
-    public static List<ModuleType> getModuleTypes(){
-        return moduleTypes;
-    }
+	public static List<ModuleType> getModuleTypes() {
+		return moduleTypes;
+	}
 
 }

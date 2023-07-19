@@ -1,5 +1,6 @@
 package org.tungsten.client.initializer;
 
+import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleTypeManager;
@@ -7,63 +8,65 @@ import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.util.ModuleClassLoader;
 import org.tungsten.client.util.Utils;
 
-import java.io.*;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class ModuleInitializer {
 
-    private static final File MODULES = new File(Tungsten.RUNDIR, "modules");
-    public static final File MODULES_COMPILED = new File(Tungsten.APPDATA, "mod_tmp");
+	public static final Path MODULES_COMPILED = Tungsten.APPDATA.resolve("mod_tmp");
+	private static final Path MODULES = Tungsten.RUNDIR.resolve("modules");
 
-    static {
-        Utils.ensureDirectoryIsCreated(MODULES);
-        Utils.ensureDirectoryIsCreated(MODULES_COMPILED);
-    }
-
-    public static void initModules(){
-        ModuleRegistry.modules.clear();
-        //todo: compile modules into classes and put them in mod_tmp
-        searchForModules(MODULES_COMPILED);
-    }
+	public static void initModules() {
+		Utils.ensureDirectoryIsCreated(MODULES);
+		Utils.ensureDirectoryIsCreated(MODULES_COMPILED);
+		ModuleRegistry.modules.clear();
+		//todo: compile modules into classes and put them in mod_tmp
+		searchForModules(MODULES_COMPILED);
+	}
 
 
-    /*
-        this method is to be called ON THE MODULES TEMP DIRECTORY, NOT THE MODULES DIRECTORY, WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
-     */
-    private static void searchForModules(File path){
-        if(path != null){
-            File[] files = path.listFiles();
-            if(files != null){
-                for(File file : files){
-                    if(file.isDirectory()){
-                        searchForModules(file);
-                    }else{
-                        if(file.getName().endsWith(".class")){
-                            try{
-                                initModule(file);
-                            }catch(Exception e){
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                }
+	/*
+		WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
+	 */
+	@SneakyThrows
+	private static void searchForModules(Path path) {
+		try (Stream<Path> v = Files.walk(path)) {
+			v.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".class")).forEach(path1 -> {
+				try {
+					initModule(path1);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			});
+//			v.forEach(path1 -> {
+//				if (path1.endsWith(".class")) {
+//					try {
+//						initModule(path1);
+//					} catch (Exception e) {
+//						throw new RuntimeException(e);
+//					}
+//				}
+//			});
+		}
+	}
+
+	public static void initModule(Path path) throws Exception {
+		try (InputStream file = Files.newInputStream(path)) {
+			byte[] classBytes = file.readAllBytes();
+            if (Utils.checkSignature(classBytes)) {
+                throw new Exception("invalid class file, did not pass class file signature check");
             }
-        }
-    }
+			Class<?> loadedModule = ModuleClassLoader.getInstance().registerClass(classBytes);
+			if (GenericModule.class.isAssignableFrom(loadedModule)) {
+				Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
+				GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();
+				Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + moduleInstance.getName());
 
-    public static void initModule(File module) throws Exception{
-        InputStream file = new FileInputStream(module);
-        byte[] classBytes = file.readAllBytes();
-        if(Utils.checkSignature(classBytes)) throw new Exception("invalid class file, did not pass class file signature check");
-        Class<?> loadedModule = ModuleClassLoader.getInstance().registerClass(classBytes);
-        if(GenericModule.class.isAssignableFrom(loadedModule)){
-            Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
-            GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();
-            Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + moduleInstance.getName());
-
-            ModuleRegistry.addModule(moduleInstance);
-            ModuleTypeManager.subscribeModuleType(moduleInstance.getType());
-        }
-    }
+				ModuleRegistry.addModule(moduleInstance);
+				ModuleTypeManager.subscribeModuleType(moduleInstance.getType());
+			}
+		}
+	}
 }

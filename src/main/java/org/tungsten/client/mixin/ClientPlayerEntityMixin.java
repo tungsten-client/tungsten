@@ -11,87 +11,55 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.tungsten.client.event.PushOutOfBlockEvent;
-import org.tungsten.client.util.ClientPlayerEntityInterface;
-import org.tungsten.client.util.Goal;
-import org.tungsten.client.util.Rotations;
+import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.PlayerMoveEvent;
-
-import static org.tungsten.client.Tungsten.client;
+import org.tungsten.client.event.PushOutOfBlockEvent;
+import org.tungsten.client.util.Rotations;
 
 @Mixin(ClientPlayerEntity.class)
-public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity implements ClientPlayerEntityInterface {
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-        super(world, profile);
-    }
+public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
+	public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+		super(world, profile);
+	}
 
-    @Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getYaw()F"))
-    float tungsten_replaceMovementPacketYaw(ClientPlayerEntity instance) {
+	@Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getYaw()F"))
+	float tungsten_replaceMovementPacketYaw(ClientPlayerEntity instance) {
 
-        Goal currentGoal = Rotations.getCurrentGoal();
-        if (currentGoal != null) {
-            Rotations.Rotation compute = currentGoal.compute();
-            return compute == null ? instance.getYaw() : compute.yaw();
-        } else {
-            return instance.getYaw();
+		Rotations.Goal currentGoal = Rotations.getCurrentGoal();
+		if (currentGoal != null) {
+			Rotations.Rotation compute = currentGoal.compute();
+			return compute == null ? instance.getYaw() : compute.yaw();
+		} else {
+			return instance.getYaw();
+		}
+	}
+
+	@Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getPitch()F"))
+	float tungsten_replaceMovementPacketPitch(ClientPlayerEntity instance) {
+		Rotations.Goal currentGoal = Rotations.getCurrentGoal();
+		if (currentGoal != null) {
+			Rotations.Rotation compute = currentGoal.compute();
+			return compute == null ? instance.getPitch() : compute.pitch();
+		} else {
+			return instance.getPitch();
+		}
+	}
+
+
+	@Inject(at = @At("HEAD"), cancellable = true, method = "pushOutOfBlocks")
+	public void onPushOutOfBlocks(double x, double y, CallbackInfo ci) {
+		PushOutOfBlockEvent pob = new PushOutOfBlockEvent();
+		Tungsten.eventManager.send(pob);
+        if (pob.isCancelled()) {
+            ci.cancel();
         }
-    }
 
-    @Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getPitch()F"))
-    float tungsten_replaceMovementPacketPitch(ClientPlayerEntity instance) {
-        Goal currentGoal = Rotations.getCurrentGoal();
-        if (currentGoal != null) {
-            Rotations.Rotation compute = currentGoal.compute();
-            return compute == null ? instance.getPitch() : compute.pitch();
-        } else {
-            return instance.getPitch();
-        }
-    }
+	}
 
-
-    @Inject(at = @At("HEAD"), cancellable = true, method = "pushOutOfBlocks")
-    public void onPushOutOfBlocks(double x, double y, CallbackInfo ci) {
-        PushOutOfBlockEvent pob = new PushOutOfBlockEvent();
-//        Events.emitEvent(pob);
-
-//        if (pob.isCancelled()) {
-//            ci.cancel();
-//        }
-    }
-
-    @Inject(method = "sendMovementPackets", at = @At("HEAD"), cancellable = true)
-    private void sendMovementPackets(CallbackInfo ci) {
-//        if(ModuleRegistry.getByClass(PacketFly.class).isEnabled()){
-//            client.player.setVelocity(Vec3d.ZERO);
-//            ci.cancel();
-//        }
-    }
-
-    @Inject(method = "move", at = @At("HEAD"), cancellable = true)
-    private void move(MovementType type, Vec3d movement, CallbackInfo ci) {
-//        if(ModuleRegistry.getByClass(PacketFly.class).isEnabled()){
-//            ci.cancel();
-//        }
-    }
-
-    @Inject(at = @At("HEAD"), cancellable = true, method = "move")
-    public void onMove(MovementType mov, Vec3d pos, CallbackInfo ci) {
-//        PlayerMoveEvent pm = new PlayerMoveEvent();
-//        Events.emitEvent(pm);
-
-//        if (pm.getCancelled()) {
-//            ci.cancel();
-//        }
-    }
-
-
-    @Override
-    public void setNoClip(boolean noClip) {
-        this.noClip = noClip;
-    }
-
-    @Override
-    public void setMovementMultiplier(Vec3d movementMultiplier) {
-
-    }
+	@Inject(at = @At("HEAD"), cancellable = true, method = "move")
+	public void onMove(MovementType mov, Vec3d delta, CallbackInfo ci) {
+		PlayerMoveEvent pm = new PlayerMoveEvent(mov, delta);
+		Tungsten.eventManager.send(pm);
+		if (pm.isCancelled()) ci.cancel();
+	}
 }

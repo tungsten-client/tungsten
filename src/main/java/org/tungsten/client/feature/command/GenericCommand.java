@@ -5,18 +5,18 @@ import org.tungsten.client.Tungsten;
 
 public abstract class GenericCommand {
 
-    protected static final MinecraftClient client = Tungsten.client;
+	protected static final MinecraftClient client = Tungsten.client;
 
 
-    private final String name;
+	private final String name;
 
-    public GenericCommand(String name){
-        this.name = name;
-    }
+	public GenericCommand(String name) {
+		this.name = name;
+	}
 
-    public String getName(){
-        return this.name;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    protected abstract void execute();
+	protected abstract void execute();
 }

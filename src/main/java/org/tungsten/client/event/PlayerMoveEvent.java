@@ -1,15 +1,13 @@
 package org.tungsten.client.event;
 
-import org.tungsten.client.util.ClientPlayerEntityInterface;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.minecraft.entity.MovementType;
+import net.minecraft.util.math.Vec3d;
 
+@AllArgsConstructor
+@Getter
 public class PlayerMoveEvent extends Event {
-
-    ClientPlayerEntityInterface player;
-    public void setPlayer(ClientPlayerEntityInterface player) {
-        this.player = player;
-    }
-    ClientPlayerEntityInterface getPlayer() {
-        return this.player;
-    }
-
+	MovementType type;
+	Vec3d requestedDelta;
 }

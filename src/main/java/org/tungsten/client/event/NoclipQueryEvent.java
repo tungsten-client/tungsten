@@ -1,19 +1,14 @@
 package org.tungsten.client.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
 
+@Getter
+@AllArgsConstructor
 public class NoclipQueryEvent extends Event {
-    final PlayerEntity player;
-    boolean shouldNoclip;
-
-    public NoclipQueryEvent(PlayerEntity player, boolean shouldNoclip) {
-        this.player = player;
-        this.shouldNoclip = shouldNoclip;
-    }
-    public void setShouldNoclip(boolean shouldNoclip) {
-        this.shouldNoclip = shouldNoclip;
-    }
-    public boolean getShouldNoclip() { return this.shouldNoclip; }
-
-    public PlayerEntity getPlayer() { return this.player; }
+	final PlayerEntity player;
+	@Setter
+	boolean shouldNoclip;
 }
