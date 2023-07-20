@@ -8,6 +8,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tungsten.client.config.Config;
+import org.tungsten.client.config.ConfigEntry;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
@@ -40,6 +42,9 @@ public class Tungsten implements ClientModInitializer {
 	public static MessageManager eventManager = new MessageManager();
 	public static Path ulNatives;
 	public static Path ulResources;
+
+	public static Config config = new Config();
+
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
