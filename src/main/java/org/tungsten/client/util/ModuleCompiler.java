@@ -56,7 +56,7 @@ public class ModuleCompiler {
 		Path output = ModuleInitializer.MODULES_COMPILED.resolve(
 				fileName.substring(0, fileName.length() - ".java".length()) + ".class");
 
-		
+
 		//ty crosby you saved me from writing a method to download the libs required
 		String libraries = System.getProperty("java.class.path"); //mapped.toAbsolutePath() + File.pathSeparator + unmapped.toAbsolutePath() + File.pathSeparator + self.toAbsolutePath();
 
@@ -78,21 +78,21 @@ public class ModuleCompiler {
 
 
 	public static void setupCompilerEnvironment() throws IOException {
-        if (!Files.exists(mapped)) {
-            WebUtils.downloadURLToPath(
-                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar",
-                    mapped);
-        }
-        if (!Files.exists(unmapped)) {
-            WebUtils.downloadURLToPath(
-                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar",
-                    unmapped);
-        }
-		if (!Files.exists(self)) {
-			WebUtils.downloadURLToPath(
-					"https://cdn.discordapp.com/attachments/1121169365883166790/1130395140884791296/Tungsten-dev.jar",
-					self);
-		}
+//        if (!Files.exists(mapped)) {
+//            WebUtils.downloadURLToPath(
+//                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar",
+//                    mapped);
+//        }
+//        if (!Files.exists(unmapped)) {
+//            WebUtils.downloadURLToPath(
+//                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar",
+//                    unmapped);
+//        }
+//		if (!Files.exists(self)) {
+//			WebUtils.downloadURLToPath(
+//					"https://cdn.discordapp.com/attachments/1121169365883166790/1130395140884791296/Tungsten-dev.jar",
+//					self);
+//		}
 	}
 
 }
