@@ -19,6 +19,7 @@ public class ModuleCompiler {
 
 	//declare the mapped minecraft sources, the unmapped minecraft sources, and the tungsten jar file, the three things needed to call the java compiler and make everything work
 	//waawaa shut up NERD!!!!
+	//if this shit ends up being retarded lmk ill continue to work on the downloader thing
 //    private static File mapped;
 //    private static File unmapped;
 //    private static File self;
