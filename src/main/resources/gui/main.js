@@ -1,6 +1,3 @@
-
-
-
 function instanceHWND(title){
     const newWindow = document.createElement("div");
     newWindow.classList.add("hwnd-window");

@@ -13,7 +13,7 @@ public class ClickGUI extends HtmlScreen {
 	static boolean ctx_setup = false;
 
 	public ClickGUI() {
-		super("file:///tungsten/appdata/gui/index.html");
+		super("file:///tungsten/appdata/gui/clickgui.html");
 	}
 
 	public static ClickGUI create() {

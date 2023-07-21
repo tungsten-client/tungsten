@@ -12,6 +12,12 @@ public class ModuleType {
 		this.y = 0;
 	}
 
+	public ModuleType(String name, int x, int y) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+	}
+
 	public String getName() {
 		return this.name;
 	}
