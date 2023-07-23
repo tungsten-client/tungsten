@@ -28,12 +28,10 @@ public class ModuleInitializer {
 		searchForModules(MODULES_COMPILED);
 
 		// temp code to force load dummy modules
-		ExampleModule exampleModule = new ExampleModule();
-		ModuleRegistry.addModule(exampleModule);
-		ModuleRegistry.addModule(exampleModule);
-		ModuleRegistry.addModule(exampleModule);
-		ModuleRegistry.addModule(exampleModule);
-		ModuleRegistry.addModule(exampleModule);
+		ExampleModule exampleModule1 = new ExampleModule();
+		ModuleRegistry.addModule(exampleModule1);
+		ExampleModule exampleModule2 = new ExampleModule();
+		ModuleRegistry.addModule(exampleModule2);
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 0, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 210, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Movement", 420, 0));
@@ -41,7 +39,8 @@ public class ModuleInitializer {
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Render", 840, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Exploit", 1050, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Misc", 1260, 0));
-		Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + exampleModule.getName());
+		Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + exampleModule1.getName());
+		Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + exampleModule2.getName());
 	}
 
 

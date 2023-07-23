@@ -7,13 +7,13 @@ public class ModuleType {
 	private double y;
 
 	public ModuleType(String name) {
-		this.name = name;
+		this.name = name.toUpperCase();
 		this.x = 0;
 		this.y = 0;
 	}
 
 	public ModuleType(String name, int x, int y) {
-		this.name = name;
+		this.name = name.toUpperCase();
 		this.x = x;
 		this.y = y;
 	}

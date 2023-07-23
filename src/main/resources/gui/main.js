@@ -160,19 +160,19 @@ function setup_checkbox(name, module, element){
   })
 }
 
-function instanceModule(parent_category, module_name){
+function instanceModule(parent_category, module_id){
 
   let module = document.createElement("div");
   module.classList.add("module");
-  module.setAttribute("id", module_name);
+  module.setAttribute("id", module_id);
   let html = `
-  <h3 class="module-title">${module_name}</h3>
-  <p class="module-description">${tungstenBridge.getDescription(module_name)}</p>
+  <h3 class="module-title">${tungstenBridge.getName(module_id)}</h3>
+  <p class="module-description">${tungstenBridge.getDescription(module_id)}</p>
   <div class="body" style="display:none">
     <h4 style="margin-bottom:5px;">Settings</h4>
   </div>
   `
-  if(tungstenBridge.queryEnabled(module_name)){
+  if(tungstenBridge.queryEnabled(module_id)){
     module.classList.add("module-enabled");
   }else{
     if(module.classList.contains("module-enabled")){
@@ -184,7 +184,7 @@ function instanceModule(parent_category, module_name){
 
   document.querySelector(`div[category=${parent_category}]`).querySelector(".hwnd-content").appendChild(module);
 
-  let settings = tungstenBridge.getSettingHTML(module_name);
+  let settings = tungstenBridge.getSettingHTML(module_id);
   for(let setting of settings){
     let div = document.createElement("div");
     div.innerHTML = setting;
@@ -199,21 +199,21 @@ function instanceModule(parent_category, module_name){
     let setting_name = element_descriptor.innerHTML;
     tungstenBridge.print(body.tagName);
     if(body.tagName.toLowerCase()=="button"){
-      setup_button(setting_name, module_name, body);
+      setup_button(setting_name, module_id, body);
     }else if(body.tagName.toLowerCase()=="input"){
       switch(body.getAttribute("type").toLowerCase()){
         case "text":
-          setup_textbox(setting_name, module_name, body);
+          setup_textbox(setting_name, module_id, body);
         break;
 
         case "range":
           element_descriptor.innerHTML = element_descriptor.innerHTML + " [" + body.value + "]"
-          setup_slider(setting_name, module_name, body);
+          setup_slider(setting_name, module_id, body);
         break;
       }
     }else if(body.tagName.toLowerCase()=="label"){
       let checkbox = body.children[0];
-      setup_checkbox(setting_name, module_name, checkbox);
+      setup_checkbox(setting_name, module_id, checkbox);
     }
   }
 

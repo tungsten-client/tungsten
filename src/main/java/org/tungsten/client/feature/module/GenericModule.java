@@ -3,6 +3,7 @@ package org.tungsten.client.feature.module;
 import net.minecraft.client.MinecraftClient;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.config.GenericSetting;
+import org.tungsten.client.feature.registry.ModuleRegistry;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -18,11 +19,14 @@ public abstract class GenericModule {
 	private int keybind;
 	private boolean enabled = false;
 
+	private String id;
+
 
 	public GenericModule(String name, String description, String moduleType) {
 		this.name = name;
 		this.description = description;
-		this.moduleType = moduleType;
+		this.moduleType = moduleType.toUpperCase();
+		this.id = name + "_" + ModuleRegistry.id;
 	}
 
 	public GenericSetting<?> getSettingByName(String name) {
@@ -81,6 +85,8 @@ public abstract class GenericModule {
 	public String getType() {
 		return this.moduleType;
 	}
+
+	public String getID() { return this.id; }
 
 	protected abstract void disable();
 
