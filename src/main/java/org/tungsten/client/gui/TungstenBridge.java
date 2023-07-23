@@ -70,7 +70,7 @@ public class TungstenBridge {
 
 	public void broadcastButtonClick(String name, String module) {
 		GenericModule mod = ModuleRegistry.getByID(module);
-		if (mod != null) {
+		if (mod != null && mod.isEnabled()) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof ButtonSetting bs) {
 				bs.run();
