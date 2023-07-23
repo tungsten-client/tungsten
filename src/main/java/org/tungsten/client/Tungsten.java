@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
 import org.tungsten.client.config.ConfigEntry;
+import org.tungsten.client.gui.ClickGUI;
+import org.tungsten.client.gui.TungstenBridge;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
@@ -45,6 +47,8 @@ public class Tungsten implements ClientModInitializer {
 
 	public static Config config = new Config();
 
+	public static TungstenBridge tungstenBridge;
+
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
@@ -73,6 +77,8 @@ public class Tungsten implements ClientModInitializer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+		tungstenBridge = new TungstenBridge();
 	}
 
 	private void setupUltraliteGUISystem() {

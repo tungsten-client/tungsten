@@ -172,6 +172,14 @@ function instanceModule(parent_category, module_name){
     <h4 style="margin-bottom:5px;">Settings</h4>
   </div>
   `
+  if(tungstenBridge.queryEnabled(module_name)){
+    module.classList.add("module-enabled");
+  }else{
+    if(module.classList.contains("module-enabled")){
+      module.classList.remove("module-enabled");
+    }
+  }
+
   module.innerHTML = html;
 
   document.querySelector(`div[category=${parent_category}]`).querySelector(".hwnd-content").appendChild(module);
