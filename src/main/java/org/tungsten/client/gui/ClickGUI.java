@@ -46,5 +46,4 @@ public class ClickGUI extends HtmlScreen {
 		ctxl.close();
 		Tungsten.LOGGER.info("set up context");
 	}
-
 }

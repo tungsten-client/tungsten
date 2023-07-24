@@ -19,14 +19,14 @@ public abstract class GenericModule {
 	private int keybind;
 	private boolean enabled = false;
 
-	private String id;
+	private int id;
 
 
 	public GenericModule(String name, String description, String moduleType) {
 		this.name = name;
 		this.description = description;
 		this.moduleType = moduleType.toUpperCase();
-		this.id = name + "_" + ModuleRegistry.id;
+		this.id = ModuleRegistry.id;
 	}
 
 	public GenericSetting<?> getSettingByName(String name) {
@@ -86,7 +86,7 @@ public abstract class GenericModule {
 		return this.moduleType;
 	}
 
-	public String getID() { return this.id; }
+	public int getID() { return this.id; }
 
 	protected abstract void disable();
 

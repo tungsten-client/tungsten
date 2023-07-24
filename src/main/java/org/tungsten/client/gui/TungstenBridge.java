@@ -13,12 +13,12 @@ import java.util.List;
 
 public class TungstenBridge {
 
-	public void toggleModule(String moduleName) {
-		ModuleRegistry.getByID(moduleName).toggle();
+	public void toggleModule(int moduleID) {
+		ModuleRegistry.getByID(moduleID).toggle();
 	}
 
-	public boolean queryEnabled(String moduleName) {
-		return ModuleRegistry.getByID(moduleName).isEnabled();
+	public boolean queryEnabled(int moduleID) {
+		return ModuleRegistry.getByID(moduleID).isEnabled();
 	}
 
 	public void setWindowPosition(String windowHandle, double wind_x, double wind_y) {
@@ -38,28 +38,28 @@ public class TungstenBridge {
 		return ModuleTypeManager.getModuleTypes().stream().map(ModuleType::getName).toArray(String[]::new);
 	}
 
-	public String[] getModulesByType(String moduleType) {
-		List<String> modules = new ArrayList<String>();
+	public Integer[] getModulesByType(String moduleType) {
+		List<Integer> modules = new ArrayList<Integer>();
 		for (GenericModule mod : ModuleRegistry.modules) {
 			if (mod.getType().equals(moduleType)) {
 				modules.add(mod.getID());
 			}
 		}
-		return modules.toArray(String[]::new);
+		return modules.toArray(Integer[]::new);
 	}
 
 	public void print(String real) {
 		Tungsten.LOGGER.info(real);
 	}
 
-	public String getName(String module) { return ModuleRegistry.getByID(module).getName(); }
+	public String getName(int moduleID) { return ModuleRegistry.getByID(moduleID).getName(); }
 
-	public String getDescription(String module) {
-		return ModuleRegistry.getByID(module).getDescription();
+	public String getDescription(int moduleID) {
+		return ModuleRegistry.getByID(moduleID).getDescription();
 	}
 
-	public void broadcastTextboxUpdate(String name, String module, String value) {
-		GenericModule mod = ModuleRegistry.getByID(module);
+	public void broadcastTextboxUpdate(String name, int moduleID, String value) {
+		GenericModule mod = ModuleRegistry.getByID(moduleID);
 		if (mod != null) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof TextboxSetting ts) {
@@ -68,8 +68,8 @@ public class TungstenBridge {
 		}
 	}
 
-	public void broadcastButtonClick(String name, String module) {
-		GenericModule mod = ModuleRegistry.getByID(module);
+	public void broadcastButtonClick(String name, int moduleID) {
+		GenericModule mod = ModuleRegistry.getByID(moduleID);
 		if (mod != null && mod.isEnabled()) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof ButtonSetting bs) {
@@ -78,8 +78,8 @@ public class TungstenBridge {
 		}
 	}
 
-	public void broadcastSliderUpdate(String name, String module, String value) {
-		GenericModule mod = ModuleRegistry.getByID(module);
+	public void broadcastSliderUpdate(String name, int moduleID, String value) {
+		GenericModule mod = ModuleRegistry.getByID(moduleID);
 		if (mod != null) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof SliderSetting ss) {
@@ -88,8 +88,8 @@ public class TungstenBridge {
 		}
 	}
 
-	public void broadcastCheckboxUpdate(String name, String module, boolean value) {
-		GenericModule mod = ModuleRegistry.getByID(module);
+	public void broadcastCheckboxUpdate(String name, int moduleID, boolean value) {
+		GenericModule mod = ModuleRegistry.getByID(moduleID);
 		if (mod != null) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof CheckboxSetting cs) {
@@ -99,10 +99,10 @@ public class TungstenBridge {
 	}
 
 
-	public String[] getSettingHTML(String module) {
+	public String[] getSettingHTML(int moduleID) {
 		Tungsten.LOGGER.info("REAL");
-		Tungsten.LOGGER.info(module);
-		GenericModule xz = ModuleRegistry.getByID(module);
+		Tungsten.LOGGER.info(moduleID + "");
+		GenericModule xz = ModuleRegistry.getByID(moduleID);
 		if (xz != null) {
 			Tungsten.LOGGER.info("was not null");
 			String[] real = xz.getSettings().stream().map(GenericSetting::toHTML).toArray(String[]::new);
@@ -118,20 +118,20 @@ public class TungstenBridge {
 	}
 
 
-	public void updateKeybind(String module, int keycode) {
-		Tungsten.LOGGER.info("Updated keybind for " + module + " to " + keycode);
-		ModuleRegistry.getByID(module).updateKeybind(keycode);
+	public void updateKeybind(int moduleID, int keycode) {
+		Tungsten.LOGGER.info("Updated keybind for " + moduleID + " to " + keycode);
+		ModuleRegistry.getByID(moduleID).updateKeybind(keycode);
 	}
 
-	public int getKeybind(String module) {
-		return ModuleRegistry.getByID(module).getKeybind();
+	public int getKeybind(int moduleID) {
+		return ModuleRegistry.getByID(moduleID).getKeybind();
 	}
 
-	public String[] getModulesByKeycode(int keycode) {
+	public Integer[] getModulesByKeycode(int keycode) {
 		return ModuleRegistry.modules.stream()
 				.filter(mkc -> mkc.getKeybind() == keycode)
 				.map(GenericModule::getID)
-				.toArray(String[]::new);
+				.toArray(Integer[]::new);
 	}
 
 	public String[] getFilteredModulesByPartialName(String partialName) {

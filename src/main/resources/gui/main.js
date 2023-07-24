@@ -87,9 +87,9 @@ function contractModuleEvent(module){
 }
 
 function toggleModuleEvent(id){
-  tungstenBridge.toggleModule(id);
+  tungstenBridge.toggleModule(parseInt(id));
   for(let module of document.querySelectorAll(".module")){
-    if(tungstenBridge.queryEnabled(module.getAttribute("id"))){
+    if(tungstenBridge.queryEnabled(parseInt(module.getAttribute("id")))){
       module.classList.add("module-enabled");
     }else{
       if(module.classList.contains("module-enabled")){
@@ -99,49 +99,49 @@ function toggleModuleEvent(id){
   }
 }
 
-function initModule(module){
-  module.onmouseup = function(event) {
-
-    var target = event.target;
-    var isBodyElementClicked = false;
-  
-    while (target !== module) {
-      if (target.classList.contains('body')) {
-        isBodyElementClicked = true;
-        break;
-      }
-      target = target.parentNode;
-    }
-
-    if (isBodyElementClicked) {
-      event.stopPropagation();
-    } else {
-      if (event.button == 2) {
-        if (module.classList.contains("expanded")) {
-          module.classList.remove("expanded");
-          contractModuleEvent(module);
-        } else {
-          module.classList.add("expanded");
-          expandModuleEvent(module);
-        }
-      } else if (event.button == 0) {
-        if (!event.target.classList.contains('child')) {
-          toggleModuleEvent(module.id);
-        }
-      }
-    }
-  };
-}
+// function initModule(module){
+//   module.onmouseup = function(event) {
+//
+//     var target = event.target;
+//     var isBodyElementClicked = false;
+//
+//     while (target !== module) {
+//       if (target.classList.contains('body')) {
+//         isBodyElementClicked = true;
+//         break;
+//       }
+//       target = target.parentNode;
+//     }
+//
+//     if (isBodyElementClicked) {
+//       event.stopPropagation();
+//     } else {
+//       if (event.button == 2) {
+//         if (module.classList.contains("expanded")) {
+//           module.classList.remove("expanded");
+//           contractModuleEvent(module);
+//         } else {
+//           module.classList.add("expanded");
+//           expandModuleEvent(module);
+//         }
+//       } else if (event.button == 0) {
+//         if (!event.target.classList.contains('child')) {
+//           toggleModuleEvent(module.id);
+//         }
+//       }
+//     }
+//   };
+// }
 
 function setup_textbox(name, module, element){
   element.addEventListener('input', (event) => {
-    tungstenBridge.broadcastTextboxUpdate(name, module, event.target.value)
+    tungstenBridge.broadcastTextboxUpdate(name, parseInt(module), event.target.value)
   })
 }
 
 function setup_button(name, module, element){
   element.addEventListener('click', (event) => {
-    tungstenBridge.broadcastButtonClick(name, module)
+    tungstenBridge.broadcastButtonClick(name, parseInt(module))
   })
 }
 
@@ -150,13 +150,13 @@ function setup_slider(name, module, element){
     const elemdesc = event.target.parentNode.querySelector(".element-descriptor") 
     const inner = elemdesc.innerHTML;
     elemdesc.innerHTML = inner.substring(0, inner.indexOf("[")) + "[" + event.target.value + "]"
-    tungstenBridge.broadcastSliderUpdate(name, module, event.target.value)
+    tungstenBridge.broadcastSliderUpdate(name, parseInt(module), event.target.value)
   })
 }
 
 function setup_checkbox(name, module, element){
   element.addEventListener('change', (event) => {
-    tungstenBridge.broadcastCheckboxUpdate(name, module, event.target.checked)
+    tungstenBridge.broadcastCheckboxUpdate(name, parseInt(module), event.target.checked)
   })
 }
 
@@ -166,13 +166,13 @@ function instanceModule(parent_category, module_id){
   module.classList.add("module");
   module.setAttribute("id", module_id);
   let html = `
-  <h3 class="module-title">${tungstenBridge.getName(module_id)}</h3>
-  <p class="module-description">${tungstenBridge.getDescription(module_id)}</p>
+  <h3 class="module-title">${tungstenBridge.getName(parseInt(module_id))}</h3>
+  <p class="module-description">${tungstenBridge.getDescription(parseInt(module_id))}</p>
   <div class="body" style="display:none">
     <h4 style="margin-bottom:5px;">Settings</h4>
   </div>
   `
-  if(tungstenBridge.queryEnabled(module_id)){
+  if(tungstenBridge.queryEnabled(parseInt(module_id))){
     module.classList.add("module-enabled");
   }else{
     if(module.classList.contains("module-enabled")){
@@ -184,7 +184,7 @@ function instanceModule(parent_category, module_id){
 
   document.querySelector(`div[category=${parent_category}]`).querySelector(".hwnd-content").appendChild(module);
 
-  let settings = tungstenBridge.getSettingHTML(module_id);
+  let settings = tungstenBridge.getSettingHTML(parseInt(module_id));
   for(let setting of settings){
     let div = document.createElement("div");
     div.innerHTML = setting;

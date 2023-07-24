@@ -20,13 +20,8 @@ public class ModuleRegistry {
 		return null;
 	}
 
-	public static GenericModule getByID(String id) {
-		for (GenericModule m : modules) {
-			if (m.getID().equals(id)) {
-				return m;
-			}
-		}
-		return null;
+	public static GenericModule getByID(int id) {
+		return modules.get(id);
 	}
 
 	public static GenericModule instanceFromClass(Class<?> clazz) {
