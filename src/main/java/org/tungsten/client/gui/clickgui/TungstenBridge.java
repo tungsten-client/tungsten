@@ -1,4 +1,4 @@
-package org.tungsten.client.gui;
+package org.tungsten.client.gui.clickgui;
 
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;

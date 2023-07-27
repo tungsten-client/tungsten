@@ -5,7 +5,6 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
 import org.tungsten.client.feature.module.ModuleTypeManager;
-import org.tungsten.client.feature.module.modules.misc.ExampleModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.util.ModuleClassLoader;
 import org.tungsten.client.util.Utils;
@@ -27,11 +26,6 @@ public class ModuleInitializer {
 		//todo: compile modules into classes and put them in mod_tmp
 		searchForModules(MODULES_COMPILED);
 
-		// temp code to force load dummy modules
-		ExampleModule exampleModule1 = new ExampleModule();
-		ModuleRegistry.addModule(exampleModule1);
-		ExampleModule exampleModule2 = new ExampleModule();
-		ModuleRegistry.addModule(exampleModule2);
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 0, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 210, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Movement", 420, 0));
@@ -39,8 +33,6 @@ public class ModuleInitializer {
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Render", 840, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Exploit", 1050, 0));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Misc", 1260, 0));
-		Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + exampleModule1.getName());
-		Tungsten.LOGGER.info("[TUNGSTEN] Loaded module " + exampleModule2.getName());
 	}
 
 

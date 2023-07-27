@@ -1,4 +1,4 @@
-package org.tungsten.client.gui;
+package org.tungsten.client.gui.clickgui;
 
 import com.labymedia.ultralight.databind.Databind;
 import com.labymedia.ultralight.databind.DatabindConfiguration;
