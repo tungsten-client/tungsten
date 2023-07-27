@@ -6,6 +6,7 @@ import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
 import org.tungsten.client.Tungsten;
+import org.tungsten.client.gui.clickgui.TungstenBridge;
 
 public class KeybindsMenu extends HtmlScreen {
 
