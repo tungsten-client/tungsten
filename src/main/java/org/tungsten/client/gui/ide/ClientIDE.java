@@ -19,9 +19,9 @@ public class ClientIDE extends HtmlScreen {
 
     static boolean ctx_setup = false;
 
-    public static ClickGUI create() {
+    public static ClientIDE create() {
         ctx_setup = false;
-        return new ClickGUI();
+        return new ClientIDE();
     }
 
 

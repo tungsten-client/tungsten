@@ -1,5 +1,6 @@
 package org.tungsten.client.mixin;
 
+import me.x150.ul.HtmlScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -10,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 import org.tungsten.client.gui.KeybindsMenu;
+import org.tungsten.client.gui.ide.ClientIDE;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
@@ -30,5 +32,10 @@ public class TitleScreenMixin extends Screen {
 			this.client.setScreen(kbm);
 			kbm.reload();
 		}).dimensions(5, 30, 100, 20).build());
+		this.addDrawableChild(ButtonWidget.builder(Text.literal("IDE"), button -> {
+			ClientIDE ide = ClientIDE.create();
+			this.client.setScreen(ide);
+			ide.reload();
+		}).dimensions(5, 55, 100, 20).build());
 	}
 }
