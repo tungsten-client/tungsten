@@ -3,18 +3,18 @@ package org.tungsten.client.util;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class CommandClassLoader extends URLClassLoader {
+public class TungstenClassLoader extends URLClassLoader {
 
-	private static CommandClassLoader INSTANCE;
+	private static TungstenClassLoader INSTANCE;
 
-	public CommandClassLoader(ClassLoader parent) {
+	public TungstenClassLoader(ClassLoader parent) {
 		super(new URL[0], parent);
 	}
 
 
-	public static CommandClassLoader getInstance() {
+	public static TungstenClassLoader getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new CommandClassLoader(CommandClassLoader.class.getClassLoader());
+			INSTANCE = new TungstenClassLoader(TungstenClassLoader.class.getClassLoader());
 		}
 		return INSTANCE;
 	}

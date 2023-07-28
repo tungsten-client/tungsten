@@ -5,7 +5,7 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleTypeManager;
 import org.tungsten.client.feature.registry.ModuleRegistry;
-import org.tungsten.client.util.ModuleClassLoader;
+import org.tungsten.client.util.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
 import java.io.InputStream;
@@ -58,7 +58,7 @@ public class ModuleInitializer {
             if (Utils.checkSignature(classBytes)) {
                 throw new Exception("invalid class file, did not pass class file signature check");
             }
-			Class<?> loadedModule = ModuleClassLoader.getInstance().registerClass(classBytes);
+			Class<?> loadedModule = TungstenClassLoader.getInstance().registerClass(classBytes);
 			if (GenericModule.class.isAssignableFrom(loadedModule)) {
 				Class<GenericModule> loadedModuleClass = (Class<GenericModule>) loadedModule;
 				GenericModule moduleInstance = loadedModuleClass.getDeclaredConstructor().newInstance();

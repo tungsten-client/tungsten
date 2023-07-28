@@ -18,22 +18,6 @@ import java.util.stream.Stream;
 
 public class CommandCompiler {
 
-	//declare the mapped minecraft sources, the unmapped minecraft sources, and the tungsten jar file, the three things needed to call the java compiler and make everything work
-
-	private static final Path mapped;
-	private static final Path unmapped;
-	private static final Path self;
-
-	static {
-		mapped = Tungsten.LIBS.resolve("minecraft-mapped.jar");
-		unmapped = Tungsten.LIBS.resolve("minecraft-unmapped.jar");
-		try {
-			self = Path.of(CommandCompiler.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-		} catch (URISyntaxException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static void compileModules() {
 		searchAndCompileCommands(Tungsten.RUNDIR.resolve("commands"));
 	}
@@ -57,12 +41,13 @@ public class CommandCompiler {
 
 	private static void compileCommand(Path command) throws IOException {
 		Tungsten.LOGGER.info("compileCommand called on " + command.toAbsolutePath());
+		LibraryDownloader.ensurePresent();
 
 		String fileName = command.getFileName().toString();
 		Path output = ModuleInitializer.MODULES_COMPILED.resolve(
 				fileName.substring(0, fileName.length() - ".java".length()) + ".class");
 
-		String libraries = mapped.toAbsolutePath() + File.pathSeparator + unmapped.toAbsolutePath() + File.pathSeparator + self.toAbsolutePath(); // couldnt remove a couple comments saturn?
+		String libraries = LibraryDownloader.generateClasspath();
 
 		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(command, List.of("-cp", libraries));
 		if (compile.compiledSuccessfully()) {

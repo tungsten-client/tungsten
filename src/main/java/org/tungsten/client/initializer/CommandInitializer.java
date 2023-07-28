@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.command.GenericCommand;
 import org.tungsten.client.feature.registry.CommandRegistry;
-import org.tungsten.client.util.ModuleClassLoader;
+import org.tungsten.client.util.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
 import java.io.InputStream;
@@ -52,7 +52,7 @@ public class CommandInitializer {
             if (Utils.checkSignature(classBytes)) {
                 throw new IllegalStateException("invalid class file, did not pass class file signature check");
             }
-			Class<?> loadedCommand = ModuleClassLoader.getInstance().registerClass(classBytes);
+			Class<?> loadedCommand = TungstenClassLoader.getInstance().registerClass(classBytes);
 			if (GenericCommand.class.isAssignableFrom(loadedCommand)) {
 				Class<GenericCommand> loadedCommandClass = (Class<GenericCommand>) loadedCommand;
 				GenericCommand commandInstance = loadedCommandClass.getDeclaredConstructor().newInstance();

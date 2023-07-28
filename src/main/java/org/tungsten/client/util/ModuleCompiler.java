@@ -17,17 +17,6 @@ import java.util.stream.Stream;
 
 public class ModuleCompiler {
 
-	//declare the mapped minecraft sources, the unmapped minecraft sources, and the tungsten jar file, the three things needed to call the java compiler and make everything work
-	private static final Path mapped;
-	private static final Path unmapped;
-	private static final Path self;
-
-	static {
-		mapped = Tungsten.LIBS.resolve("minecraft-mapped.jar");
-		unmapped = Tungsten.LIBS.resolve("minecraft-unmapped.jar");
-		self = Tungsten.LIBS.resolve("Tungsten-dev.jar");
-	}
-
 	public static void compileModules() {
 		searchAndCompileModules(Tungsten.RUNDIR.resolve("modules"));
 	}
@@ -50,6 +39,7 @@ public class ModuleCompiler {
 
 	private static void compileModule(Path module) throws IOException {
 		Tungsten.LOGGER.info("compileModule called on " + module.getFileName().toString());
+		LibraryDownloader.ensurePresent();
 
 		String fileName = module.getFileName().toString();
 		Path output = ModuleInitializer.MODULES_COMPILED.resolve(
@@ -58,8 +48,9 @@ public class ModuleCompiler {
 
 		//ty crosby you saved me from writing a method to download the libs required
 		//nevermind saturn retardo brain
+		//why is this MY fault joe? you didn't even test your code!
 
-		String libraries = mapped.toAbsolutePath() + File.pathSeparator + unmapped.toAbsolutePath() + File.pathSeparator + self.toAbsolutePath();
+		String libraries = LibraryDownloader.generateClasspath();
 
 		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(module, List.of("-cp", libraries));
 		if (compile.compiledSuccessfully()) {
@@ -78,22 +69,5 @@ public class ModuleCompiler {
 	}
 
 
-	public static void setupCompilerEnvironment() throws IOException {
-        if (!Files.exists(mapped)) {
-            WebUtils.downloadURLToPath(
-                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar",
-                    mapped);
-        }
-        if (!Files.exists(unmapped)) {
-            WebUtils.downloadURLToPath(
-                    "https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar",
-                    unmapped);
-        }
-		if (!Files.exists(self)) {
-			WebUtils.downloadURLToPath(
-					"https://cdn.discordapp.com/attachments/1121169365883166790/1130395140884791296/Tungsten-dev.jar",
-					self);
-		}
-	}
 
 }

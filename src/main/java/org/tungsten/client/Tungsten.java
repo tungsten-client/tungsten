@@ -59,11 +59,6 @@ public class Tungsten implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		try {
-			ModuleCompiler.setupCompilerEnvironment();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
 
