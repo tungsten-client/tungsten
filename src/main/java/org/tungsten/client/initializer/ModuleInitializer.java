@@ -22,7 +22,6 @@ public class ModuleInitializer {
 		Utils.ensureDirectoryIsCreated(MODULES);
 		Utils.ensureDirectoryIsCreated(MODULES_COMPILED);
 		ModuleRegistry.modules.clear();
-		//todo: compile modules into classes and put them in mod_tmp
 		searchForModules(MODULES_COMPILED);
 	}
 
