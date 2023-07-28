@@ -18,6 +18,7 @@
     "KeyboardMixin",
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
+    "ScreenMixin",
     "SimpleOptionMixin",
     "TitleScreenMixin"
   ],
