@@ -34,7 +34,7 @@ public class ClassFileCompiler {
 		}
 		try (Stream<Path> p = Files.walk(tempDirectory)) {
 			List<Path> list = p.filter(Files::isRegularFile).toList();
-			if (list.size() != 1) {
+			if (list.size() > 1) {
 				// I intentionally did not delete the temp directory here because one might want to look into it when this happens
 				throw new IllegalStateException(
 						"Compiler generated " + list.size() + " source files instead of one. See output directory @ " + tempDirectory.toAbsolutePath());

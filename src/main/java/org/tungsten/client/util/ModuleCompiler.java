@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class ModuleCompiler {
 
 	public static void compileModules() {
+		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("modules"));
 		searchAndCompileModules(Tungsten.RUNDIR.resolve("modules"));
 	}
 
