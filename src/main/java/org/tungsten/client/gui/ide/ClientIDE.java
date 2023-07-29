@@ -8,8 +8,9 @@ import me.x150.ul.HtmlScreen;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 
 public class ClientIDE extends HtmlScreen {
+
     public ClientIDE() {
-        super("file:///tungsten/appdata/gui/ide.html"); //placeholder, please implement when actual
+        super("file:///tungsten/appdata/ide/index.html"); //placeholder, please implement when actual
     }
 
     @Override
@@ -24,6 +25,14 @@ public class ClientIDE extends HtmlScreen {
         return new ClientIDE();
     }
 
+    @Override
+    public void reload() {
+        super.reload();
+        if (!ctx_setup) {
+            this.setupContext();
+            ctx_setup = true;
+        }
+    }
 
 
     public void setupContext() {
@@ -32,7 +41,7 @@ public class ClientIDE extends HtmlScreen {
         JavascriptContext ctx = ctxl.getContext();
         ctx.getGlobalContext()
                 .getGlobalObject()
-                .setProperty("bindings", db.getConversionUtils().toJavascript(ctx, new EditorBridge()), 0);
+                .setProperty("binders", db.getConversionUtils().toJavascript(ctx, new EditorBridge()), 0);
         ctxl.unlock();
         ctxl.close();
     }
