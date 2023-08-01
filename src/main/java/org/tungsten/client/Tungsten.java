@@ -15,10 +15,7 @@ import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
 import org.tungsten.client.util.WebUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
@@ -56,6 +53,11 @@ public class Tungsten implements ClientModInitializer {
 	}
 
 	public static void onShutdownClient() {
+		try {
+			Thread.sleep(1000 * 10); //sleep for 10 seconds to ensure the locks are released before cleaning up files.
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 		Utils.rmDirectoryTree(ULTRALIGHT); //cleanup ultralight files
 	}
 
