@@ -99,6 +99,10 @@ h1,h2,h3,h4,h5{
   background:#008000 !important;
 }
 
+.highlight {
+  border:2px solid #FF6600;
+}
+
 
 .module {
   background: #5A5A5A;
