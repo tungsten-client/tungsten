@@ -23,7 +23,7 @@ public class ModuleInitializer {
 		Utils.ensureDirectoryIsCreated(MODULES);
 		Utils.ensureDirectoryIsCreated(MODULES_COMPILED);
 		ModuleRegistry.modules.clear();
-		//todo: compile modules into classes and put them in mod_tmp
+		ModuleTypeManager.getModuleTypes().clear();
 		searchForModules(MODULES_COMPILED);
 
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 0, 0));

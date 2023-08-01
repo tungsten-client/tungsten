@@ -174,10 +174,6 @@ function instanceModule(parent_category, module_id){
   `
   if(tungstenBridge.queryEnabled(parseInt(module_id))){
     module.classList.add("module-enabled");
-  }else{
-    if(module.classList.contains("module-enabled")){
-      module.classList.remove("module-enabled");
-    }
   }
 
   module.innerHTML = html;

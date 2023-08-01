@@ -9,7 +9,7 @@ public class ModuleTypeManager {
 
 
 	public static void subscribeModuleType(String moduleType) {
-		if (!moduleTypes.stream().map(ModuleType::getName).toList().contains(moduleType)) {
+		if (!moduleTypes.stream().map(mt -> {return mt.getName().toUpperCase();}).toList().contains(moduleType.toUpperCase())) {
 			moduleTypes.add(new ModuleType(moduleType));
 		}
 	}
@@ -27,7 +27,7 @@ public class ModuleTypeManager {
 	}
 
 	public static ModuleType getByName(String name) {
-		return moduleTypes.stream().filter(moduleType -> moduleType.getName().equals(name)).findFirst().orElseThrow();
+		return moduleTypes.stream().filter(moduleType -> moduleType.getName().equals(name.toUpperCase())).findFirst().orElseThrow();
 	}
 
 	public static List<ModuleType> getModuleTypes() {
