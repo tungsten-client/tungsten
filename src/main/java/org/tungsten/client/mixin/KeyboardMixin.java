@@ -13,7 +13,6 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.KeyboardEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
-import org.tungsten.client.gui.ClickGUI;
 
 
 @Mixin(Keyboard.class)
