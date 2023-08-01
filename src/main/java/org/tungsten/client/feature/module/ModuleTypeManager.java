@@ -9,7 +9,7 @@ public class ModuleTypeManager {
 
 
 	public static void subscribeModuleType(String moduleType) {
-		if (!moduleTypes.stream().map(mt -> {return mt.getName().toUpperCase();}).toList().contains(moduleType.toUpperCase())) {
+		if (!moduleTypes.stream().map(mt -> mt.getName().toUpperCase()).toList().contains(moduleType.toUpperCase())) {
 			moduleTypes.add(new ModuleType(moduleType));
 		}
 	}
