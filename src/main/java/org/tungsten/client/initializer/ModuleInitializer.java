@@ -27,10 +27,10 @@ public class ModuleInitializer {
 		ModuleTypeManager.getModuleTypes().clear();
 		searchForModules(MODULES_COMPILED);
 
-		ExampleModule exampleModule1 = new ExampleModule();
-		ModuleRegistry.addModule(exampleModule1);
-		ExampleModule exampleModule2 = new ExampleModule();
-		ModuleRegistry.addModule(exampleModule2);
+//		ExampleModule exampleModule1 = new ExampleModule();
+//		ModuleRegistry.addModule(exampleModule1);
+//		ExampleModule exampleModule2 = new ExampleModule();
+//		ModuleRegistry.addModule(exampleModule2);
 
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 5, 50));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 215, 50));
