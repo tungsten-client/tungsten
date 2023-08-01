@@ -13,6 +13,7 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.KeyboardEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
+import org.tungsten.client.gui.ClickGUI;
 
 
 @Mixin(Keyboard.class)
@@ -27,9 +28,11 @@ public class KeyboardMixin {
 		Tungsten.eventManager.send(ke);
 		if (action == GLFW.GLFW_PRESS && key != -1) { // key = -1 means invalid key mapping, aka a special key like a volume wheel
 			if (client.player != null) {
-				for (GenericModule m : ModuleRegistry.modules) {
-					if (m.getKeybind() == key) {
-						m.toggle();
+				if(client.currentScreen == null){
+					for (GenericModule m : ModuleRegistry.modules) {
+						if (m.getKeybind() == key) {
+							m.toggle();
+						}
 					}
 				}
 			}
