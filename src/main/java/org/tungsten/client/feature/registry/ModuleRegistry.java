@@ -9,6 +9,8 @@ public class ModuleRegistry {
 
 	public static List<GenericModule> modules = new ArrayList<>();
 
+	public static int id = 0;
+
 	public static GenericModule getByName(String name) {
 		for (GenericModule m : modules) {
 			if (m.getName().equals(name)) {
@@ -16,6 +18,10 @@ public class ModuleRegistry {
 			}
 		}
 		return null;
+	}
+
+	public static GenericModule getByID(int id) {
+		return modules.get(id);
 	}
 
 	public static GenericModule instanceFromClass(Class<?> clazz) {
@@ -29,6 +35,7 @@ public class ModuleRegistry {
 
 	public static void addModule(GenericModule module) {
 		modules.add(module);
+		id += 1;
 	}
 
 

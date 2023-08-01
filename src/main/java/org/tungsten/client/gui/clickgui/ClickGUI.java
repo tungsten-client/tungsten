@@ -13,7 +13,7 @@ public class ClickGUI extends HtmlScreen {
 	static boolean ctx_setup = false;
 
 	public ClickGUI() {
-		super("file:///tungsten/appdata/gui/index.html");
+		super("file:///tungsten/appdata/gui/clickgui.html");
 	}
 
 	public static ClickGUI create() {
@@ -41,10 +41,9 @@ public class ClickGUI extends HtmlScreen {
 		JavascriptContext ctx = ctxl.getContext();
 		ctx.getGlobalContext()
 				.getGlobalObject()
-				.setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, new TungstenBridge()), 0);
+				.setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, Tungsten.tungstenBridge), 0);
 		ctxl.unlock();
 		ctxl.close();
 		Tungsten.LOGGER.info("set up context");
 	}
-
 }

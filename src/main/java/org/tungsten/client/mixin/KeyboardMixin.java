@@ -13,6 +13,7 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.KeyboardEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
+import org.tungsten.client.gui.clickgui.ClickGUI;
 
 
 @Mixin(Keyboard.class)
@@ -33,6 +34,12 @@ public class KeyboardMixin {
 					}
 				}
 			}
+		}
+
+		if (action == GLFW.GLFW_PRESS && key == GLFW.GLFW_KEY_RIGHT_SHIFT) {
+			ClickGUI clickGUI = ClickGUI.create();
+			client.setScreen(clickGUI);
+			clickGUI.reload();
 		}
 	}
 }

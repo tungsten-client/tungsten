@@ -41,7 +41,7 @@ public class KeybindsMenu extends HtmlScreen {
 		JavascriptContext ctx = ctxl.getContext();
 		ctx.getGlobalContext()
 				.getGlobalObject()
-				.setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, new TungstenBridge()), 0);
+				.setProperty("tungstenBridge", db.getConversionUtils().toJavascript(ctx, Tungsten.tungstenBridge), 0);
 		ctxl.unlock();
 		ctxl.close();
 		Tungsten.LOGGER.info("set up context");
