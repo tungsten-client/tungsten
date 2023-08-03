@@ -19,7 +19,9 @@
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
     "SimpleOptionMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ChatInputSuggestorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
