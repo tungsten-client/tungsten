@@ -7,15 +7,16 @@ import me.x150.impl.SubscriberUnregisterEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A message manager
  */
 public class MessageManager {
-    protected final List<Handler> handlers = new CopyOnWriteArrayList<>();
+    protected final Map<Class<?>, List<Handler>> eventMap = new ConcurrentHashMap<>();
 
     /**
      * Registers a new handler. Will sort all handlers based on priority, and emit an {@link SubscriberRegisterEvent}
@@ -23,24 +24,38 @@ public class MessageManager {
      * @param handler The handler to register
      */
     protected void register(Handler handler) {
-        this.handlers.add(handler);
-        sortHandlers();
+        List<Handler> handlers = eventMap.computeIfAbsent(handler.subscriptionType, c -> new CopyOnWriteArrayList<>());
+
+        if (handlers.contains(handler)) {
+            throw new SubscriberAlreadyRegisteredException(String.format("Handler %s.%s%s is already registered",
+                    handler.getClass().getName(),
+                    handler.callee.getName(),
+                    Util.signatureOf(handler.callee)));
+        }
+
+        handlers.add(searchIndex(handlers, handler), handler);
         send(new SubscriberRegisterEvent(handler));
     }
 
-    private void sortHandlers() {
-        this.handlers.sort(Comparator.comparingInt(Handler::priority));
-    }
+    private int searchIndex(List<Handler> handlers, Handler handler) {
+        // Binary search algorithm
+        int low = 0;
+        int high = handlers.size() - 1;
 
-    /**
-     * Gets all subscribers listening for {@code subscriptionType}
-     *
-     * @param subscriptionType The message type to search for
-     *
-     * @return The list of handlers listening for {@code subscriptionType}
-     */
-    protected List<Handler> getSubscribersByType(Class<?> subscriptionType) {
-        return handlers.stream().filter(handler -> handler.subscriptionType.isAssignableFrom(subscriptionType)).toList();
+        while (low < high) {
+            int mid = (low + high) >>> 1;
+            int priority = handlers.get(mid).priority;
+
+            if (priority > handler.priority) {
+                low = mid + 1;
+            } else if (priority < handler.priority) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+
+        return low;
     }
 
     /**
@@ -51,7 +66,9 @@ public class MessageManager {
     public void send(Object o) {
         try {
             Class<?> aClass = o.getClass();
-            for (Handler handler : getSubscribersByType(aClass)) {
+            List<Handler> handlers = eventMap.get(aClass);
+            if (handlers == null) return;
+            for (Handler handler : handlers) {
                 handler.invoke(o);
             }
         } catch (Exception e) {
@@ -76,7 +93,7 @@ public class MessageManager {
      * @param i The class owning the handlers which to remove
      */
     public void unregister(Class<?> i) {
-        this.handlers.removeIf(handler -> handler.ownerClass.equals(i));
+        this.eventMap.values().forEach(list -> list.removeIf(handler -> handler.ownerClass == i));
         send(new SubscriberUnregisterEvent(i));
     }
 
@@ -91,8 +108,8 @@ public class MessageManager {
         Class<?> aClass = instance.getClass();
         Method[] declaredMethods = aClass.getDeclaredMethods();
         for (Method declaredMethod : declaredMethods) {
-            MessageSubscription annotationFrom = Util.getAnnotationFrom(declaredMethod, MessageSubscription.class);
-            if (annotationFrom == null) {
+            MessageSubscription annotation = declaredMethod.getAnnotation(MessageSubscription.class);
+            if (annotation == null) {
                 continue;
             }
             Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
@@ -104,13 +121,7 @@ public class MessageManager {
                     parameterTypes.length));
             }
             Class<?> listenerType = parameterTypes[0];
-            Handler handler = new Handler(instance, aClass, declaredMethod, listenerType, annotationFrom.priority());
-            if (this.handlers.contains(handler)) {
-                throw new SubscriberAlreadyRegisteredException(String.format("Handler %s.%s%s is already registered",
-                    aClass.getName(),
-                    declaredMethod.getName(),
-                    Util.signatureOf(declaredMethod)));
-            }
+            Handler handler = new Handler(instance, aClass, declaredMethod, listenerType, annotation.priority());
             register(handler);
         }
     }
