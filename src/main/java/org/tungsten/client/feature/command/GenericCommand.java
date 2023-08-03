@@ -2,78 +2,63 @@ package org.tungsten.client.feature.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
-import org.tungsten.client.Tungsten;
-import org.tungsten.client.feature.registry.CommandRegistry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class GenericCommand {
+    private final String name;
+    private final String description;
+    private final List<String> aliases = new ArrayList<>();
 
-	protected static final MinecraftClient client = Tungsten.client;
+    public GenericCommand(String name, String description, String... aliases) {
+        this.name = name;
+        this.description = description;
+        Collections.addAll(this.aliases, aliases);
+    }
 
+    protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
+        return RequiredArgumentBuilder.argument(name, type);
+    }
 
-	private final String name;
-	private final List<ArgumentEntry> arguments;
-	protected LiteralArgumentBuilder<CommandSource> builder;
+    protected static LiteralArgumentBuilder<CommandSource> literal(final String name) {
+        return LiteralArgumentBuilder.literal(name);
+    }
 
-	public LiteralArgumentBuilder<CommandSource> getBuilder(){
-		return this.builder;
-	}
+    public final void registerTo(CommandDispatcher<CommandSource> dispatcher) {
+        register(dispatcher, name);
+        for (String alias : aliases) register(dispatcher, alias);
+    }
 
-	public GenericCommand(String name, List<ArgumentEntry> arguments) {
-		this.name = name;
-		this.arguments = arguments;
+    public void register(CommandDispatcher<CommandSource> dispatcher, String name) {
+        LiteralArgumentBuilder<CommandSource> builder = LiteralArgumentBuilder.literal(name);
+        build(builder);
+        dispatcher.register(builder);
+    }
 
-		//todo: rewrite ENTIRELY. this shit is straight ass. i also had and still have no idea how specific parts make it work/if they are even needed to work lol. saturn you could prolly do this.
-		//also this is super inconsistent with the this.name & name (param).
-		//dont bully me for this shit i js got back into modding when i wrote this :waa:
+    public abstract void build(LiteralArgumentBuilder<CommandSource> builder);
 
-		LiteralArgumentBuilder<CommandSource> command = LiteralArgumentBuilder.literal(this.name);
-		builder = command;
-		if(arguments != null) {
-			if(arguments.size()==1){
-				ArgumentEntry entry = arguments.get(0);
+    public String getName() {
+        return name;
+    }
 
-				command.then(RequiredArgumentBuilder.argument(entry.name(), entry.type()).executes(context -> 1));
-			} else if (!arguments.isEmpty()) {
-				ArgumentBuilder ab = null;
-				ArgumentBuilder previous = ab;
-				for (int i = arguments.size() - 1; i >= 0; i--) {
-					ArgumentEntry entry = arguments.get(i);
-					ArgumentBuilder new_arg = RequiredArgumentBuilder.argument(entry.name(), entry.type()).executes(context -> 1);
-					if (previous != null)
-						new_arg = new_arg.then(previous);
-					previous = new_arg;
-					ab = new_arg;
-				}
-				command.then(ab);
-			}
-		}
-		command.executes(context -> 1);
-		CommandRegistry.DISPATCHER.register(command);
-		Tungsten.LOGGER.info("constructor registered " + this.name);
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getName() {
-		return this.name;
-	}
-	public List<ArgumentEntry> getTypes(){
-		return this.arguments;
-	}
+    public List<String> getAliases() {
+        return aliases;
+    }
 
-	protected void registerWithBuilder(LiteralArgumentBuilder<CommandSource> builder){
-		builder.executes(c -> 1);
-		boolean removed = CommandRegistry.DISPATCHER.getRoot().getChildren().removeIf(node -> node.getName().equals(builder.getLiteral()));
-		Tungsten.LOGGER.info("removed matching node from root?: " + removed);
-		CommandRegistry.DISPATCHER.register(builder);
-	}
-	public void onRegistered(LiteralArgumentBuilder<CommandSource> builder) {}
-	public abstract void execute(String[] args);
+    public String toString(String... args) {
+        StringBuilder base = new StringBuilder(toString());
+        for (String arg : args)
+            base.append(' ').append(arg);
 
+        return base.toString();
+    }
 }

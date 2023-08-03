@@ -12,6 +12,8 @@
     "PlayerPositionLookPacketAccessor"
   ],
   "client": [
+    "ChatInputSuggestorMixin",
+    "ChatScreenMixin",
     "ClientPlayerEntityAccessor",
     "ClientPlayerEntityMixin",
     "ClientWorldMixin",
@@ -19,9 +21,7 @@
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
     "SimpleOptionMixin",
-    "TitleScreenMixin",
-    "ClientPlayNetworkHandlerMixin",
-    "ChatInputSuggestorMixin"
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

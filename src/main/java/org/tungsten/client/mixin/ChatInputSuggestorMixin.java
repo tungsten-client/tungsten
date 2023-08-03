@@ -1,5 +1,6 @@
 package org.tungsten.client.mixin;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -36,24 +37,23 @@ public abstract class ChatInputSuggestorMixin {
     public void onRefresh(CallbackInfo ci, String string, StringReader reader) {
         String prefix = Tungsten.config.getConfig().Prefix.getValue();
         int length = prefix.length();
-
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
             reader.setCursor(reader.getCursor() + length);
-
+            assert Tungsten.client.player != null;
+            CommandDispatcher<CommandSource> commandDispatcher = CommandRegistry.DISPATCHER;
             if (this.parse == null) {
-                this.parse = CommandRegistry.DISPATCHER.parse(reader, CommandRegistry.COMMAND_SOURCE);
+                this.parse = commandDispatcher.parse(reader, CommandRegistry.COMMAND_SOURCE);
             }
 
             int cursor = textField.getCursor();
             if (cursor >= 1 && (this.window == null || !this.completingSuggestions)) {
-                this.pendingSuggestions = CommandRegistry.DISPATCHER.getCompletionSuggestions(this.parse, cursor);
+                this.pendingSuggestions = commandDispatcher.getCompletionSuggestions(this.parse, cursor);
                 this.pendingSuggestions.thenRun(() -> {
                     if (this.pendingSuggestions.isDone()) {
                         this.showCommandSuggestions();
                     }
                 });
             }
-
             ci.cancel();
         }
     }

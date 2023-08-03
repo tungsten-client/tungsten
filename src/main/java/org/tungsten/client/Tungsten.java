@@ -6,12 +6,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import org.apache.commons.compress.harmony.unpack200.bytecode.ExceptionsAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
-import org.tungsten.client.feature.command.temp.ExampleCommand;
-import org.tungsten.client.feature.registry.CommandRegistry;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
@@ -71,7 +68,7 @@ public class Tungsten implements ClientModInitializer {
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
 
-		CommandCompiler.compileModules();
+		CommandCompiler.compileCommands();
 		CommandInitializer.initCommands();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
