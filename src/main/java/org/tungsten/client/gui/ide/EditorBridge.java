@@ -4,6 +4,7 @@ import org.tungsten.client.Tungsten;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class EditorBridge {
 
@@ -15,9 +16,26 @@ public class EditorBridge {
      * @param path The path to list files from, should look like "modules" or "modules/abc123"
      * @return a list of file names located in that directory, if the directory does not exist or the given path is not a directory, returns null
      */
-    public String[] listDir(String path){
-        File dir = root.resolve(path).toFile();
-        return dir.list();
+    public String listDir(String path){
+        Path dir = Paths.get(Tungsten.RUNDIR.toString(), path);
+        File dirFile = dir.toFile();
+        String[] fileList = dirFile.list();
+
+        StringBuilder jsonBuilder = new StringBuilder("[");
+        for (int i = 0; i < fileList.length; i++) {
+            String file = fileList[i];
+            Path filePath = dir.resolve(file);
+            boolean isDirectory = filePath.toFile().isDirectory();
+
+            jsonBuilder.append("{\"name\":\"").append(file).append("\",\"type\":\"").append(isDirectory ? "folder" : "file").append("\"}");
+
+            if (i < fileList.length - 1) {
+                jsonBuilder.append(",");
+            }
+        }
+        jsonBuilder.append("]");
+
+        return jsonBuilder.toString();
     }
 
     /**
@@ -26,7 +44,8 @@ public class EditorBridge {
      * @return the content of the file as a plain string
      */
     public String readFile(String path) {
-        File target = root.resolve(path).toFile();
+        Path dir = Paths.get(Tungsten.RUNDIR.toString(), path);
+        File target = dir.toFile();
         try {
             StringBuilder result = new StringBuilder();
             BufferedReader reader = new BufferedReader(new FileReader(target.getAbsolutePath()));
@@ -35,6 +54,7 @@ public class EditorBridge {
             }
             return result.toString();
         } catch (IOException e) {
+            Tungsten.LOGGER.error(e.toString());
             return null;
         }
     }
@@ -46,13 +66,20 @@ public class EditorBridge {
      * @param content the content as a string to write to that file
      */
     public void writeFile(String path, String content){
-        File target = root.resolve(path).toFile();
+
+        Path dir = Paths.get(Tungsten.RUNDIR.toString(), path);
+        File target = dir.toFile();
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(target.getAbsolutePath()));
             writer.write(content);
+            writer.close(); //close the fucking thing
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void log(String message) {
+        Tungsten.LOGGER.info(message);
     }
 
 

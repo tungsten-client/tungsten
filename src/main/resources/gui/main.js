@@ -34,7 +34,6 @@ function sleep(ms) {
 }
 
 document.addEventListener('contextmenu', function(event) {event.preventDefault()})
-
 function finishSetupWindow(element, title) {
     let pos1 = 0,
         pos2 = 0,
