@@ -5,6 +5,8 @@ import com.labymedia.ultralight.databind.DatabindConfiguration;
 import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
+import net.minecraft.client.MinecraftClient;
+import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
 public class ClickGUI extends HtmlScreen {
@@ -33,6 +35,14 @@ public class ClickGUI extends HtmlScreen {
 			this.setupContext();
 			ctx_setup = true;
 		}
+	}
+
+	public static @NotNull ClickGUI setScreen(@NotNull MinecraftClient client) {
+		ClickGUI gui = ClickGUI.create();
+		client.setScreen(gui);
+		gui.reload();
+
+		return gui;
 	}
 
 	public void setupContext() {

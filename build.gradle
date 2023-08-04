@@ -44,6 +44,9 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    modImplementation(include(fabricApi.module("fabric-key-binding-api-v1", "0.86.1+1.20.1")))
+    modImplementation(include(fabricApi.module("fabric-lifecycle-events-v1", "0.86.1+1.20.1")))
 }
 
 tasks.register('generateDevJar', Jar) {

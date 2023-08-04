@@ -23,9 +23,8 @@ public class TitleScreenMixin extends Screen {
 	@Inject(method = "init", at = @At("TAIL"))
 	void onInit(CallbackInfo ci) {
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("GUI"), button -> {
-			ClickGUI gui = ClickGUI.create();
-			this.client.setScreen(gui);
-			gui.reload();
+			assert this.client != null;
+			ClickGUI.setScreen(this.client);
 		}).dimensions(5, 5, 100, 20).build());
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("KEYBINDS"), button -> {
 			KeybindsMenu kbm = KeybindsMenu.create();

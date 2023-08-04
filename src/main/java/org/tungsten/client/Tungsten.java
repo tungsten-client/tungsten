@@ -13,6 +13,7 @@ import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
+import org.tungsten.client.util.VanillaKeybindManager;
 import org.tungsten.client.util.WebUtils;
 
 import java.io.*;
@@ -65,6 +66,9 @@ public class Tungsten implements ClientModInitializer {
 	public void onInitializeClient() {
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
+
+		VanillaKeybindManager.init();
+		VanillaKeybindManager.createBinds();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
 		try {
