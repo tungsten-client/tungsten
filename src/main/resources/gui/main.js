@@ -35,6 +35,7 @@ function sleep(ms) {
 
 document.addEventListener('contextmenu', function(event) {event.preventDefault()})
 
+
 document.addEventListener("DOMContentLoaded", function() {
   const searchBar = document.getElementById("search-bar");
 
