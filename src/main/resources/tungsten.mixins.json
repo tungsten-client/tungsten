@@ -12,6 +12,8 @@
     "PlayerPositionLookPacketAccessor"
   ],
   "client": [
+    "ChatInputSuggestorMixin",
+    "ChatScreenMixin",
     "ClientPlayerEntityAccessor",
     "ClientPlayerEntityMixin",
     "ClientWorldMixin",

@@ -34,6 +34,28 @@ function sleep(ms) {
 }
 
 document.addEventListener('contextmenu', function(event) {event.preventDefault()})
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const searchBar = document.getElementById("search-bar");
+
+  function highlight() {
+    const searchQuery = searchBar.value.toLowerCase();
+    tungstenBridge.print("SEARCH BAR: " + searchQuery);
+
+    for(let module of document.querySelectorAll(".module")){
+      if(tungstenBridge.getName(parseInt(module.getAttribute("id"))).toLowerCase().startsWith(searchQuery) && searchQuery.trim().length > 0) {
+        module.classList.add("highlight");
+        tungstenBridge.print("found search module!");
+      } else {
+        module.classList.remove("highlight");
+      }
+    }
+  }
+
+  searchBar.addEventListener("input", highlight);
+});
+
 function finishSetupWindow(element, title) {
     let pos1 = 0,
         pos2 = 0,
@@ -97,40 +119,6 @@ function toggleModuleEvent(id){
     }
   }
 }
-
-// function initModule(module){
-//   module.onmouseup = function(event) {
-//
-//     var target = event.target;
-//     var isBodyElementClicked = false;
-//
-//     while (target !== module) {
-//       if (target.classList.contains('body')) {
-//         isBodyElementClicked = true;
-//         break;
-//       }
-//       target = target.parentNode;
-//     }
-//
-//     if (isBodyElementClicked) {
-//       event.stopPropagation();
-//     } else {
-//       if (event.button == 2) {
-//         if (module.classList.contains("expanded")) {
-//           module.classList.remove("expanded");
-//           contractModuleEvent(module);
-//         } else {
-//           module.classList.add("expanded");
-//           expandModuleEvent(module);
-//         }
-//       } else if (event.button == 0) {
-//         if (!event.target.classList.contains('child')) {
-//           toggleModuleEvent(module.id);
-//         }
-//       }
-//     }
-//   };
-// }
 
 function setup_textbox(name, module, element){
   element.addEventListener('input', (event) => {

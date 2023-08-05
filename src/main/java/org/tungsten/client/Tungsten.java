@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
+import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
+import org.tungsten.client.util.CommandCompiler;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
 import org.tungsten.client.util.WebUtils;
@@ -65,6 +67,9 @@ public class Tungsten implements ClientModInitializer {
 	public void onInitializeClient() {
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
+
+		CommandCompiler.compileCommands();
+		CommandInitializer.initCommands();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
 		try {
