@@ -19,7 +19,7 @@ public class ModuleType {
 	}
 
 	public String getName() {
-		return this.name;
+		return this.name.toUpperCase();
 	}
 
 	public double[] getPos() {

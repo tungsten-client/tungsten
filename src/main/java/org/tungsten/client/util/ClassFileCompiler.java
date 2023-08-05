@@ -29,7 +29,6 @@ public class ClassFileCompiler {
 		boolean aBoolean = systemJavaCompiler.getTask(sw, standardFileManager, jfs, compilerArgs, null,
 				javaFileObjectsFromPaths).call();
 		if (!aBoolean) {
-			Utils.rmDirectoryTree(input);
 			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), false, null);
 		}
 		try (Stream<Path> p = Files.walk(tempDirectory)) {
@@ -41,7 +40,6 @@ public class ClassFileCompiler {
 			}
 			Path path = list.get(0);
 			byte[] ba = Files.readAllBytes(path);
-			Utils.rmDirectoryTree(input);
 			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), true, ba);
 		}
 	}
