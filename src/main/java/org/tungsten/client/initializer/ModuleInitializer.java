@@ -5,6 +5,7 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
 import org.tungsten.client.feature.module.ModuleTypeManager;
+import org.tungsten.client.feature.module.modules.client.mClickGUI;
 import org.tungsten.client.feature.module.modules.misc.ExampleModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.languageserver.LanguageServer;
@@ -32,6 +33,9 @@ public class ModuleInitializer {
 //		ModuleRegistry.addModule(exampleModule1);
 //		ExampleModule exampleModule2 = new ExampleModule();
 //		ModuleRegistry.addModule(exampleModule2);
+
+		mClickGUI mClickGUI = new mClickGUI();
+		ModuleRegistry.addModule(mClickGUI);
 
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 5, 50));
 		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 215, 50));

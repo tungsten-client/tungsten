@@ -1,6 +1,9 @@
 package org.tungsten.client.feature.module;
 
 import net.minecraft.client.MinecraftClient;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.config.GenericSetting;
 import org.tungsten.client.feature.registry.ModuleRegistry;
@@ -19,14 +22,17 @@ public abstract class GenericModule {
 	private int keybind;
 	private boolean enabled = false;
 
+	protected Logger logger;
+
 	private int id;
 
 
-	public GenericModule(String name, String description, String moduleType) {
+	public GenericModule(String name, String description, @NotNull String moduleType) {
 		this.name = name;
 		this.description = description;
 		this.moduleType = moduleType.toUpperCase();
 		this.id = ModuleRegistry.id;
+		this.logger = LoggerFactory.getLogger(name);
 	}
 
 	public GenericSetting<?> getSettingByName(String name) {

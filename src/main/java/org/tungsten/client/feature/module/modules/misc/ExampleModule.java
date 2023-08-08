@@ -27,7 +27,7 @@ public class ExampleModule extends GenericModule {
     });
 
     public ExampleModule() {
-        super("Example", "A really really really really really really long example module description.", "Misc");
+        super("Example", "A really really really really really really long example module description.", "MISC");
         // -- Add default GLFW keybind.
         //this.updateKeybind(GLFW.GLFW_KEY_M);
         this.registerSettings();
