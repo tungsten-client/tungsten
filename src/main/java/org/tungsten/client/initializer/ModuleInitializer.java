@@ -28,10 +28,12 @@ public class ModuleInitializer {
 		ModuleTypeManager.getModuleTypes().clear();
 		searchForModules(MODULES_COMPILED);
 
-//		ExampleModule exampleModule1 = new ExampleModule();
-//		ModuleRegistry.addModule(exampleModule1);
-//		ExampleModule exampleModule2 = new ExampleModule();
-//		ModuleRegistry.addModule(exampleModule2);
+		ExampleModule exampleModule1 = new ExampleModule();
+		ModuleRegistry.addModule(exampleModule1);
+		ExampleModule exampleModule2 = new ExampleModule();
+		ModuleRegistry.addModule(exampleModule2);
+		ExampleModule exampleModule3 = new ExampleModule();
+		ModuleRegistry.addModule(exampleModule3);
 
 		mClickGUI mClickGUI = new mClickGUI();
 		ModuleRegistry.addModule(mClickGUI);

@@ -98,6 +98,21 @@ public class TungstenBridge {
 		}
 	}
 
+	public void broadcastKeybindUpdate(String name, int moduleID, int keycode) {
+		updateKeybind(moduleID, keycode);
+	}
+
+	public void broadcastModeUpdate(String name, int moduleID, String mode) {
+		GenericModule mod = ModuleRegistry.getByID(moduleID);
+		if (mod != null) {
+			GenericSetting<?> mms = mod.getSettingByName(name);
+			if (mms instanceof ModeSetting ms) {
+				ms.setValue(ms.modesMap.get(mode));
+				Tungsten.LOGGER.info("Changed mode to: " + mode);
+			}
+		}
+	}
+
 
 	public String[] getSettingHTML(int moduleID) {
 		Tungsten.LOGGER.info("REAL");

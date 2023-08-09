@@ -147,6 +147,19 @@ function setup_checkbox(name, module, element){
   })
 }
 
+function setup_keybind(name, module, element){
+  element.addEventListener('keydown', (event) => {
+    tungstenBridge.broadcastKeybindUpdate(name, parseInt(module), event.key)
+  })
+}
+
+function setup_modes(name, module, element) {
+  var mode = element.querySelector('#modes')
+  element.addEventListener('change', (event) => {
+    tungstenBridge.broadcastModeUpdate(name, parseInt(module), mode.value)
+  })
+}
+
 function instanceModule(parent_category, module_id){
 
   let module = document.createElement("div");
@@ -181,9 +194,9 @@ function instanceModule(parent_category, module_id){
     let body = setting.children[1];
     let setting_name = element_descriptor.innerHTML;
     tungstenBridge.print(body.tagName);
-    if(body.tagName.toLowerCase()=="button"){
+    if(body.getAttribute("class")=="button"){
       setup_button(setting_name, module_id, body);
-    }else if(body.tagName.toLowerCase()=="input"){
+    }else if(body.getAttribute("class")=="input"){
       switch(body.getAttribute("type").toLowerCase()){
         case "text":
           setup_textbox(setting_name, module_id, body);
@@ -194,9 +207,13 @@ function instanceModule(parent_category, module_id){
           setup_slider(setting_name, module_id, body);
         break;
       }
-    }else if(body.tagName.toLowerCase()=="label"){
+    }else if(body.getAttribute("class")=="checkbox-container"){
       let checkbox = body.children[0];
       setup_checkbox(setting_name, module_id, checkbox);
+    } else if (body.getAttribute("class")=="keybind") {
+      setup_keybind(setting_name, module_id, body);
+    } else if (body.getAttribute("class")=="modes") {
+      setup_modes(setting_name, module_id, body);
     }
   }
 
