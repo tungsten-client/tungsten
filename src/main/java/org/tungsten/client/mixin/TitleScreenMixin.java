@@ -12,9 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 import org.tungsten.client.gui.KeybindsMenu;
 import org.tungsten.client.gui.ide.ClientIDE;
+import org.tungsten.client.languageserver.LanguageServer;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
+
+
 
 	protected TitleScreenMixin(Text title) {
 		super(title);
@@ -33,9 +36,9 @@ public class TitleScreenMixin extends Screen {
 			kbm.reload();
 		}).dimensions(5, 30, 100, 20).build());
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("IDE"), button -> {
-			ClientIDE ide = ClientIDE.create();
-			this.client.setScreen(ide);
-			ide.reload();
+//			ClientIDE ide = ClientIDE.create();
+//			this.client.setScreen(ide);
+//			ide.reload();
 		}).dimensions(5, 55, 100, 20).build());
 	}
 }

@@ -7,6 +7,7 @@ import me.x150.impl.SubscriberUnregisterEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,23 +106,36 @@ public class MessageManager {
      * @param instance The instance of the class containing the handler methods.
      */
     public void registerSubscribers(Object instance) {
-        Class<?> aClass = instance.getClass();
-        Method[] declaredMethods = aClass.getDeclaredMethods();
+        register(instance, instance.getClass());
+    }
+
+    /**
+     * Registers all methods annotated with {@link MessageSubscription} as handlers for specific messages.<p>
+     * Note that all handlers must have exactly one argument of the type of message they wish to listen for, and no return type (V)<p>
+     * A method handler not following these rules will cause an {@link InvalidSubscriberException} to be thrown, explaining which method violated the rule, and how.
+     *
+     * @param  instanceClass The class containing the handler methods.
+     */
+    public void registerSubscribers(Class<?> instanceClass) {
+        register(null, instanceClass);
+    }
+
+    private void register(Object instance, Class<?> instanceClass) {
+        Method[] declaredMethods = instanceClass.getDeclaredMethods();
         for (Method declaredMethod : declaredMethods) {
             MessageSubscription annotation = declaredMethod.getAnnotation(MessageSubscription.class);
-            if (annotation == null) {
-                continue;
-            }
+            if (annotation == null) continue;
+            if (instance == null || !Modifier.isStatic(declaredMethod.getModifiers())) continue;
             Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
             if (parameterTypes.length != 1) {
                 throw new InvalidSubscriberException(String.format("Handler %s.%s%s has an invalid signature: Expected 1 argument, found %s",
-                    aClass.getName(),
-                    declaredMethod.getName(),
-                    Util.signatureOf(declaredMethod),
-                    parameterTypes.length));
+                        instanceClass.getName(),
+                        declaredMethod.getName(),
+                        Util.signatureOf(declaredMethod),
+                        parameterTypes.length));
             }
             Class<?> listenerType = parameterTypes[0];
-            Handler handler = new Handler(instance, aClass, declaredMethod, listenerType, annotation.priority());
+            Handler handler = new Handler(instance, instanceClass, declaredMethod, listenerType, annotation.priority());
             register(handler);
         }
     }
