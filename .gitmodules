@@ -1,3 +1,0 @@
-[submodule "src/main/resources/ide"]
-	path = src/main/resources/ide
-	url = https://github.com/tungsten-client/client-ide
