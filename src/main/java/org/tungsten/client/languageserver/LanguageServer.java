@@ -12,6 +12,12 @@ import java.util.List;
 
 public class LanguageServer {
 
+    private static LanguageServer inst = null;
+
+    public static LanguageServer instance(){
+        if(inst == null) inst = new LanguageServer();
+        return inst;
+    }
 
     List<ClassTreeBuilder.Class> classPool = new ArrayList<>();
 
@@ -126,4 +132,5 @@ public class LanguageServer {
         }
         return "";
     }
+
 }
