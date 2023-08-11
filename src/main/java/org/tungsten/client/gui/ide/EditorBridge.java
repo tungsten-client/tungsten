@@ -5,6 +5,7 @@ import org.tungsten.client.Tungsten;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.tungsten.client.languageserver.LanguageServer;
 
 public class EditorBridge {
 
@@ -75,6 +76,18 @@ public class EditorBridge {
             writer.close(); //close the fucking thing
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public String getCompletion(String partial) {
+        try {
+            LanguageServer ls = LanguageServer.instance();
+            String complete = ls.getFirstCompletion(partial);
+            return complete;
+        } catch (Error e)
+        {
+            Tungsten.LOGGER.error(e.toString()); //when it cant find anything it throws and error
+            return "";
         }
     }
 
