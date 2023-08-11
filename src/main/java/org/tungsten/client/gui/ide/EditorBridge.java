@@ -83,8 +83,6 @@ public class EditorBridge {
         try {
             LanguageServer ls = LanguageServer.instance();
             String complete = ls.getFirstCompletion(partial);
-            Tungsten.LOGGER.info("partial: " + partial);
-            Tungsten.LOGGER.info("complete: " + complete);
             return complete;
         } catch (Error e)
         {

@@ -12,6 +12,7 @@ import org.tungsten.client.config.Config;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
+import org.tungsten.client.languageserver.LanguageServer;
 import org.tungsten.client.util.CommandCompiler;
 import org.tungsten.client.util.ModuleCompiler;
 import org.tungsten.client.util.Utils;
@@ -70,6 +71,8 @@ public class Tungsten implements ClientModInitializer {
 
 		CommandCompiler.compileCommands();
 		CommandInitializer.initCommands();
+
+		LanguageServer.instance();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
 		try {
