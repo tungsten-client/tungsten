@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class CommandInitializer {
 
 	private static final Path COMMANDS = Tungsten.RUNDIR.resolve("commands");
-	private static final Path COMMANDS_COMPILED = Tungsten.APPDATA.resolve("cmd_tmp");
+	public static final Path COMMANDS_COMPILED = Tungsten.APPDATA.resolve("cmd_tmp");
 
 	static {
 		Utils.ensureDirectoryIsCreated(COMMANDS);
