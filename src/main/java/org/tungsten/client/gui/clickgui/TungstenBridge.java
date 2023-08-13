@@ -48,6 +48,14 @@ public class TungstenBridge {
 		return modules.toArray(Integer[]::new);
 	}
 
+	public boolean getModuleTypeExpanded(String moduleType) {
+		return ModuleTypeManager.getByName(moduleType).getExpanded();
+	}
+
+	public void setModuleTypeExpanded(String moduleType, boolean expanded) {
+		ModuleTypeManager.getByName(moduleType).setExpanded(expanded);
+	}
+
 	public void print(String real) {
 		Tungsten.LOGGER.info(real);
 	}
@@ -63,6 +71,7 @@ public class TungstenBridge {
 		if (mod != null) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof TextboxSetting ts) {
+				Tungsten.LOGGER.info("Set textbox value to "  + value);
 				ts.setValue(value);
 			}
 		}
@@ -83,6 +92,7 @@ public class TungstenBridge {
 		if (mod != null) {
 			GenericSetting<?> mms = mod.getSettingByName(name);
 			if (mms instanceof SliderSetting ss) {
+				Tungsten.LOGGER.info("Set slider setting value to " + Double.parseDouble(value));
 				ss.setValue(Double.parseDouble(value));
 			}
 		}

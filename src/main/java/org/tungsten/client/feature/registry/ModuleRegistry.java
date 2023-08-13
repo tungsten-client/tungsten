@@ -36,7 +36,7 @@ public class ModuleRegistry {
 
 	public static void addModule(GenericModule module) {
 		modules.add(module);
-		module.getSettings().add(new KeybindSetting(module.getKeybind(), "Keybind", "Keybind for module"));
+		module.getSettings().add(new KeybindSetting(module, "Keybind", "Keybind for module"));
 		id += 1;
 	}
 

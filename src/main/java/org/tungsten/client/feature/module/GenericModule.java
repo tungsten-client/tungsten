@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.config.GenericSetting;
+import org.tungsten.client.feature.module.config.KeybindSetting;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 
 import java.lang.reflect.Field;
