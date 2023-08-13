@@ -24,8 +24,8 @@ public class CommandInitializer {
 		//todo: compile modules into classes and put them in mod_tmp
 		searchForCommands(COMMANDS_COMPILED);
 
-		ExampleCommand ex = new ExampleCommand();
-		CommandRegistry.addCommand(ex);
+//		ExampleCommand ex = new ExampleCommand();
+//		CommandRegistry.addCommand(ex);
 	}
 
 

@@ -32,8 +32,8 @@ public class ClassFileCompiler {
 			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), false, null);
 		}
 		try (Stream<Path> p = Files.walk(tempDirectory)) {
-			List<Path> list = p.filter(Files::isRegularFile).toList();
-			if (list.size() > 1) {
+			List<Path> list = p.filter(Files::isRegularFile).filter(a->a.getFileName().toString().equals(input.getFileName().toString().replaceFirst("(?s).java(?!.*?.java)", "") + ".class")).toList();
+			if (list.size() != 1) {
 				// I intentionally did not delete the temp directory here because one might want to look into it when this happens
 				throw new IllegalStateException(
 						"Compiler generated " + list.size() + " source files instead of one. See output directory @ " + tempDirectory.toAbsolutePath());
