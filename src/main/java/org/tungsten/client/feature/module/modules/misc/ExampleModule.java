@@ -1,9 +1,12 @@
 package org.tungsten.client.feature.module.modules.misc;
 
+import me.x150.MessageSubscription;
 import net.minecraft.SharedConstants;
 import net.minecraft.text.Text;
 //import org.lwjgl.glfw.GLFW;
 import org.tungsten.client.Tungsten;
+import org.tungsten.client.event.PacketEvent;
+import org.tungsten.client.event.PlayerMoveEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.config.*;
 
@@ -51,5 +54,12 @@ public class ExampleModule extends GenericModule {
         mode1,
         mode2,
         mode3
+    }
+
+    @MessageSubscription
+    void onPlayerMove(PlayerMoveEvent event) {
+        Tungsten.LOGGER.info(
+                "Move type: %s, Requested Delta: %s%n".formatted(event.getType(),event.getRequestedDelta())
+        );
     }
 }
