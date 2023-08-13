@@ -42,7 +42,7 @@ public class CommandCompiler {
 
 	private static void compileCommand(Path command) throws IOException {
 		Tungsten.LOGGER.info("compileCommand called on " + command.toAbsolutePath());
-		LibraryDownloader.ensurePresent();
+//		LibraryDownloader.ensurePresent();
 
 		String fileName = command.getFileName().toString();
 		Path output = CommandInitializer.COMMANDS_COMPILED.resolve(

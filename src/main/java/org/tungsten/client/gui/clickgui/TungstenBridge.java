@@ -99,6 +99,7 @@ public class TungstenBridge {
 	}
 
 	public void broadcastKeybindUpdate(String name, int moduleID, int keycode) {
+		Tungsten.LOGGER.info("DEBUG keybind for " + ModuleRegistry.getByID(moduleID).getName() + " to " + keycode);
 		updateKeybind(moduleID, keycode);
 	}
 

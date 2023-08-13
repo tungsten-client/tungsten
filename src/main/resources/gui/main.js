@@ -149,7 +149,7 @@ function setup_checkbox(name, module, element){
 
 function setup_keybind(name, module, element){
   element.addEventListener('keydown', (event) => {
-    tungstenBridge.broadcastKeybindUpdate(name, parseInt(module), event.key)
+    tungstenBridge.broadcastKeybindUpdate(name, parseInt(module), event.which)
   })
 }
 
