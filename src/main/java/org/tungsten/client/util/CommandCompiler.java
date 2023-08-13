@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class CommandCompiler {
 
 	public static void compileCommands() {
-		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("cmd_tmp"));
+		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("commands"));
 		searchAndCompileCommands(Tungsten.RUNDIR.resolve("commands"));
 	}
 
@@ -29,16 +29,14 @@ public class CommandCompiler {
 	private static void searchAndCompileCommands(Path path) {
 		Utils.rmDirectoryTree(CommandInitializer.COMMANDS_COMPILED);
 		Utils.ensureDirectoryIsCreated(CommandInitializer.COMMANDS_COMPILED);
-		if (path != null) {
-			try (Stream<Path> p = Files.walk(path)) {
-				p.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".java")).forEach(path1 -> {
-					try {
-						compileCommand(path1);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				});
-			}
+		try (Stream<Path> r = Files.walk(path)) {
+			r.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".java")).forEach(path1 -> {
+				try {
+					compileCommand(path1);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
 		}
 	}
 

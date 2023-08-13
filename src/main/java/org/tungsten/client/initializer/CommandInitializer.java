@@ -18,12 +18,9 @@ public class CommandInitializer {
 	private static final Path COMMANDS = Tungsten.RUNDIR.resolve("commands");
 	public static final Path COMMANDS_COMPILED = Tungsten.APPDATA.resolve("cmd_tmp");
 
-	static {
+	public static void initCommands() {
 		Utils.ensureDirectoryIsCreated(COMMANDS);
 		Utils.ensureDirectoryIsCreated(COMMANDS_COMPILED);
-	}
-
-	public static void initCommands() {
 		//todo: compile modules into classes and put them in mod_tmp
 		searchForCommands(COMMANDS_COMPILED);
 
