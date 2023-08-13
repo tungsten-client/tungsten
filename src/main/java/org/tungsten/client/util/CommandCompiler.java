@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class CommandCompiler {
 
 	public static void compileCommands() {
-		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("commands"));
+		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("cmd_tmp"));
 		searchAndCompileCommands(Tungsten.RUNDIR.resolve("commands"));
 	}
 
