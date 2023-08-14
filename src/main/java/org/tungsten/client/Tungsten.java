@@ -1,19 +1,29 @@
 package org.tungsten.client;
 
 import com.labymedia.ultralight.UltralightJava;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.x150.MessageManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.CommandInitializer;
+import org.tungsten.client.initializer.ItemInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.languageserver.LanguageServer;
 import org.tungsten.client.util.*;
+import net.minecraft.util.Identifier;
 
 import java.io.*;
 import java.net.URI;
@@ -68,6 +78,9 @@ public class Tungsten implements ClientModInitializer {
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
 
+		ItemCompiler.compileItems();
+		ItemInitializer.initItems();
+
 		CommandCompiler.compileCommands();
 		CommandInitializer.initCommands();
 
@@ -79,7 +92,8 @@ public class Tungsten implements ClientModInitializer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
+		//Initialiaze item groups
+		//Goes here? I have no idea. Please help.
 		tungstenBridge = new TungstenBridge();
 	}
 
