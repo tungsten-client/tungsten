@@ -7,12 +7,15 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Unique;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.itemgroup.GenericItem;
 import org.tungsten.client.feature.itemgroup.items.ExampleItem;
 import org.tungsten.client.feature.registry.ItemRegistry;
+import org.tungsten.client.util.GradientText;
 import org.tungsten.client.util.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
@@ -23,17 +26,19 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class ItemInitializer {
+    private static final @Unique MutableText CreativeTabName = GradientText.get(Text.literal("Tungsten Items"), "#585D5B", "#EF712A");
 
     private static final Path ITEMS = Tungsten.RUNDIR.resolve("items");
     public static final Path ITEMS_COMPILED = Tungsten.APPDATA.resolve("item_tmp");
 
     public static void initItems() {
+
         Utils.ensureDirectoryIsCreated(ITEMS);
         Utils.ensureDirectoryIsCreated(ITEMS_COMPILED);
         searchForItems(ITEMS_COMPILED);
         ItemRegistry.addItem(new ExampleItem());
 
-        Registry.register(Registries.ITEM_GROUP, new Identifier("tungsten", "default"), FabricItemGroup.builder().displayName(Text.of("Tungsten Items")).icon(() -> new ItemStack(Items.IRON_INGOT)).entries((displayContext, entries) -> {
+        Registry.register(Registries.ITEM_GROUP, new Identifier("tungsten", "default"), FabricItemGroup.builder().displayName(CreativeTabName.setStyle(CreativeTabName.getStyle().withBold(true))).icon(() -> new ItemStack(Items.IRON_INGOT)).entries((displayContext, entries) -> {
             for (GenericItem item : ItemRegistry.items) {
                 entries.add(item.create());
             }
