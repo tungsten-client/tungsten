@@ -17,6 +17,8 @@ import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
+import org.tungsten.client.feature.itemgroup.GenericItem;
+import org.tungsten.client.feature.itemgroup.items.ExampleItem;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ItemInitializer;
@@ -92,7 +94,6 @@ public class Tungsten implements ClientModInitializer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		//Initialiaze item groups
 		//Goes here? I have no idea. Please help.
 		tungstenBridge = new TungstenBridge();
 	}

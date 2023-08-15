@@ -1,8 +1,17 @@
 package org.tungsten.client.initializer;
 
 import lombok.SneakyThrows;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.StringNbtReader;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.itemgroup.GenericItem;
+import org.tungsten.client.feature.itemgroup.items.ExampleItem;
 import org.tungsten.client.feature.registry.ItemRegistry;
 import org.tungsten.client.util.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
@@ -10,6 +19,7 @@ import org.tungsten.client.util.Utils;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class ItemInitializer {
@@ -21,7 +31,13 @@ public class ItemInitializer {
         Utils.ensureDirectoryIsCreated(ITEMS);
         Utils.ensureDirectoryIsCreated(ITEMS_COMPILED);
         searchForItems(ITEMS_COMPILED);
+        ItemRegistry.addItem(new ExampleItem());
 
+        Registry.register(Registries.ITEM_GROUP, new Identifier("tungsten", "default"), FabricItemGroup.builder().displayName(Text.of("Tungsten Items")).icon(() -> new ItemStack(Items.IRON_INGOT)).entries((displayContext, entries) -> {
+            for (GenericItem item : ItemRegistry.items) {
+                entries.add(item.create());
+            }
+        }).build());
     }
 
 
@@ -35,6 +51,7 @@ public class ItemInitializer {
                 try {
                     initItem(path1);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     throw new RuntimeException(e);
                 }
             });
