@@ -1,40 +1,44 @@
 package org.tungsten.client;
 
-import com.labymedia.ultralight.UltralightJava;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.x150.MessageManager;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.StringNbtReader;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.text.Text;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystemAlreadyExistsException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
-import org.tungsten.client.feature.itemgroup.GenericItem;
-import org.tungsten.client.feature.itemgroup.items.ExampleItem;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ItemInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.languageserver.LanguageServer;
-import org.tungsten.client.util.*;
-import net.minecraft.util.Identifier;
+import org.tungsten.client.util.CommandCompiler;
+import org.tungsten.client.util.ItemCompiler;
+import org.tungsten.client.util.LibraryDownloader;
+import org.tungsten.client.util.ModuleCompiler;
+import org.tungsten.client.util.Utils;
+import org.tungsten.client.util.WebUtils;
 
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.*;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.stream.Stream;
+import com.labymedia.ultralight.UltralightJava;
+
+import me.x150.MessageManager;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 
 @Environment(EnvType.CLIENT)
 public class Tungsten implements ClientModInitializer {
@@ -55,7 +59,6 @@ public class Tungsten implements ClientModInitializer {
 	public static Config config = new Config();
 
 	public static TungstenBridge tungstenBridge;
-
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
