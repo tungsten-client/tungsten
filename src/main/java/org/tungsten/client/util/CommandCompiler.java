@@ -2,6 +2,7 @@ package org.tungsten.client.util;
 
 import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
+import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 
 import javax.tools.Diagnostic;
@@ -26,26 +27,25 @@ public class CommandCompiler {
 
 	@SneakyThrows
 	private static void searchAndCompileCommands(Path path) {
-		Utils.rmDirectoryTree(ModuleInitializer.MODULES_COMPILED);
-		if (path != null) {
-			try (Stream<Path> p = Files.walk(path)) {
-				p.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".java")).forEach(path1 -> {
-					try {
-						compileCommand(path1);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				});
-			}
+		Utils.rmDirectoryTree(CommandInitializer.COMMANDS_COMPILED);
+		Utils.ensureDirectoryIsCreated(CommandInitializer.COMMANDS_COMPILED);
+		try (Stream<Path> r = Files.walk(path)) {
+			r.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".java")).forEach(path1 -> {
+				try {
+					compileCommand(path1);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
 		}
 	}
 
 	private static void compileCommand(Path command) throws IOException {
 		Tungsten.LOGGER.info("compileCommand called on " + command.toAbsolutePath());
-		LibraryDownloader.ensurePresent();
+//		LibraryDownloader.ensurePresent();
 
 		String fileName = command.getFileName().toString();
-		Path output = ModuleInitializer.MODULES_COMPILED.resolve(
+		Path output = CommandInitializer.COMMANDS_COMPILED.resolve(
 				fileName.substring(0, fileName.length() - ".java".length()) + ".class");
 
 		String libraries = LibraryDownloader.generateClasspath();
@@ -65,11 +65,4 @@ public class CommandCompiler {
 			Arrays.stream(compile.logs().split("\n")).map(s -> "  ...:" + s).forEach(Tungsten.LOGGER::error);
 		}
 	}
-
-
-//    public static void setupCompilerEnvironment() throws IOException, URISyntaxException {
-//        WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar", mapped);
-//        WebUtils.downloadURLToPath("https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar", unmapped);
-//    }
-
 }

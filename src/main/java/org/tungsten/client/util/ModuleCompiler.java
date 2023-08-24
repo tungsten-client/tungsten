@@ -40,7 +40,7 @@ public class ModuleCompiler {
 
 	private static void compileModule(Path module) throws IOException {
 		Tungsten.LOGGER.info("compileModule called on " + module.getFileName().toString());
-		LibraryDownloader.ensurePresent();
+//		LibraryDownloader.ensurePresent();
 
 		String fileName = module.getFileName().toString();
 		Path output = ModuleInitializer.MODULES_COMPILED.resolve(

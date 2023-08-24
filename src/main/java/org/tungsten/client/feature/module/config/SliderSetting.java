@@ -20,9 +20,8 @@ public class SliderSetting extends GenericSetting<Double> {
 
 	@Override
 	public void setValue(Double value) {
-		if (value > max || value < min) {
-			return;
-		}
+		if (value > max) { value = max; }
+		else if (value < min) { value = min; }
 		super.setValue(value);
 	}
 

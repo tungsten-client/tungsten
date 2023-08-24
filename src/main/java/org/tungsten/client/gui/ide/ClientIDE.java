@@ -10,7 +10,7 @@ import org.tungsten.client.gui.clickgui.ClickGUI;
 public class ClientIDE extends HtmlScreen {
 
     public ClientIDE() {
-        super("file:///tungsten/appdata/ide/index.html"); //placeholder, please implement when actual
+        super("file://C:\\Users\\burke\\IdeaProjects\\tungstenDevving\\src\\main\\resources\\ide\\index.html"); //placeholder, please implement when actual
     }
 
     @Override

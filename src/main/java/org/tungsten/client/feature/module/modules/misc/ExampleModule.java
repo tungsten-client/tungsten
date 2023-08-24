@@ -1,14 +1,14 @@
 package org.tungsten.client.feature.module.modules.misc;
 
+import me.x150.MessageSubscription;
 import net.minecraft.SharedConstants;
 import net.minecraft.text.Text;
 //import org.lwjgl.glfw.GLFW;
 import org.tungsten.client.Tungsten;
+import org.tungsten.client.event.PacketEvent;
+import org.tungsten.client.event.PlayerMoveEvent;
 import org.tungsten.client.feature.module.GenericModule;
-import org.tungsten.client.feature.module.config.ButtonSetting;
-import org.tungsten.client.feature.module.config.CheckboxSetting;
-import org.tungsten.client.feature.module.config.SliderSetting;
-import org.tungsten.client.feature.module.config.TextboxSetting;
+import org.tungsten.client.feature.module.config.*;
 
 public class ExampleModule extends GenericModule {
 
@@ -25,6 +25,8 @@ public class ExampleModule extends GenericModule {
                     + sliderSetting.getValue().toString() + "Text: " + SharedConstants.stripInvalidChars(textboxSetting.getValue())));
         }
     });
+
+    ModeSetting modeSetting = new ModeSetting(Mode.mode1, "ExampleMode", "Example mode setting.");
 
     public ExampleModule() {
         super("Example", "A really really really really really really long example module description.", "MISC");
@@ -46,5 +48,18 @@ public class ExampleModule extends GenericModule {
     @Override
     protected void tickClient() {
 
+    }
+
+    public enum Mode {
+        mode1,
+        mode2,
+        mode3
+    }
+
+    @MessageSubscription
+    void onPlayerMove(PlayerMoveEvent event) {
+        Tungsten.LOGGER.info(
+                "Move type: %s, Requested Delta: %s%n".formatted(event.getType(),event.getRequestedDelta())
+        );
     }
 }

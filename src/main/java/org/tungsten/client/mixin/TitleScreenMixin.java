@@ -12,9 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 import org.tungsten.client.gui.KeybindsMenu;
 import org.tungsten.client.gui.ide.ClientIDE;
+import org.tungsten.client.languageserver.LanguageServer;
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
+
+
 
 	protected TitleScreenMixin(Text title) {
 		super(title);

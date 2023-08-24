@@ -16,19 +16,16 @@ import java.util.stream.Stream;
 public class CommandInitializer {
 
 	private static final Path COMMANDS = Tungsten.RUNDIR.resolve("commands");
-	private static final Path COMMANDS_COMPILED = Tungsten.APPDATA.resolve("cmd_tmp");
-
-	static {
-		Utils.ensureDirectoryIsCreated(COMMANDS);
-		Utils.ensureDirectoryIsCreated(COMMANDS_COMPILED);
-	}
+	public static final Path COMMANDS_COMPILED = Tungsten.APPDATA.resolve("cmd_tmp");
 
 	public static void initCommands() {
+		Utils.ensureDirectoryIsCreated(COMMANDS);
+		Utils.ensureDirectoryIsCreated(COMMANDS_COMPILED);
 		//todo: compile modules into classes and put them in mod_tmp
 		searchForCommands(COMMANDS_COMPILED);
 
-		ExampleCommand ex = new ExampleCommand();
-		CommandRegistry.addCommand(ex);
+//		ExampleCommand ex = new ExampleCommand();
+//		CommandRegistry.addCommand(ex);
 	}
 
 
@@ -38,13 +35,11 @@ public class CommandInitializer {
 	@SneakyThrows
 	private static void searchForCommands(Path path) {
 		try (Stream<Path> v = Files.walk(path)) {
-			v.forEach(path1 -> {
-				if (path1.toString().endsWith(".class")) {
-					try {
-						initCommand(path1);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
+			v.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".class")).forEach(path1 -> {
+				try {
+					initCommand(path1);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 			});
 		}
@@ -60,7 +55,7 @@ public class CommandInitializer {
 			if (GenericCommand.class.isAssignableFrom(loadedCommand)) {
 				Class<GenericCommand> loadedCommandClass = (Class<GenericCommand>) loadedCommand;
 				GenericCommand commandInstance = loadedCommandClass.getDeclaredConstructor().newInstance();
-				Tungsten.LOGGER.info("Loaded module " + commandInstance.getName());
+				Tungsten.LOGGER.info("Loaded command " + commandInstance.getName());
 				CommandRegistry.addCommand(commandInstance);
 			}
 		}

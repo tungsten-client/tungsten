@@ -1,6 +1,7 @@
 package org.tungsten.client.feature.registry;
 
 import org.tungsten.client.feature.module.GenericModule;
+import org.tungsten.client.feature.module.config.KeybindSetting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ModuleRegistry {
 
 	public static void addModule(GenericModule module) {
 		modules.add(module);
+		module.getSettings().add(new KeybindSetting(module, "Keybind", "Keybind for module"));
 		id += 1;
 	}
 
