@@ -32,7 +32,7 @@ public abstract class GenericModule {
 		this.description = description;
 		this.moduleType = moduleType.toUpperCase();
 		this.id = ModuleRegistry.id;
-		this.logger = LoggerFactory.getLogger(name);
+		this.logger = LoggerFactory.getLogger("Module '" + name + "'");
 	}
 
 	public GenericSetting<?> getSettingByName(String name) {
