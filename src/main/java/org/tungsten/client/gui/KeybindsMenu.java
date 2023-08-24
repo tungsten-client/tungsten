@@ -5,6 +5,8 @@ import com.labymedia.ultralight.databind.DatabindConfiguration;
 import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.gui.clickgui.TungstenBridge;
 
@@ -16,7 +18,8 @@ public class KeybindsMenu extends HtmlScreen {
 		super("file:///tungsten/appdata/gui/keybind.html");
 	}
 
-	public static KeybindsMenu create() {
+	@Contract(" -> new")
+	public static @NotNull KeybindsMenu create() {
 		ctx_setup = false;
 		return new KeybindsMenu();
 	}
