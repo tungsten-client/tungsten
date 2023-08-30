@@ -6,6 +6,8 @@ plugins {
 
     id("fabric-loom") version "1.3-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+
+    id("maven-publish")
 }
 
 version = properties["project_version"]!!
@@ -18,6 +20,15 @@ repositories {
 
     maven("https://maven.terraformersmc.com/releases")
     maven("https://maven.terraformersmc.com/snapshots")
+
+    maven {
+        name = "GithubPackages"
+        url = uri("https://maven.pkg.github.com/tungsten-client/tungsten")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        }
+    }
 }
 
 enum class IncludeMethod { NOT, SHADOW, INCLUDE }
@@ -195,4 +206,11 @@ tasks {
 
 configurations.shadow {
     isTransitive = false
+}
+
+publications {
+    gpr(MavenPublication) {
+         from(components.java)   
+    }
+}
 }
