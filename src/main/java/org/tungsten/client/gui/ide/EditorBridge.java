@@ -1,17 +1,10 @@
 package org.tungsten.client.gui.ide;
 
-import net.minecraft.client.MinecraftClient;
 import org.tungsten.client.Tungsten;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.tungsten.client.languageserver.LanguageServer;
-import java.awt.Toolkit; //for clipboard
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.StringSelection;
 import me.x150.ul.mgr.ClipboardAdapter;
 
 public class EditorBridge {
@@ -89,6 +82,7 @@ public class EditorBridge {
 
     // I think this is right...
     public String getClipboardContents(){
+        Tungsten.LOGGER.info(root+"\\appdata\\lsp");
         return cbad.readPlainText();
     }
 
