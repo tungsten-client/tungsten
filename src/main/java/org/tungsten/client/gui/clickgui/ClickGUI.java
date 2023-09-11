@@ -5,6 +5,8 @@ import com.labymedia.ultralight.databind.DatabindConfiguration;
 import com.labymedia.ultralight.javascript.JavascriptContext;
 import com.labymedia.ultralight.javascript.JavascriptContextLock;
 import me.x150.ul.HtmlScreen;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
 public class ClickGUI extends HtmlScreen {
@@ -16,7 +18,8 @@ public class ClickGUI extends HtmlScreen {
 		super("file:///tungsten/appdata/gui/clickgui.html");
 	}
 
-	public static ClickGUI create() {
+	@Contract(" -> new")
+	public static @NotNull ClickGUI create() {
 		ctx_setup = false;
 		return new ClickGUI();
 	}
