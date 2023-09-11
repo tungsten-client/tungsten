@@ -68,7 +68,4 @@ public class ModuleCompiler {
 			Arrays.stream(compile.logs().split("\n")).map(s -> "  ...:" + s).forEach(Tungsten.LOGGER::error);
 		}
 	}
-
-
-
 }

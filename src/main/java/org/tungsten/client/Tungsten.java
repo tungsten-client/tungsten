@@ -107,9 +107,7 @@ public class Tungsten implements ClientModInitializer {
 			Iterator<Path> iterator = getGUIComponents().iterator();
 			while (iterator.hasNext()) {
 				Path path = iterator.next();
-                if (Files.isDirectory(path)) {
-                    continue; // dont need
-                }
+                if (Files.isDirectory(path)) continue; // dont need
 				String s = path.getFileName().toString();
 				Path tf = APPDATA.resolve("gui").resolve(s);
 				Tungsten.LOGGER.info(path + " -> " + tf);
@@ -143,10 +141,7 @@ public class Tungsten implements ClientModInitializer {
 				c = FileSystems.getFileSystem(uri);
 				myPath = c.getPath("gui");
 			}
-		} else {
-			myPath = Paths.get(uri);
-		}
-
+		} else myPath = Paths.get(uri);
 		return Files.walk(myPath);
 	}
 
@@ -163,13 +158,9 @@ public class Tungsten implements ClientModInitializer {
 				c = FileSystems.getFileSystem(uri);
 				myPath = c.getPath("ul-resources");
 			}
-		} else {
-			myPath = Paths.get(uri);
-		}
-
+		} else myPath = Paths.get(uri);
 		return Files.walk(myPath);
 	}
-
 
 	public void startUltralight() throws Exception {
 		Tungsten.LOGGER.info("Initializing Ultralight");
@@ -183,9 +174,8 @@ public class Tungsten implements ClientModInitializer {
 
 		if (libpath != null) {
 			libpath += File.pathSeparator + ulNatives.toAbsolutePath();
-		} else {
-			libpath = ulNatives.toAbsolutePath().toString();
-		}
+		} else libpath = ulNatives.toAbsolutePath().toString();
+
 		System.setProperty("java.library.path", libpath);
 
 		if (Utils.isDirectoryEmpty(ulNatives)) {
@@ -197,9 +187,7 @@ public class Tungsten implements ClientModInitializer {
 		Iterator<Path> iterator = findUlResources().iterator();
 		while (iterator.hasNext()) {
 			Path path = iterator.next();
-            if (Files.isDirectory(path)) {
-                continue; // dont need
-            }
+            if (Files.isDirectory(path)) continue; // dont need
 			String s = path.getFileName().toString();
 			Path tf = ulResources.resolve(s);
 			Tungsten.LOGGER.info(path + " -> " + tf);

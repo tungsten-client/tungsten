@@ -8,4 +8,5 @@ import me.x150.MessageManager;
  * @param handler The new handler added to the subscriber list
  */
 public record SubscriberRegisterEvent(MessageManager.Handler handler) {
+
 }

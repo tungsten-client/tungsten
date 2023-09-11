@@ -15,6 +15,7 @@ import org.lwjgl.system.MemoryStack;
 import java.nio.DoubleBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
 
 /**
  * Class for converting GLFW events into Ultralight events.
@@ -107,6 +108,11 @@ public class InputAdapter {
         UltralightMouseEvent event = new UltralightMouseEvent().x((int) (x * xScale)).y((int) (y * yScale)).type(UltralightMouseEventType.MOVED);
 
         // Translate the mouse state to the org.tungsten.client.event
+        // Changed many if else if to switch.
+
+//        switch(glfwGetMouseButton(window, )) {
+//
+//        }
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
             event.button(UltralightMouseEventButton.LEFT);
         } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
@@ -343,4 +349,9 @@ public class InputAdapter {
             default -> UltralightKey.UNKNOWN;
         };
     }
+//    public Enum mouseButtons() {
+//        GLFW_MOUSE_BUTTON_LEFT,
+//                GLFW_MOUSE_BUTTON_RIGHT,
+//                GLFW_MOUSE_BUTTON_MIDDLE;
+//    }
 }

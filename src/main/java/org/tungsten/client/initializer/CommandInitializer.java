@@ -21,7 +21,7 @@ public class CommandInitializer {
 	public static void initCommands() {
 		Utils.ensureDirectoryIsCreated(COMMANDS);
 		Utils.ensureDirectoryIsCreated(COMMANDS_COMPILED);
-		//todo: compile modules into classes and put them in mod_tmp
+		// todo: compile modules into classes and put them in mod_tmp
 		searchForCommands(COMMANDS_COMPILED);
 
 //		ExampleCommand ex = new ExampleCommand();

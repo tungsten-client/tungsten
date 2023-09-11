@@ -6,4 +6,5 @@ package me.x150.impl;
  * @param handlerClass The class owning the handlers being removed
  */
 public record SubscriberUnregisterEvent(Class<?> handlerClass) {
+
 }

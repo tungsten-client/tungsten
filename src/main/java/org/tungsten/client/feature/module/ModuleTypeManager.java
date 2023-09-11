@@ -24,7 +24,6 @@ public class ModuleTypeManager {
 		if (!moduleTypes.stream().map(ModuleType::getName).toList().contains(moduleType.getName())) {
 			moduleTypes.add(moduleType);
 		}
-
 	}
 
 	public static ModuleType getByName(String name) {

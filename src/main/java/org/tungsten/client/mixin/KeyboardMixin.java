@@ -27,11 +27,9 @@ public class KeyboardMixin {
 		Tungsten.eventManager.send(ke);
 		if (action == GLFW.GLFW_PRESS && key != -1) { // key = -1 means invalid key mapping, aka a special key like a volume wheel
 			if (client.player != null) {
-				if(client.currentScreen == null){
+				if(client.currentScreen == null) {
 					for (GenericModule m : ModuleRegistry.modules) {
-						if (m.getKeybind() == key) {
-							m.toggle();
-						}
+						if (m.getKeybind() == key) m.toggle();
 					}
 				}
 			}

@@ -13,9 +13,8 @@ public class ModeSetting<T extends Enum<?>> extends GenericSetting<T> {
         super(defaultValue, name, description);
         try {
             modes = (T[]) defaultValue.getClass().getMethod("values").invoke(null);
-            for(T mode : modes) {
+            for(T mode : modes)
                 modesMap.put(mode.name(), mode);
-            }
         } catch (Exception e) {
             Tungsten.LOGGER.info(e.toString());
         }

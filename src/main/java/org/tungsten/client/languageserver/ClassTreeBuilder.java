@@ -61,7 +61,7 @@ public class ClassTreeBuilder {
 			return t.toString().trim();
 		}
 
-		public String getSimpleName(){
+		public String getSimpleName() {
 			String[] tokn = name.split("/");
 			return tokn[tokn.length - 1];
 		}
@@ -211,8 +211,6 @@ public class ClassTreeBuilder {
 
 	public static void main(String[] args) throws Throwable {
 		Class[] classes = buildTreeFrom(Path.of("/media/x150/Knowledge Base/Development/JavaObfMvn/core/target/original-core-1.0.jar"));
-		for (Class aClass : classes) {
-			System.out.println(aClass);
-		}
+		for (Class aClass : classes) { System.out.println(aClass); }
 	}
 }

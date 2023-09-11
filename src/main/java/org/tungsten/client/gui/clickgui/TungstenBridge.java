@@ -169,6 +169,4 @@ public class TungstenBridge {
 				.filter(name -> name.toLowerCase().contains(partialName.toLowerCase()))
 				.toArray(String[]::new);
 	}
-
-
 }

@@ -45,6 +45,6 @@ public class ClassFileCompiler {
 	}
 
 	public record CompilationResults(List<Diagnostic<? extends JavaFileObject>> diagnostics, String logs,
-	                                 boolean compiledSuccessfully, byte[] compiledClassFile) {
+									 boolean compiledSuccessfully, byte[] compiledClassFile) {
 	}
 }

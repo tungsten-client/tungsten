@@ -17,8 +17,6 @@ import org.tungsten.client.languageserver.LanguageServer;
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen {
 
-
-
 	protected TitleScreenMixin(Text title) {
 		super(title);
 	}

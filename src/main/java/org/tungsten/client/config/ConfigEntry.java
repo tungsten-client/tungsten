@@ -9,11 +9,11 @@ public class ConfigEntry<T> {
         this.default_value = default_value;
     }
 
-    public static <T> ConfigEntry<T> create(T value, T default_value){
+    public static <T> ConfigEntry<T> create(T value, T default_value) {
         return new ConfigEntry<T>(value,default_value);
     }
 
-    public static <T> ConfigEntry<T> create(T value){
+    public static <T> ConfigEntry<T> create(T value) {
         return new ConfigEntry<T>(value,value);
     }
 
@@ -25,15 +25,15 @@ public class ConfigEntry<T> {
         return default_value;
     }
 
-    public void setValue(T new_value){
+    public void setValue(T new_value) {
         this.value = new_value;
     }
 
-    public void setDefault(T new_default){
+    public void setDefault(T new_default) {
         this.default_value = new_default;
     }
 
-    public void reset(){
+    public void reset() {
         setValue(getDefault());
     }
 }

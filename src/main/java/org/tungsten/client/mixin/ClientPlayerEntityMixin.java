@@ -29,9 +29,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 		if (currentGoal != null) {
 			Rotations.Rotation compute = currentGoal.compute();
 			return compute == null ? instance.getYaw() : compute.yaw();
-		} else {
-			return instance.getYaw();
-		}
+		} else return instance.getYaw();
 	}
 
 	@Redirect(method = "sendMovementPackets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getPitch()F"))
@@ -40,9 +38,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 		if (currentGoal != null) {
 			Rotations.Rotation compute = currentGoal.compute();
 			return compute == null ? instance.getPitch() : compute.pitch();
-		} else {
-			return instance.getPitch();
-		}
+		} else return instance.getPitch();
 	}
 
 
@@ -50,10 +46,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 	public void onPushOutOfBlocks(double x, double y, CallbackInfo ci) {
 		PushOutOfBlockEvent pob = new PushOutOfBlockEvent();
 		Tungsten.eventManager.send(pob);
-        if (pob.isCancelled()) {
-            ci.cancel();
-        }
-
+        if (pob.isCancelled()) ci.cancel();
 	}
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "move")

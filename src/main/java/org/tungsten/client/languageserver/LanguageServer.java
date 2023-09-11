@@ -35,17 +35,15 @@ public class LanguageServer {
     }
 
 
-    public ClassTreeBuilder.Class findFirstClass(String name){
+    public ClassTreeBuilder.Class findFirstClass(String name) {
         ClassTreeBuilder.Class mostLikelyMatch = null;
         int idx = 0;
-        for(ClassTreeBuilder.Class clazz : classPool){
+        for(ClassTreeBuilder.Class clazz : classPool) {
             String clz_name = clazz.getSimpleName();
-            if(clz_name.equalsIgnoreCase(name)){
-                return clazz;
-            }
-            if(clz_name.startsWith(name)){
+            if(clz_name.equalsIgnoreCase(name)) { return clazz; }
+            if(clz_name.startsWith(name)) {
                 int pidx = (name.length() -  clz_name.length()) * -1;
-                if(pidx > idx){
+                if(pidx > idx) {
                     mostLikelyMatch = clazz;
                     idx = pidx;
                 }
@@ -59,15 +57,13 @@ public class LanguageServer {
         return input.replaceAll(regex, "");
     }
 
-    public ClassTreeBuilder.Member findFirstMember(ClassTreeBuilder.Class parentClass, String name){
+    public ClassTreeBuilder.Member findFirstMember(ClassTreeBuilder.Class parentClass, String name) {
         name = santizeMethod(name);
         ClassTreeBuilder.Member mostLikelyMatch = null;
         int idx = 0;
         for(ClassTreeBuilder.Member member : parentClass.members()){
-            if(member.name().equals(name)){
-                return member;
-            }
-            if(member.name().startsWith(name)){
+            if(member.name().equals(name)){ return member; }
+            if(member.name().startsWith(name)) {
                 int pidx = member.name().length() - name.length();
                 if(pidx > idx){
                     mostLikelyMatch = member;
@@ -78,10 +74,10 @@ public class LanguageServer {
         return mostLikelyMatch;
     }
 
-    public ClassTreeBuilder.Class forName(String input){
+    public ClassTreeBuilder.Class forName(String input) {
         input = input.substring(0, input.length() - 1);
-        for(ClassTreeBuilder.Class cl : classPool){
-            if(cl.name().equalsIgnoreCase(input)){
+        for(ClassTreeBuilder.Class cl : classPool) {
+            if(cl.name().equalsIgnoreCase(input)) {
                 return cl;
             }
         }
@@ -89,16 +85,13 @@ public class LanguageServer {
     }
 
 
-    public ClassTreeBuilder.Class descriptorToClass(String input){
+    public ClassTreeBuilder.Class descriptorToClass(String input) {
         input = santizeMethod(input);
         if(input.startsWith("L")) {
             input = input.substring(1);
             return forName(input);
-        }else{
-            return null;
-        }
+        } else return null;
     }
-
 
 
     public String getFirstCompletion(String partial) {
@@ -132,5 +125,4 @@ public class LanguageServer {
         }
         return "";
     }
-
 }

@@ -14,9 +14,7 @@ public class ModuleRegistry {
 
 	public static GenericModule getByName(String name) {
 		for (GenericModule m : modules) {
-			if (m.getName().equals(name)) {
-				return m;
-			}
+			if (m.getName().equals(name)) { return m; }
 		}
 		return null;
 	}
@@ -27,9 +25,7 @@ public class ModuleRegistry {
 
 	public static GenericModule instanceFromClass(Class<?> clazz) {
 		for (GenericModule m : modules) {
-			if (m.getClass().equals(clazz)) {
-				return m;
-			}
+			if (m.getClass().equals(clazz)) { return m; }
 		}
 		return null;
 	}
@@ -39,6 +35,4 @@ public class ModuleRegistry {
 		module.getSettings().add(new KeybindSetting(module, "Keybind", "Keybind for module"));
 		id += 1;
 	}
-
-
 }

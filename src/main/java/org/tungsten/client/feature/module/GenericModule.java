@@ -38,9 +38,7 @@ public abstract class GenericModule {
 
 	public GenericSetting<?> getSettingByName(String name) {
 		for (GenericSetting<?> gs : settings) {
-			if (gs.getName().equals(name)) {
-				return gs;
-			}
+			if (gs.getName().equals(name)) return gs;
 		}
 		return null;
 	}
@@ -72,7 +70,7 @@ public abstract class GenericModule {
 						}
 					} else {
 						throw new RuntimeException(
-								"Please do not make the settings inside your module private, we need to see them");
+								"Please do not make the settings inside your module private, we need to see them.");
 					}
 				} catch (IllegalAccessException e) {
 					throw new RuntimeException(e);
@@ -93,7 +91,9 @@ public abstract class GenericModule {
 		return this.moduleType;
 	}
 
-	public int getID() { return this.id; }
+	public int getID() {
+		return this.id;
+	}
 
 	protected abstract void disable();
 

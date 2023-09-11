@@ -32,4 +32,3 @@ public interface PlayerMovePacketAccessor {
 	@Accessor("pitch")
 	void setPitch(float pitch);
 }
-

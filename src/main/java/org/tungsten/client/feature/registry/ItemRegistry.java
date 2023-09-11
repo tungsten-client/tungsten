@@ -14,9 +14,7 @@ public class ItemRegistry {
 
     public static GenericItem getByName(ItemStack item) {
         for (GenericItem i : items) {
-            if (i.getItem().equals(item)) {
-                return i;
-            }
+            if (i.getItem().equals(item)) { return i; }
         }
         return null;
     }
@@ -27,9 +25,7 @@ public class ItemRegistry {
 
     public static GenericItem instanceFromClass(Class<?> clazz) {
         for (GenericItem i : items) {
-            if (i.getClass().equals(clazz)) {
-                return i;
-            }
+            if (i.getClass().equals(clazz)) { return i; }
         }
         return null;
     }
@@ -38,6 +34,4 @@ public class ItemRegistry {
         items.add(item);
         id += 1;
     }
-
-
 }

@@ -31,4 +31,3 @@ public interface MinecraftClientAccessor {
 	@Accessor("authenticationService")
 	YggdrasilAuthenticationService getAuthenticationService();
 }
-

@@ -61,4 +61,3 @@ public class Rotations {
         Rotation compute();
     }
 }
-

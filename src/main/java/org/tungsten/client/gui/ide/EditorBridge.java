@@ -17,7 +17,7 @@ public class EditorBridge {
      * @param path The path to list files from, should look like "modules" or "modules/abc123"
      * @return a list of file names located in that directory, if the directory does not exist or the given path is not a directory, returns null
      */
-    public String listDir(String path){
+    public String listDir(String path) {
         Path dir = Paths.get(Tungsten.RUNDIR.toString(), path);
         File dirFile = dir.toFile();
         String[] fileList = dirFile.list();
@@ -30,9 +30,7 @@ public class EditorBridge {
 
             jsonBuilder.append("{\"name\":\"").append(file).append("\",\"type\":\"").append(isDirectory ? "folder" : "file").append("\"}");
 
-            if (i < fileList.length - 1) {
-                jsonBuilder.append(",");
-            }
+            if (i < fileList.length - 1) { jsonBuilder.append(","); }
         }
         jsonBuilder.append("]");
 
@@ -50,7 +48,7 @@ public class EditorBridge {
         try {
             StringBuilder result = new StringBuilder();
             BufferedReader reader = new BufferedReader(new FileReader(target.getAbsolutePath()));
-            for(String line = ""; line != null; line = reader.readLine()){
+            for(String line = ""; line != null; line = reader.readLine()) {
                 result.append(line).append("\n");
             }
             return result.toString();
@@ -66,7 +64,7 @@ public class EditorBridge {
      * @param path  the path of the file to write to, starting from the appdata/tungsten folder
      * @param content the content as a string to write to that file
      */
-    public void writeFile(String path, String content){
+    public void writeFile(String path, String content) {
 
         Path dir = Paths.get(Tungsten.RUNDIR.toString(), path);
         File target = dir.toFile();
@@ -84,8 +82,7 @@ public class EditorBridge {
             LanguageServer ls = LanguageServer.instance();
             String complete = ls.getFirstCompletion(partial);
             return complete;
-        } catch (Error e)
-        {
+        } catch (Error e) {
             Tungsten.LOGGER.error(e.toString()); //when it cant find anything it throws and error
             return "";
         }
@@ -94,8 +91,4 @@ public class EditorBridge {
     public void log(String message) {
         Tungsten.LOGGER.info(message);
     }
-
-
-
-
 }

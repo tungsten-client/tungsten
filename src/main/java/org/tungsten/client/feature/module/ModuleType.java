@@ -1,7 +1,7 @@
 package org.tungsten.client.feature.module;
 
 public class ModuleType {
-
+	/* can we just use lombok for some of these? */
 	private final String name;
 	private double x;
 	private double y;
@@ -32,7 +32,7 @@ public class ModuleType {
 				y
 		};
 	}
-
+	/* couldn't this be replaced with a @Getter ? */
 	public double getX() {
 		return this.x;
 	}

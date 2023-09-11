@@ -18,7 +18,7 @@ import java.util.zip.ZipInputStream;
 
 public class Utils {
 
-	private static final int[] EXPECTED_CLASS_SIGNATURE = new int[]{0xCA, 0xFE, 0xBA, 0xBE};
+	private static final int[] EXPECTED_CLASS_SIGNATURE = new int[] { 0xCA, 0xFE, 0xBA, 0xBE };
 
 	public static boolean checkSignature(byte[] classFile) {
 		byte[] cSig = Arrays.copyOfRange(classFile, 0, 4);
@@ -127,7 +127,6 @@ public class Utils {
 			}
 		}
 	}
-
 
 	private static <T> boolean arrayContains(T[] array, T element) {
 		return Arrays.asList(array).contains(element);
