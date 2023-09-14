@@ -5,12 +5,13 @@ import org.tungsten.client.Tungsten;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.tungsten.client.languageserver.LanguageServer;
+import me.x150.ul.mgr.ClipboardAdapter;
 
 public class EditorBridge {
 
     Path root = Tungsten.RUNDIR;
 
+    ClipboardAdapter cbad = new ClipboardAdapter();
 
     /**
      * Lists the files in the directory given, originating from the appdata/tungsten folder (Tungsten.RUNDIR)
@@ -79,23 +80,14 @@ public class EditorBridge {
         }
     }
 
-    public String getCompletion(String partial) {
-        try {
-            LanguageServer ls = LanguageServer.instance();
-            String complete = ls.getFirstCompletion(partial);
-            return complete;
-        } catch (Error e)
-        {
-            Tungsten.LOGGER.error(e.toString()); //when it cant find anything it throws and error
-            return "";
-        }
+    // I think this is right...
+    public String getClipboardContents(){
+        Tungsten.LOGGER.info(root+"\\appdata\\lsp");
+        return cbad.readPlainText();
     }
 
-    public void log(String message) {
-        Tungsten.LOGGER.info(message);
+    public void setClipboardContents(String text) {
+        cbad.writePlainText(text);
     }
-
-
-
 
 }
