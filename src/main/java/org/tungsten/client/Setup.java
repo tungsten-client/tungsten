@@ -4,8 +4,8 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.util.LibraryDownloader;
 
+import javax.swing.*;
 import java.io.*;
-import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -21,8 +21,11 @@ public class Setup {
     static void setupJDK() {
         if(System.getProperty("sun.boot.library.path").contains("jdk")) return;
 
-        Tungsten.LOGGER.info("Setting up JDK");
-        // magic
+        Tungsten.LOGGER.info("JDK not found");
+        System.setProperty("java.awt.headless", "false");
+        JOptionPane.showMessageDialog(null, "Compatible JDK installation not found. Please install JDK '17' (https://www.oracle.com/java/technologies/downloads/#java17)", "Missing JDK", JOptionPane.ERROR_MESSAGE);
+        //System.exit(20);
+        throw new IllegalStateException("Compatible JDK installation not found. Please install JDK '17'");
     }
 
     static void setupIDE() throws IOException {
