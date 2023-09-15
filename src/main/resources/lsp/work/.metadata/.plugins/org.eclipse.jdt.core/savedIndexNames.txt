@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+C:\Users\nasir\IdeaProjects\tungsten\run\tungsten\appdata\lsp\work\.metadata\.plugins\org.eclipse.jdt.core
-1901559816.index
-1865797976.index
-3413725848.index

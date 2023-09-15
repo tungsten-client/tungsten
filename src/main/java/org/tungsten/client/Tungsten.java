@@ -78,7 +78,7 @@ public class Tungsten implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		LibraryDownloader.ensurePresent();
+		Setup.setup();
 
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
