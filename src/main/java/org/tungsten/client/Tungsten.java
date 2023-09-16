@@ -71,13 +71,17 @@ public class Tungsten implements ClientModInitializer {
 	public static void onShutdownClient() {
 		LOGGER.info("Shutting down client");
 
+		LanguageServer.kill();
+	}
+
+	private static void cleanupUL() {
+		Tungsten.LOGGER.info("Cleaning up UL");
 		try {
 			Thread.sleep(1000 * 10); //sleep for 10 seconds to ensure the locks are released before cleaning up files.
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 		Utils.rmDirectoryTree(ULTRALIGHT); //cleanup ultralight files
-		LanguageServer.kill();
 	}
 
 	@Override
@@ -95,7 +99,7 @@ public class Tungsten implements ClientModInitializer {
 
 		LanguageServer.instance();
 
-		//Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
+		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::cleanupUL));
 		try {
 			startUltralight();
 		} catch (Exception e) {
