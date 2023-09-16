@@ -12,6 +12,7 @@ public class LanguageServer {
 
     // should I download the lsp on client init?
     private static LanguageServer inst = null;
+    private Process process;
 
     public static LanguageServer instance() {
         if(inst == null) {
@@ -43,7 +44,7 @@ public class LanguageServer {
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);
 
         // starting the process
-        Process process = pb.start();
+        process = pb.start();
     }
 
     @NotNull
@@ -79,5 +80,11 @@ public class LanguageServer {
         );
     }
 
+    public static void kill() {
+        Tungsten.LOGGER.info("Killing language server");
+        inst.process.children().forEach(ProcessHandle::destroy);
+        inst.process.destroy();
 
+        inst = null;
+    }
 }

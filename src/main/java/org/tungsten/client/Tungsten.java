@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
@@ -68,12 +69,15 @@ public class Tungsten implements ClientModInitializer {
 	}
 
 	public static void onShutdownClient() {
+		LOGGER.info("Shutting down client");
+
 		try {
 			Thread.sleep(1000 * 10); //sleep for 10 seconds to ensure the locks are released before cleaning up files.
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
 		Utils.rmDirectoryTree(ULTRALIGHT); //cleanup ultralight files
+		LanguageServer.kill();
 	}
 
 	@Override
@@ -91,12 +95,17 @@ public class Tungsten implements ClientModInitializer {
 
 		LanguageServer.instance();
 
-		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
+		/*Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
 		try {
 			startUltralight();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		}
+		}*/
+
+		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> {
+			onShutdownClient();
+		});
+
 		//Goes here? I have no idea. Please help.
 		tungstenBridge = new TungstenBridge();
 	}
