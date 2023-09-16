@@ -37,18 +37,13 @@ public class LanguageServer {
 
         String exe = String.valueOf(LSPDir.resolve("lsp-ws-proxy/lsp-ws-proxy.exe"));
         final ProcessBuilder pb = getProcessBuilder(JDTLangServ, LSPDir, exe);
-        pb.directory(new File(Tungsten.RUNDIR +"\\appdata\\lsp\\"));
+
+        pb.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+
         // starting the process
         Process process = pb.start();
-
-        // for reading the output from stream
-        BufferedReader stdInput
-                = new BufferedReader(new InputStreamReader(
-                process.getInputStream()));
-        String s;
-        while ((s = stdInput.readLine()) != null) {
-            Tungsten.LOGGER.debug(s);
-        }
     }
 
     @NotNull
@@ -60,7 +55,8 @@ public class LanguageServer {
         return new ProcessBuilder(
                 exe,
                 "-r",
-                "-l 9999", // might want to make this autoadjust if port taken
+                "-l",
+                "9999", // might want to make this autoadjust if port taken
                 "--",
                 "java",
                 "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -70,11 +66,16 @@ public class LanguageServer {
                 "-Dlog.level=ALL",
                 "-Xmx1G",
                 "--add-module=ALL-SYSTEM",
-                "--add-opens java.base/java.util=ALL-UNNAMED",
-                "--add-opens java.base/java.lang=ALL-UNNAMED",
-                "-jar " + jar,
-                "-configuration " + configWin,
-                "-data " + work
+                "--add-opens",
+                "java.base/java.util=ALL-UNNAMED",
+                "--add-opens",
+                "java.base/java.lang=ALL-UNNAMED",
+                "-jar",
+                jar,
+                "-configuration",
+                configWin,
+                "-data",
+                work
         );
     }
 
