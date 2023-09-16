@@ -6,6 +6,7 @@ import org.tungsten.client.Tungsten;
 import java.io.IOException;
 import java.io.*;
 import java.lang.*;
+import java.net.ServerSocket;
 import java.nio.file.Path;
 
 public class LanguageServer {
@@ -13,6 +14,12 @@ public class LanguageServer {
     // should I download the lsp on client init?
     private static LanguageServer inst = null;
     private Process process;
+
+    public static int getPort() {
+        return port;
+    }
+
+    private static int port = 0;
 
     public static LanguageServer instance() {
         if(inst == null) {
@@ -33,6 +40,11 @@ public class LanguageServer {
     }
 
     public LanguageServer() throws IOException {
+        // find available port
+        ServerSocket s = new ServerSocket(0);
+        port = s.getLocalPort();
+        s.close();
+
         Path LSPDir = Tungsten.APPDATA.resolve("lsp");
         Path JDTLangServ = LSPDir.resolve("jdt-lang-serv");
 
@@ -57,7 +69,7 @@ public class LanguageServer {
                 exe,
                 "-r",
                 "-l",
-                "9999", // might want to make this autoadjust if port taken
+                String.valueOf(port),
                 "--",
                 "java",
                 "-Declipse.application=org.eclipse.jdt.ls.core.id1",
