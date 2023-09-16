@@ -95,12 +95,12 @@ public class Tungsten implements ClientModInitializer {
 
 		LanguageServer.instance();
 
-		/*Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
+		//Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::onShutdownClient));
 		try {
 			startUltralight();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		}*/
+		}
 
 		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> {
 			onShutdownClient();
