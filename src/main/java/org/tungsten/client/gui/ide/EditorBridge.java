@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import me.x150.ul.mgr.ClipboardAdapter;
+import org.tungsten.client.languageserver.LanguageServer;
 
 public class EditorBridge {
 
@@ -90,4 +91,7 @@ public class EditorBridge {
         cbad.writePlainText(text);
     }
 
+    public int getPort() {
+        return LanguageServer.getPort();
+    }
 }
