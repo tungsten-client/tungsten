@@ -190,9 +190,18 @@ tasks {
         isZip64 = true
     }
 
+    register<Jar>("generateDevJar") {
+        dependsOn(jar)
+        from(sourceSets.main.get().output) {
+            archiveClassifier.set("dev")
+            archiveFileName.set(archiveBaseName.get() + "-" + archiveClassifier.get() + "." + archiveExtension.get())
+        }
+    }
+
     build {
         doLast { shadowJar.get().archiveFile.get().asFile.delete() }
     }
+
 }
 
 configurations.shadow {
