@@ -3,8 +3,6 @@
 </p>
 
 <h1 align="center">Tungsten</h1>
-<a href="https://tungstenclient.com/"><p style="text-align:center">tungstenclient.com</a>
-
 <div align="center">
 <img src="https://img.shields.io/badge/MC-1.20.2-brightgreen.svg" alt="Minecraft"/>
 </div>
