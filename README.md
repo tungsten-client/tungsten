@@ -58,7 +58,7 @@ Tungsten is a Fabric Utility Mod & Platform that focuses on providing inexperien
 
 ## Disclaimer
 
-For educational purposes only. Use at your own risk. We are not responsible in any way shape or form if the developers using our platform choose to create modules that are against fair play policies. While we will moderate to a minor extent what content is uploaded to our marketplace, we strive to provide people with the opportunity to express themselves and their mod development skills freely.
+For educational purposes only. Use at your own risk. While we do our best to moderate malicious or harmful content hosted on our marketplace, we are not responsible for any uses of such content that violate fair play policies. We ultimately strive to provide people with the opportunity to express themselves and their mod development skills freely.
 
 ## License
 
