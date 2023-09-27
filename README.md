@@ -17,6 +17,10 @@
 
 For instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
 
+## Join
+
+Consider applying as a developer [here](https://forms.gle/RTW9EpmritmEscoM7).
+
 ## Info
 
 Tungsten is a Fabric Utility Mod & Platform that focuses on providing inexperienced programmers with an easy entrance into making their own utility addons by using our in-client editor, marketplace, and other tools to learn Minecraft programming.
