@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class ItemInitializer {
-    private static final @Unique MutableText CreativeTabName = GradientText.get(Text.literal("Tungsten Items"), "#585D5B", "#EF712A");
+    private static final @Unique MutableText CreativeTabName = GradientText.get(Text.literal("Tungsten Items"), 0x585D5B, 0xEF712A);
 
     private static final Path ITEMS = Tungsten.RUNDIR.resolve("items");
     public static final Path ITEMS_COMPILED = Tungsten.APPDATA.resolve("item_tmp");
