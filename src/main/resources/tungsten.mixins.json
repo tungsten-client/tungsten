@@ -8,7 +8,8 @@
     "EntityVelocityUpdateS2CPacketAccessor",
     "IdentifierAccessor",
     "PlayerMovePacketAccessor",
-    "PlayerPositionLookPacketAccessor"
+    "PlayerPositionLookPacketAccessor",
+    "RenderTickCounterAccessor"
   ],
   "client": [
     "ChatInputSuggestorMixin",
@@ -20,7 +21,8 @@
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
     "SimpleOptionMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "ClientPlayNetworkHandlerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
