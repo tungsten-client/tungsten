@@ -70,6 +70,7 @@ public class Tungsten implements ClientModInitializer {
 
 	public static void onShutdownClient() {
 		LOGGER.info("Shutting down client");
+		LanguageServer.kill();
 	}
 
 
