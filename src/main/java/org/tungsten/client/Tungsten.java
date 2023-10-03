@@ -111,9 +111,7 @@ public class Tungsten implements ClientModInitializer {
 			throw new RuntimeException(e);
 		}
 
-		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> {
-			onShutdownClient();
-		});
+		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> onShutdownClient());
 
 		tungstenBridge = new TungstenBridge();
 	}

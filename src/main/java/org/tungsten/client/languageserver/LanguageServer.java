@@ -1,5 +1,6 @@
 package org.tungsten.client.languageserver;
 
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
@@ -15,10 +16,7 @@ public class LanguageServer {
     private static LanguageServer inst = null;
     private Process process;
 
-    public static int getPort() {
-        return port;
-    }
-
+    @Getter
     private static int port = 0;
 
     public static LanguageServer instance() {
@@ -94,9 +92,7 @@ public class LanguageServer {
 
     public static void kill() {
         Tungsten.LOGGER.info("Killing language server");
-        inst.process.children().forEach(ProcessHandle::destroy);
         inst.process.destroy();
-
         inst = null;
     }
 }
