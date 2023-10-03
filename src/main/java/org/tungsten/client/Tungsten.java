@@ -98,7 +98,6 @@ public class Tungsten implements ClientModInitializer {
 		CommandInitializer.initCommands();
 
 		LanguageServer.instance();
-
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			Tungsten.cleanupUL();
 			LanguageServer.kill();
@@ -234,5 +233,8 @@ public class Tungsten implements ClientModInitializer {
 		UltralightJava.load(ulNatives);
 
 		Tungsten.LOGGER.info("OK");
+	}
+	public static String getOS() {
+		return System.getProperty("os.name");
 	}
 }

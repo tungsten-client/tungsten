@@ -5,8 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
 import java.io.IOException;
-import java.io.*;
-import java.lang.*;
 import java.net.ServerSocket;
 import java.nio.file.Path;
 
@@ -19,28 +17,38 @@ public class LanguageServer {
     @Getter
     private static int port = 0;
 
+    @Getter
+    private static String addr;
+
     public static LanguageServer instance() {
         if(inst == null) {
             Tungsten.LOGGER.info("Starting language sever");
-            Runnable runnable = () -> {
-                try {
-                    inst = new LanguageServer();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            };
-
-            Thread thread = new Thread(runnable);
-
-            thread.start();
+            new Thread(() -> {
+                try { inst = new LanguageServer(); }
+                catch (IOException e) { throw new RuntimeException(e); }
+            }).start();
         }
         return inst;
+    }
+
+    /**
+     *  Returns the respective LanguageServer config for the current os.
+     */
+    public static String getConfigForOS(@NotNull Path langServ) {
+        Path win = langServ.resolve("config_win");
+        Path linux = langServ.resolve("config_linux");
+        Path macos = langServ.resolve("config_mac");
+        if(Tungsten.getOS().startsWith("Win")) return String.valueOf(win);
+        if(Tungsten.getOS().startsWith("Lin")) return String.valueOf(linux);
+        if(Tungsten.getOS().startsWith("Mac")) return String.valueOf(macos);
+        return "";
     }
 
     public LanguageServer() throws IOException {
         // find available port
         ServerSocket s = new ServerSocket(0);
         port = s.getLocalPort();
+        addr = "127.0.0.1:" + port;
         s.close();
 
         Path LSPDir = Tungsten.APPDATA.resolve("lsp");
@@ -60,14 +68,13 @@ public class LanguageServer {
     @NotNull
     private static ProcessBuilder getProcessBuilder(@NotNull Path JDTLangServ, @NotNull Path LSPDir, String exe) {
         String jar = String.valueOf(JDTLangServ.resolve("plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"));
-        String configWin = String.valueOf(JDTLangServ.resolve("config_win"));
+        String configOS = getConfigForOS(JDTLangServ);
         String work = String.valueOf(LSPDir.resolve("work"));
-
         return new ProcessBuilder(
                 exe,
                 "-r",
                 "-l",
-                String.valueOf(port),
+                addr,
                 "--",
                 "java",
                 "-Declipse.application=org.eclipse.jdt.ls.core.id1",
@@ -84,7 +91,7 @@ public class LanguageServer {
                 "-jar",
                 jar,
                 "-configuration",
-                configWin,
+                configOS,
                 "-data",
                 work
         );

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.tungsten.client.Tungsten;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 import org.tungsten.client.gui.KeybindsMenu;
 import org.tungsten.client.gui.ide.ClientIDE;
@@ -25,20 +26,24 @@ public class TitleScreenMixin extends Screen {
 
 	@Inject(method = "init", at = @At("TAIL"))
 	void onInit(CallbackInfo ci) {
+		// ClickGUI Button
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("GUI"), button -> {
 			ClickGUI gui = ClickGUI.create();
 			this.client.setScreen(gui);
 			gui.reload();
 		}).dimensions(5, 5, 100, 20).build());
+		// Keybinds Button
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("KEYBINDS"), button -> {
 			KeybindsMenu kbm = KeybindsMenu.create();
 			this.client.setScreen(kbm);
 			kbm.reload();
 		}).dimensions(5, 30, 100, 20).build());
+		// Client IDE Button
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("IDE"), button -> {
 			ClientIDE ide = ClientIDE.create();
 			this.client.setScreen(ide);
 			ide.reload();
 		}).dimensions(5, 55, 100, 20).build());
+
 	}
 }
