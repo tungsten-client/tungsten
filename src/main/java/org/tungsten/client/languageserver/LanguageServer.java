@@ -70,6 +70,8 @@ public class LanguageServer {
         String jar = String.valueOf(JDTLangServ.resolve("plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"));
         String configOS = getConfigForOS(JDTLangServ);
         String work = String.valueOf(LSPDir.resolve("work"));
+
+        // https://github.com/qualified/lsp-ws-proxy#usage
         return new ProcessBuilder(
                 exe,
                 "-r",

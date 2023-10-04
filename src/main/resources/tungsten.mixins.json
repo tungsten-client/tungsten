@@ -22,7 +22,8 @@
     "MinecraftClientMixin",
     "SimpleOptionMixin",
     "TitleScreenMixin",
-    "ClientPlayNetworkHandlerAccessor"
+    "ClientPlayNetworkHandlerAccessor",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
