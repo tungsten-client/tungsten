@@ -66,5 +66,5 @@ This project is licensed under the [The MIT License](https://opensource.org/lice
 
 ## Donate
 
-Donate at [tungstenclient.com/donate](https://tungstenclient.com/donation).
+Donate at [tungstenclient.com/donation](https://tungstenclient.com/donation).
 
