@@ -125,7 +125,7 @@ public class MessageManager {
         for (Method declaredMethod : declaredMethods) {
             MessageSubscription annotation = declaredMethod.getAnnotation(MessageSubscription.class);
             if (annotation == null) continue;
-            if (instance == null || !Modifier.isStatic(declaredMethod.getModifiers())) continue;
+            if (instance == null && !Modifier.isStatic(declaredMethod.getModifiers())) continue;
             Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
             if (parameterTypes.length != 1) {
                 throw new InvalidSubscriberException(String.format("Handler %s.%s%s has an invalid signature: Expected 1 argument, found %s",
