@@ -4,7 +4,7 @@ plugins {
     id("java")
     id("java-library")
 
-    id("fabric-loom") version "1.3-SNAPSHOT"
+    id("fabric-loom") version "1.4-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
