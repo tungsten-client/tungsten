@@ -24,8 +24,8 @@ public class MessageManager {
      *
      * @param handler The handler to register
      */
-    protected void register(Handler handler) {
-        List<Handler> handlers = eventMap.computeIfAbsent(handler.subscriptionType, c -> new CopyOnWriteArrayList<>());
+    protected void register(Handler handler, Class<?> listenerType) {
+        List<Handler> handlers = eventMap.computeIfAbsent(listenerType, c -> new CopyOnWriteArrayList<>());
 
         if (handlers.contains(handler)) {
             throw new SubscriberAlreadyRegisteredException(String.format("Handler %s.%s%s is already registered",
@@ -135,8 +135,9 @@ public class MessageManager {
                         parameterTypes.length));
             }
             Class<?> listenerType = parameterTypes[0];
-            Handler handler = new Handler(instance, instanceClass, declaredMethod, listenerType, annotation.priority());
-            register(handler);
+            declaredMethod.trySetAccessible();
+            Handler handler = new Handler(instance, instanceClass, declaredMethod, annotation.priority());
+            register(handler, listenerType);
         }
     }
 
@@ -146,10 +147,9 @@ public class MessageManager {
      * @param ownerInstance    The instance of the owning class, or null if handler is static
      * @param ownerClass       The type of the owning class
      * @param callee           The handler method
-     * @param subscriptionType The object type being subscribed to
      * @param priority         The priority of this handler
      */
-    public record Handler(Object ownerInstance, Class<?> ownerClass, Method callee, Class<?> subscriptionType, int priority) {
+    public record Handler(Object ownerInstance, Class<?> ownerClass, Method callee, int priority) {
         /**
          * Invokes this handler
          *
@@ -157,24 +157,25 @@ public class MessageManager {
          *
          * @throws InvocationTargetException When {@link Method#invoke(Object, Object...)} throws
          * @throws IllegalAccessException    When {@link Method#invoke(Object, Object...)} throws
-         * @implNote The object {@code message} is not instance checked with {@link #subscriptionType}, and may be an arbitrary object.
          */
         public void invoke(Object message) throws InvocationTargetException, IllegalAccessException {
-            callee.setAccessible(true);
             callee.invoke(ownerInstance, message);
         }
 
         @Override
         public String toString() {
-            return "Handler{" + "ownerInstance=" + ownerInstance + ", ownerClass=" + ownerClass + ", callee=" + callee + ", subscriptionType=" + subscriptionType + ", priority=" + priority + '}';
+            return "Handler{" + "ownerInstance=" + ownerInstance + ", ownerClass=" + ownerClass + ", callee=" + callee + ", priority=" + priority + '}';
         }
 
         @Override
         public boolean equals(Object obj) {
+            if (obj == this) return true;
             if (!(obj instanceof Handler h)) {
                 return false;
             }
-            return callee.equals(h.callee);
+            return ownerClass == h.ownerClass
+                    && callee.equals(h.callee)
+                    && ownerInstance.equals(h.ownerInstance);
         }
     }
 }
