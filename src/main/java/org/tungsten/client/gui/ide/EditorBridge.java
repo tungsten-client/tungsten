@@ -91,7 +91,4 @@ public class EditorBridge {
         cbad.writePlainText(text);
     }
 
-    public int getPort() {
-        return LanguageServer.getPort();
-    }
 }

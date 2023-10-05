@@ -70,9 +70,9 @@ public class Tungsten implements ClientModInitializer {
 
 	public static void onShutdownClient() {
 		LOGGER.info("Shutting down client");
-
 		LanguageServer.kill();
 	}
+
 
 	private static void cleanupUL() {
 		Tungsten.LOGGER.info("Cleaning up UL");
@@ -98,19 +98,20 @@ public class Tungsten implements ClientModInitializer {
 		CommandInitializer.initCommands();
 
 		LanguageServer.instance();
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			Tungsten.cleanupUL();
+			LanguageServer.kill();
+			}
+		));
 
-		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::cleanupUL));
 		try {
 			startUltralight();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> {
-			onShutdownClient();
-		});
+		ClientLifecycleEvents.CLIENT_STOPPING.register(_c -> onShutdownClient());
 
-		//Goes here? I have no idea. Please help.
 		tungstenBridge = new TungstenBridge();
 	}
 
@@ -232,5 +233,8 @@ public class Tungsten implements ClientModInitializer {
 		UltralightJava.load(ulNatives);
 
 		Tungsten.LOGGER.info("OK");
+	}
+	public static String getOS() {
+		return System.getProperty("os.name");
 	}
 }
