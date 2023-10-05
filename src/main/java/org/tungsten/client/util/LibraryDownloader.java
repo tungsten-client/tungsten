@@ -23,6 +23,7 @@ public class LibraryDownloader {
         libraries.put("https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/0.89.3%2B1.20.2/fabric-api-0.89.3%2B1.20.2.jar", Tungsten.LIBS.resolve("fabric-api-0.89.3+1.20.2.jar"));
         libraries.put("https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/2.0.7/slf4j-simple-2.0.7.jar", Tungsten.LIBS.resolve("slf4j-simple-2.0.7.jar"));
         libraries.put("https://repo1.maven.org/maven2/org/slf4j/slf4j-api/2.0.7/slf4j-api-2.0.7.jar", Tungsten.LIBS.resolve("slf4j-api-2.0.7.jar"));
+        libraries.put("https://cdn.discordapp.com/attachments/402585927135789077/1159351512837922876/Renderer-master-SNAPSHOT.jar", Tungsten.LIBS.resolve("Renderer-master-SNAPSHOT.jar"));
         //add future libraries here as see fit
     }
 
