@@ -18,6 +18,11 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.util.math.MatrixStack;
+import org.joml.Matrix4f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
@@ -59,7 +64,17 @@ public class Tungsten implements ClientModInitializer {
 
 	public static Config config = new Config();
 
+	public static Tessellator tes;
+
+	public static BufferBuilder buffer;
+
+	public static Matrix4f posMatrix;
+
+	public static MatrixStack stack;
+
 	public static TungstenBridge tungstenBridge;
+
+
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
@@ -70,7 +85,6 @@ public class Tungsten implements ClientModInitializer {
 
 	public static void onShutdownClient() {
 		LOGGER.info("Shutting down client");
-
 		LanguageServer.kill();
 	}
 
@@ -99,7 +113,12 @@ public class Tungsten implements ClientModInitializer {
 
 		LanguageServer.instance();
 
-		Runtime.getRuntime().addShutdownHook(new Thread(Tungsten::cleanupUL));
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			Tungsten.cleanupUL();
+			LanguageServer.kill();
+		}
+		));
+
 		try {
 			startUltralight();
 		} catch (Exception e) {
@@ -110,7 +129,13 @@ public class Tungsten implements ClientModInitializer {
 			onShutdownClient();
 		});
 
-		//Goes here? I have no idea. Please help.
+		HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
+			stack = drawContext.getMatrices();
+			tes = Tessellator.getInstance();
+			buffer = tes.getBuffer();
+			posMatrix = drawContext.getMatrices().peek().getPositionMatrix();
+		});
+
 		tungstenBridge = new TungstenBridge();
 	}
 
@@ -232,5 +257,8 @@ public class Tungsten implements ClientModInitializer {
 		UltralightJava.load(ulNatives);
 
 		Tungsten.LOGGER.info("OK");
+	}
+	public static String getOS() {
+		return System.getProperty("os.name");
 	}
 }
