@@ -20,7 +20,8 @@
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
     "SimpleOptionMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

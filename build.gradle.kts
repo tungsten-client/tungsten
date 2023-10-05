@@ -18,6 +18,8 @@ repositories {
 
     maven("https://maven.terraformersmc.com/releases")
     maven("https://maven.terraformersmc.com/snapshots")
+
+    maven("https://maven.ladysnake.org/releases")
 }
 
 enum class IncludeMethod { NOT, SHADOW, INCLUDE }
@@ -167,6 +169,13 @@ dependencies {
         group = "com.terraformersmc",
         name = "modmenu",
         version = properties["dep_mod_modmenu"].toString()
+    )
+
+    modDepend(
+        includeMethod = IncludeMethod.NOT,
+        group = "com.github.0x3C50",
+        name = "Renderer",
+        version = properties["dep_mod_renderer"].toString()
     )
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
