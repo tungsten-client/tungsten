@@ -73,6 +73,8 @@ public class TungstenBridge {
 			if (mms instanceof TextboxSetting ts) {
 				Tungsten.LOGGER.info("Set textbox value to "  + value);
 				ts.setValue(value);
+			} else {
+				Tungsten.LOGGER.info("Textbox setting " + name + " not found!");
 			}
 		}
 	}
@@ -94,6 +96,8 @@ public class TungstenBridge {
 			if (mms instanceof SliderSetting ss) {
 				Tungsten.LOGGER.info("Set slider setting value to " + Double.parseDouble(value));
 				ss.setValue(Double.parseDouble(value));
+			} else {
+				Tungsten.LOGGER.info("Slier setting " + name + " not found!");
 			}
 		}
 	}

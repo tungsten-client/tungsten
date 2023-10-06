@@ -37,12 +37,12 @@ public class ExampleModule extends GenericModule {
 
     @Override
     protected void enable() {
-        System.out.println("Module Enabled.");
+        Tungsten.LOGGER.info("Module Enabled.");
     }
 
     @Override
     protected void disable() {
-        System.out.println("Module Disabled.");
+        Tungsten.LOGGER.info("Module Disabled.");
     }
 
     @Override
