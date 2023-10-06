@@ -14,7 +14,7 @@ public class LibraryDownloader {
     static {
         libraries.put("https://cdn.discordapp.com/attachments/1121169365883166790/1121169526021689344/minecraft-unmapped.jar", Tungsten.LIBS.resolve("minecraft-unmapped.jar"));
         libraries.put("https://cdn.discordapp.com/attachments/1121169365883166790/1121169525522563242/minecraft-mapped.jar", Tungsten.LIBS.resolve("minecraft-mapped.jar"));
-        libraries.put("https://cdn.discordapp.com/attachments/1121169365883166790/1130395140884791296/Tungsten-dev.jar", Tungsten.LIBS.resolve("Tungsten-dev.jar"));
+        libraries.put("https://github.com/tungsten-client/dependencies/releases/download/DevJars/Tungsten-dev.jar", Tungsten.LIBS.resolve("Tungsten-dev.jar"));
         libraries.put("https://libraries.minecraft.net/com/mojang/authlib/3.18.38/authlib-3.18.38-sources.jar", Tungsten.LIBS.resolve("authlib.jar"));
         libraries.put("https://libraries.minecraft.net/com/mojang/blocklist/1.0.10/blocklist-1.0.10-sources.jar", Tungsten.LIBS.resolve("blocklist.jar"));
         libraries.put("https://libraries.minecraft.net/com/mojang/brigadier/1.0.18/brigadier-1.0.18-sources.jar", Tungsten.LIBS.resolve("brigadier.jar"));
