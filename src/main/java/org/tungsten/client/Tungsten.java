@@ -17,11 +17,14 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import lombok.Getter;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +34,7 @@ import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ItemInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.languageserver.LanguageServer;
-import org.tungsten.client.util.CommandCompiler;
-import org.tungsten.client.util.ItemCompiler;
-import org.tungsten.client.util.LibraryDownloader;
-import org.tungsten.client.util.ModuleCompiler;
-import org.tungsten.client.util.Utils;
-import org.tungsten.client.util.WebUtils;
+import org.tungsten.client.util.*;
 
 import com.labymedia.ultralight.UltralightJava;
 
@@ -50,6 +48,9 @@ import net.minecraft.client.MinecraftClient;
 public class Tungsten implements ClientModInitializer {
 
 	public static final MinecraftClient client = MinecraftClient.getInstance();
+
+	@Getter
+	private static final Tungsten INSTANCE = new Tungsten();
 	public static final Path RUNDIR = Path.of(MinecraftClient.getInstance().runDirectory.toURI())
 			.resolve("tungsten"); //PLEASE USE THIS DIRECTORY TO SAVE ALL CONFIGURATION FILES, EVERYTHING
 	public static final Path APPDATA = RUNDIR.resolve(
@@ -67,14 +68,12 @@ public class Tungsten implements ClientModInitializer {
 	public static Tessellator tes;
 
 	public static BufferBuilder buffer;
-
+	public static DrawContext context;
 	public static Matrix4f posMatrix;
-
+	public static float delta;
 	public static MatrixStack stack;
-
+	public static Identifier logo = new Texture("tungsten.png");
 	public static TungstenBridge tungstenBridge;
-
-
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
@@ -130,6 +129,8 @@ public class Tungsten implements ClientModInitializer {
 		});
 
 		HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
+			context = drawContext;
+			delta = tickDelta;
 			stack = drawContext.getMatrices();
 			tes = Tessellator.getInstance();
 			buffer = tes.getBuffer();
