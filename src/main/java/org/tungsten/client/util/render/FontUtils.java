@@ -1,4 +1,4 @@
-package org.tungsten.client.render.util;
+package org.tungsten.client.util.render;
 
 import lombok.Getter;
 import me.x150.renderer.font.FontRenderer;

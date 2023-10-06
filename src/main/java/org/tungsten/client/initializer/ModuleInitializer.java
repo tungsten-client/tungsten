@@ -6,11 +6,9 @@ import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
 import org.tungsten.client.feature.module.ModuleTypeManager;
 import org.tungsten.client.feature.module.modules.client.mClickGUI;
-import org.tungsten.client.feature.module.modules.misc.ExampleModule;
-import org.tungsten.client.feature.module.modules.misc.HUD;
+import org.tungsten.client.feature.module.modules.render.HUD;
 import org.tungsten.client.feature.registry.ModuleRegistry;
-import org.tungsten.client.languageserver.LanguageServer;
-import org.tungsten.client.util.TungstenClassLoader;
+import org.tungsten.client.util.io.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
 import java.io.InputStream;

@@ -1,6 +1,7 @@
-package org.tungsten.client.util;
+package org.tungsten.client.util.io;
 
 import org.tungsten.client.Tungsten;
+import org.tungsten.client.util.WebUtils;
 
 import java.io.File;
 import java.nio.file.Path;

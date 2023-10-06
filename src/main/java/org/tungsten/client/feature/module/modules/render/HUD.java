@@ -1,4 +1,4 @@
-package org.tungsten.client.feature.module.modules.misc;
+package org.tungsten.client.feature.module.modules.render;
 
 import me.x150.MessageSubscription;
 import org.tungsten.client.Tungsten;

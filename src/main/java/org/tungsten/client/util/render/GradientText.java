@@ -1,4 +1,4 @@
-package org.tungsten.client.util;
+package org.tungsten.client.util.render;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;

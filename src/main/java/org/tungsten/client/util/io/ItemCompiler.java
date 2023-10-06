@@ -1,8 +1,9 @@
-package org.tungsten.client.util;
+package org.tungsten.client.util.io;
 
 import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.initializer.ItemInitializer;
+import org.tungsten.client.util.Utils;
 
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;

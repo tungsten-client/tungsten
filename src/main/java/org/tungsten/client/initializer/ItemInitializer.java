@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.MutableText;
@@ -15,14 +14,13 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.itemgroup.GenericItem;
 import org.tungsten.client.feature.itemgroup.items.ExampleItem;
 import org.tungsten.client.feature.registry.ItemRegistry;
-import org.tungsten.client.util.GradientText;
-import org.tungsten.client.util.TungstenClassLoader;
+import org.tungsten.client.util.render.GradientText;
+import org.tungsten.client.util.io.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class ItemInitializer {

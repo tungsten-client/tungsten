@@ -1,15 +1,13 @@
-package org.tungsten.client.util;
+package org.tungsten.client.util.io;
 
 import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
-import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
+import org.tungsten.client.util.Utils;
 
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -17,22 +15,22 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-public class CommandCompiler {
+public class ModuleCompiler {
 
-	public static void compileCommands() {
-		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("commands"));
-		searchAndCompileCommands(Tungsten.RUNDIR.resolve("commands"));
+	public static void compileModules() {
+		Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("modules"));
+		searchAndCompileModules(Tungsten.RUNDIR.resolve("modules"));
 	}
 
 
 	@SneakyThrows
-	private static void searchAndCompileCommands(Path path) {
-		Utils.rmDirectoryTree(CommandInitializer.COMMANDS_COMPILED);
-		Utils.ensureDirectoryIsCreated(CommandInitializer.COMMANDS_COMPILED);
+	private static void searchAndCompileModules(Path path) {
+		Utils.rmDirectoryTree(ModuleInitializer.MODULES_COMPILED);
+		Utils.ensureDirectoryIsCreated(ModuleInitializer.MODULES_COMPILED);
 		try (Stream<Path> r = Files.walk(path)) {
 			r.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".java")).forEach(path1 -> {
 				try {
-					compileCommand(path1);
+					compileModule(path1);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
@@ -40,21 +38,26 @@ public class CommandCompiler {
 		}
 	}
 
-	private static void compileCommand(Path command) throws IOException {
-		Tungsten.LOGGER.info("compileCommand called on " + command.toAbsolutePath());
+	private static void compileModule(Path module) throws IOException {
+		Tungsten.LOGGER.info("compileModule called on " + module.getFileName().toString());
 //		LibraryDownloader.ensurePresent();
 
-		String fileName = command.getFileName().toString();
-		Path output = CommandInitializer.COMMANDS_COMPILED.resolve(
+		String fileName = module.getFileName().toString();
+		Path output = ModuleInitializer.MODULES_COMPILED.resolve(
 				fileName.substring(0, fileName.length() - ".java".length()) + ".class");
+
+
+		//ty crosby you saved me from writing a method to download the libs required
+		//nevermind saturn retardo brain
+		//why is this MY fault joe? you didn't even test your code!
 
 		String libraries = LibraryDownloader.generateClasspath();
 
-		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(command, List.of("-cp", libraries));
+		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(module, List.of("-cp", libraries));
 		if (compile.compiledSuccessfully()) {
 			Files.write(output, compile.compiledClassFile());
 		} else {
-			Tungsten.LOGGER.error("Command {} failed to compile", command.toAbsolutePath());
+			Tungsten.LOGGER.error("Module {} failed to compile", module.toAbsolutePath());
 			for (Diagnostic<? extends JavaFileObject> diagnostic : compile.diagnostics()) {
 				Tungsten.LOGGER.error("  ...: [{}] {}: {}. At {}:{} in {}", diagnostic.getKind(), diagnostic.getCode(),
 						diagnostic.getMessage(
@@ -65,4 +68,7 @@ public class CommandCompiler {
 			Arrays.stream(compile.logs().split("\n")).map(s -> "  ...:" + s).forEach(Tungsten.LOGGER::error);
 		}
 	}
+
+
+
 }

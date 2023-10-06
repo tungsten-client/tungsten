@@ -1,4 +1,4 @@
-package org.tungsten.client.render.util;
+package org.tungsten.client.util.render;
 
 import lombok.NonNull;
 import net.minecraft.client.render.Camera;

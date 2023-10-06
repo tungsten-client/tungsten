@@ -1,11 +1,10 @@
-package org.tungsten.client.render.util;
+package org.tungsten.client.util.render;
 
 import lombok.Getter;
 import me.x150.renderer.render.Renderer2d;
 import me.x150.renderer.util.RendererUtils;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
-import org.tungsten.client.Tungsten;
 
 import java.awt.*;
 
@@ -43,7 +42,7 @@ public class Line {
 
     }
     public static void drawLineToPosInverse(MatrixStack stack, Color color, Vec3d pos) {
-        Vec3d j = org.tungsten.client.render.util.RenderUtils.worldSpaceToScreenSpaceInverse(pos);
+        Vec3d j = RenderUtils.worldSpaceToScreenSpaceInverse(pos);
         double x = client.getWindow().getScaledWidth() / 2D;
         double y = client.getWindow().getScaledHeight() / 2D;
 

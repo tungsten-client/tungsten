@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.command.GenericCommand;
 import org.tungsten.client.feature.registry.CommandRegistry;
-import org.tungsten.client.util.TungstenClassLoader;
+import org.tungsten.client.util.io.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
 import java.io.InputStream;

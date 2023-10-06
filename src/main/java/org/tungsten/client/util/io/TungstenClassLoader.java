@@ -1,4 +1,4 @@
-package org.tungsten.client.util;
+package org.tungsten.client.util.io;
 
 import java.net.URL;
 import java.net.URLClassLoader;

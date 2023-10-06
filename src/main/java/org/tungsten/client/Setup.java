@@ -2,7 +2,7 @@ package org.tungsten.client;
 
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
-import org.tungsten.client.util.LibraryDownloader;
+import org.tungsten.client.util.io.LibraryDownloader;
 
 import javax.swing.*;
 import java.io.*;

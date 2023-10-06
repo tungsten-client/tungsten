@@ -4,8 +4,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
-import org.tungsten.client.Tungsten;
-import org.tungsten.client.feature.module.modules.misc.HUD;
+import org.tungsten.client.feature.module.modules.render.HUD;
 
 public class HudEditorGui extends Screen {
     private final Screen previousScreen;

@@ -2,14 +2,12 @@ package org.tungsten.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.x150.renderer.render.Renderer2d;
-import me.x150.renderer.util.RendererUtils;
 import org.tungsten.client.Tungsten;
-import org.tungsten.client.feature.module.modules.misc.HUD;
 import org.tungsten.client.util.Texture;
 
 import java.awt.*;
 
-import static org.tungsten.client.feature.module.modules.misc.HUD.*;
+import static org.tungsten.client.feature.module.modules.render.HUD.*;
 
 public class HudElementRegistry {
 

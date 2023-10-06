@@ -43,6 +43,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import org.tungsten.client.util.io.CommandCompiler;
+import org.tungsten.client.util.io.ItemCompiler;
+import org.tungsten.client.util.io.ModuleCompiler;
 
 @Environment(EnvType.CLIENT)
 public class Tungsten implements ClientModInitializer {
