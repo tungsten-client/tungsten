@@ -13,10 +13,10 @@ public class HudEditorGui extends Screen {
         this.previousScreen = prevScreen;
     }
 
-    private int leg;
-    private int arm;
     public static boolean selected;
-    public static boolean resizeClicked;
+    private boolean resizeClicked;
+    private int leg; //y
+    private int arm; //x
     private int grandfatherMouse; //y
     private int grandmotherMouse; //x
     private int grandfatherHeight; //y

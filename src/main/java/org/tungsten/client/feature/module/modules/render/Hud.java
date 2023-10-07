@@ -20,7 +20,7 @@ public class Hud extends GenericModule {
     protected void disable() {
 
     }
-    public static int logoX = -5; // In HudEditorGui change pos when dragging these
+    public static int logoX = -5;
     public static int logoY = -15;
     public static int resizeX = logoX + 90;
     public static int resizeY = logoY + 90;
