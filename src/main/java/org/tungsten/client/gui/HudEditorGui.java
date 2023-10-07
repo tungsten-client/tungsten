@@ -18,18 +18,12 @@ public class HudEditorGui extends Screen {
     public static int leg;
     public static int arm;
     public static boolean selected;
-    public static boolean hoveringOverLogo;
     public static boolean resizeClicked;
     public static int grandfatherMouse; //y
     public static int grandmotherMouse; //x
     public static int grandfatherHeight; //y
     public static int grandmotherWidth; //x
     boolean shouldRenderLogo = true;
-
-    @Override
-    public void init() {
-
-    }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -85,16 +79,6 @@ public class HudEditorGui extends Screen {
            }
         }
         return super.mouseClicked(mouseX, mouseY, button);
-    }
-
-    @Override
-    public boolean isMouseOver(double mouseX, double mouseY) {
-        if(!((mouseX >= HUD.logoX && mouseX <= HUD.logoX + HUD.logoWidth) && (mouseY >= HUD.logoY && mouseY <= HUD.logoY + HUD.logoHeight))) {
-            hoveringOverLogo = false;
-            return false;
-        } else hoveringOverLogo = true;
-        System.out.println(hoveringOverLogo);
-        return super.isMouseOver(mouseX, mouseY);
     }
 
     @Override
