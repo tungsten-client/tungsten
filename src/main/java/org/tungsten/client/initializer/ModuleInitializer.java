@@ -26,6 +26,13 @@ public class ModuleInitializer {
 		Utils.ensureDirectoryIsCreated(MODULES_COMPILED);
 		ModuleRegistry.modules.clear();
 		ModuleTypeManager.getModuleTypes().clear();
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 5, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 215, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Movement", 425, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Player", 635, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Render", 845, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Exploit", 1055, 50));
+		ModuleTypeManager.subscribeModuleType(new ModuleType("Misc", 1265, 50));
 		searchForModules(MODULES_COMPILED);
 
 //		ExampleModule exampleModule1 = new ExampleModule();
@@ -40,14 +47,6 @@ public class ModuleInitializer {
 
 		// Register HUD module.
 		ModuleRegistry.addModule(new Hud());
-
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Client", 5, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Combat", 215, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Movement", 425, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Player", 635, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Render", 845, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Exploit", 1055, 50));
-		ModuleTypeManager.subscribeModuleType(new ModuleType("Misc", 1265, 50));
 	}
 
 
