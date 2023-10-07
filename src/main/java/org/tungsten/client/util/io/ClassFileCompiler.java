@@ -1,6 +1,7 @@
 package org.tungsten.client.util.io;
 
 import lombok.SneakyThrows;
+import org.tungsten.client.Tungsten;
 
 import javax.tools.*;
 import java.io.StringWriter;
@@ -29,22 +30,29 @@ public class ClassFileCompiler {
 		boolean aBoolean = systemJavaCompiler.getTask(sw, standardFileManager, jfs, compilerArgs, null,
 				javaFileObjectsFromPaths).call();
 		if (!aBoolean) {
-			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), false, null);
+			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), false, null, null);
 		}
 		try (Stream<Path> p = Files.walk(tempDirectory)) {
-			List<Path> list = p.filter(Files::isRegularFile).filter(a->a.getFileName().toString().equals(input.getFileName().toString().replaceFirst("(?s).java(?!.*?.java)", "") + ".class")).toList();
-			if (list.size() != 1) {
-				// I intentionally did not delete the temp directory here because one might want to look into it when this happens
-				throw new IllegalStateException(
-						"Compiler generated " + list.size() + " source files instead of one. See output directory @ " + tempDirectory.toAbsolutePath());
+			List<Path> list = p.filter(Files::isRegularFile).filter(a->a.getFileName().toString().contains(input.getFileName().toString().replaceFirst("(?s).java(?!.*?.java)", ""))).toList();
+//			if (list.size() != 1) {
+//				// I intentionally did not delete the temp directory here because one might want to look into it when this happens
+//				throw new IllegalStateException(
+//						"Compiler generated " + list.size() + " source files instead of one. See output directory @ " + tempDirectory.toAbsolutePath());
+//			}
+			ArrayList<String> names = new ArrayList<>();
+			ArrayList<byte[]> files = new ArrayList<>();
+			Tungsten.LOGGER.info(list.size() + " FILES TO COMPILE");
+			for(Path path : list) {
+				String spath = path.toString();
+				Tungsten.LOGGER.info("COMPILING:" + spath);
+				files.add(Files.readAllBytes(path));
+				names.add(spath.substring(spath.lastIndexOf("\\") + 1));
 			}
-			Path path = list.get(0);
-			byte[] ba = Files.readAllBytes(path);
-			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), true, ba);
+			return new CompilationResults(jfs.getDiagnostics(), sw.toString(), true, names, files);
 		}
 	}
 
 	public record CompilationResults(List<Diagnostic<? extends JavaFileObject>> diagnostics, String logs,
-	                                 boolean compiledSuccessfully, byte[] compiledClassFile) {
+									 boolean compiledSuccessfully, ArrayList<String> compiledClassFileNames, ArrayList<byte[]> compiledClassFiles) {
 	}
 }

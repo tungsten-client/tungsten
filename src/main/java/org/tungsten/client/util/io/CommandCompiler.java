@@ -3,6 +3,7 @@ package org.tungsten.client.util.io;
 import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.initializer.CommandInitializer;
+import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.Utils;
 
 import javax.tools.Diagnostic;
@@ -10,6 +11,7 @@ import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +52,11 @@ public class CommandCompiler {
 
 		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(command, List.of("-cp", libraries));
 		if (compile.compiledSuccessfully()) {
-			Files.write(output, compile.compiledClassFile());
+			ArrayList<String> sas = compile.compiledClassFileNames();
+			ArrayList<byte[]> bas = compile.compiledClassFiles();
+			for(int i = 0; i < sas.size(); i++) {
+				Files.write(ModuleInitializer.MODULES_COMPILED.resolve(sas.get(i)), bas.get(i));
+			}
 		} else {
 			Tungsten.LOGGER.error("Command {} failed to compile", command.toAbsolutePath());
 			for (Diagnostic<? extends JavaFileObject> diagnostic : compile.diagnostics()) {

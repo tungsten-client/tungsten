@@ -10,6 +10,7 @@ import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +56,11 @@ public class ModuleCompiler {
 
 		ClassFileCompiler.CompilationResults compile = ClassFileCompiler.compile(module, List.of("-cp", libraries));
 		if (compile.compiledSuccessfully()) {
-			Files.write(output, compile.compiledClassFile());
+			ArrayList<String> sas = compile.compiledClassFileNames();
+			ArrayList<byte[]> bas = compile.compiledClassFiles();
+			for(int i = 0; i < sas.size(); i++) {
+				Files.write(ModuleInitializer.MODULES_COMPILED.resolve(sas.get(i)), bas.get(i));
+			}
 		} else {
 			Tungsten.LOGGER.error("Module {} failed to compile", module.toAbsolutePath());
 			for (Diagnostic<? extends JavaFileObject> diagnostic : compile.diagnostics()) {
