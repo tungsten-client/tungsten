@@ -1,7 +1,6 @@
 package org.tungsten.client.feature.module.modules.render;
 
 import me.x150.MessageSubscription;
-import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.RenderEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.config.ButtonSetting;
@@ -9,8 +8,8 @@ import org.tungsten.client.feature.module.config.SliderSetting;
 import org.tungsten.client.gui.HudEditorGui;
 import org.tungsten.client.gui.HudElementRegistry;
 
-public class HUD extends GenericModule {
-    public HUD() {
+public class Hud extends GenericModule {
+    public Hud() {
         super("HUD", "Enable default HUD elements.", "RENDER");
         this.registerSettings();
     }

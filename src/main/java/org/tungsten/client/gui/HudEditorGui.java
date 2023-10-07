@@ -4,7 +4,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
-import org.tungsten.client.feature.module.modules.render.HUD;
+import org.tungsten.client.feature.module.modules.render.Hud;
 
 public class HudEditorGui extends Screen {
     private final Screen previousScreen;
@@ -13,35 +13,31 @@ public class HudEditorGui extends Screen {
         this.previousScreen = prevScreen;
     }
 
-    public static int mousePosX;
-    public static int mousePosY;
-    public static int leg;
-    public static int arm;
+    private int leg;
+    private int arm;
     public static boolean selected;
     public static boolean resizeClicked;
-    public static int grandfatherMouse; //y
-    public static int grandmotherMouse; //x
-    public static int grandfatherHeight; //y
-    public static int grandmotherWidth; //x
-    boolean shouldRenderLogo = true;
+    private int grandfatherMouse; //y
+    private int grandmotherMouse; //x
+    private int grandfatherHeight; //y
+    private int grandmotherWidth; //x
+    private boolean shouldRenderLogo = true;
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        mousePosX = mouseX;
-        mousePosY = mouseY;
-        if (shouldRenderLogo) HudElementRegistry.renderLogo();
+        if(shouldRenderLogo) HudElementRegistry.renderLogo();
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if(selected) {
-            HUD.logoX = (int) mouseX - arm;
-            HUD.logoY = (int) mouseY - leg;
+            Hud.logoX = (int) mouseX - arm;
+            Hud.logoY = (int) mouseY - leg;
         }
 
         if(resizeClicked) {
-            HUD.logoWidth = grandmotherWidth + (int) mouseX - grandmotherMouse;
-            HUD.logoHeight = grandfatherHeight + (int) mouseY - grandfatherMouse;
+            Hud.logoWidth = grandmotherWidth + (int) mouseX - grandmotherMouse;
+            Hud.logoHeight = grandfatherHeight + (int) mouseY - grandfatherMouse;
         }
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
@@ -55,26 +51,26 @@ public class HudEditorGui extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if(button == GLFW.GLFW_MOUSE_BUTTON_1) {
-            if (!((mouseX >= HUD.logoX && mouseX <= HUD.logoX + HUD.logoWidth) && (mouseY >= HUD.logoY && mouseY <= HUD.logoY + HUD.logoHeight))) {
+            if(!((mouseX >= Hud.logoX && mouseX <= Hud.logoX + Hud.logoWidth) && (mouseY >= Hud.logoY && mouseY <= Hud.logoY + Hud.logoHeight))) {
                 selected = false;
                 return false;
             } else {
                 selected = true;
-                arm = ((int) mouseX) - HUD.logoX;
-                leg = ((int) mouseY) - HUD.logoY;
+                arm = ((int) mouseX) - Hud.logoX;
+                leg = ((int) mouseY) - Hud.logoY;
             }
         }
 
         if(button == GLFW.GLFW_MOUSE_BUTTON_2) {
-           if(!((mouseX >= HUD.resizeX && mouseX <= HUD.resizeX + HUD.resizeWidth) && (mouseY >= HUD.resizeY && mouseY <= HUD.resizeY + HUD.resizeHeight))) {
+           if(!((mouseX >= Hud.resizeX && mouseX <= Hud.resizeX + Hud.resizeWidth) && (mouseY >= Hud.resizeY && mouseY <= Hud.resizeY + Hud.resizeHeight))) {
                resizeClicked = false;
                return false;
            } else {
                resizeClicked = true;
                grandfatherMouse = (int) mouseY;
                grandmotherMouse = (int) mouseX;
-               grandfatherHeight = HUD.logoHeight;
-               grandmotherWidth = HUD.logoWidth;
+               grandfatherHeight = Hud.logoHeight;
+               grandmotherWidth = Hud.logoWidth;
 
            }
         }
@@ -83,7 +79,7 @@ public class HudEditorGui extends Screen {
 
     @Override
     public boolean keyPressed(int key, int scanCode, int modifiers) {
-        if (key == GLFW.GLFW_KEY_ESCAPE) {
+        if(key == GLFW.GLFW_KEY_ESCAPE) {
             client.setScreen(this.previousScreen);
             return false;
         }
@@ -97,7 +93,6 @@ public class HudEditorGui extends Screen {
     }
 
 }
-
 
 //            shouldShrink = deltaX < 0 || deltaY < 0;
 //            shouldExpand = deltaX > 0 || deltaY > 0;

@@ -7,7 +7,7 @@ import org.tungsten.client.util.Texture;
 
 import java.awt.*;
 
-import static org.tungsten.client.feature.module.modules.render.HUD.*;
+import static org.tungsten.client.feature.module.modules.render.Hud.*;
 
 public class HudElementRegistry {
 
