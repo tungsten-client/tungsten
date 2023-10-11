@@ -13,6 +13,7 @@ public class HudEditorGui extends Screen {
         this.previousScreen = prevScreen;
     }
 
+    public static boolean shouldRenderLogo = true;
     public static boolean selected;
     private boolean resizeClicked;
     private int leg; //y
@@ -21,7 +22,6 @@ public class HudEditorGui extends Screen {
     private int grandmotherMouse; //x
     private int grandfatherHeight; //y
     private int grandmotherWidth; //x
-    private boolean shouldRenderLogo = true;
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -80,6 +80,7 @@ public class HudEditorGui extends Screen {
     @Override
     public boolean keyPressed(int key, int scanCode, int modifiers) {
         if(key == GLFW.GLFW_KEY_ESCAPE) {
+            // SAVE GUI POSITIONS IN THIS METHOD
             client.setScreen(this.previousScreen);
             return false;
         }

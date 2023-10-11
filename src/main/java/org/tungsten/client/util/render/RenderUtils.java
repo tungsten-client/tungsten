@@ -2,12 +2,16 @@ package org.tungsten.client.util.render;
 
 import lombok.NonNull;
 import net.minecraft.client.render.Camera;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Contract;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+
 import static org.tungsten.client.Tungsten.client;
 
 import static me.x150.renderer.util.RendererUtils.*;
@@ -56,5 +60,16 @@ public class RenderUtils {
                 target.z
         );
 
+    }
+
+    public static boolean inBounds(int mouseX, int mouseY, int elementX, int elementY, int elementWidth, int elementHeight) {
+        return !((mouseX >= elementX && mouseX <= elementX + elementWidth) && (mouseY >= elementY && mouseY <= elementY + elementHeight));
+    }
+
+    public static Color lerp(Color a, Color b, float delta) {
+        return new Color(MathHelper.lerp(delta, a.getRed(), b.getRed()),
+                MathHelper.lerp(delta, a.getGreen(), b.getGreen()),
+                MathHelper.lerp(delta, a.getBlue(), b.getBlue()),
+                MathHelper.lerp(delta, a.getAlpha(), b.getAlpha()));
     }
 }

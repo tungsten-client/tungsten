@@ -7,7 +7,7 @@
   "authors": [],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/tungsten/icon.png",
+  "icon": "assets/tungsten/icon/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [

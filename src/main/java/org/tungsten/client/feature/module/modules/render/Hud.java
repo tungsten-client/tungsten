@@ -1,12 +1,14 @@
 package org.tungsten.client.feature.module.modules.render;
 
 import me.x150.MessageSubscription;
+import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.RenderEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.config.ButtonSetting;
 import org.tungsten.client.feature.module.config.SliderSetting;
 import org.tungsten.client.gui.HudEditorGui;
 import org.tungsten.client.gui.HudElementRegistry;
+import org.tungsten.client.util.render.notification.Notifications;
 
 public class Hud extends GenericModule {
     public Hud() {
@@ -29,23 +31,25 @@ public class Hud extends GenericModule {
     public static int logoWidth = 100;
     public static int logoHeight = 100;
     public static float imgAlpha = alpha.getValue().floatValue();
+    public static float daVal;
     @Override
     protected void enable() {
-
     }
 
     @Override
     protected void tickClient() {
-
     }
 
     @MessageSubscription
     void onRender(RenderEvent.HudNoMSAA event) {
+        daVal = Tungsten.tDelta / 1000F;
+        Notifications.newNotification("WOWWWW", 1000L).title("Test").build();
+
         // Hard code in resize arrow to be in bottom opposite of left of the logo.
         resizeX = logoX + (logoWidth - 10);
         resizeY = logoY + (logoHeight - 10);
 
-        if(client.currentScreen == null ) HudElementRegistry.renderLogo();
+        if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo();
         if(client.currentScreen instanceof HudEditorGui) {
             if (HudEditorGui.selected) HudElementRegistry.highlightLogo();
             else HudElementRegistry.drawResizeTriangle();

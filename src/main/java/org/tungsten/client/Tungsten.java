@@ -1,25 +1,14 @@
 package org.tungsten.client;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystemAlreadyExistsException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.stream.Stream;
-
+import com.labymedia.ultralight.UltralightJava;
 import lombok.Getter;
+import me.x150.MessageManager;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -34,18 +23,24 @@ import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ItemInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.languageserver.LanguageServer;
-import org.tungsten.client.util.*;
-
-import com.labymedia.ultralight.UltralightJava;
-
-import me.x150.MessageManager;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
+import org.tungsten.client.util.Texture;
+import org.tungsten.client.util.Utils;
+import org.tungsten.client.util.WebUtils;
 import org.tungsten.client.util.io.CommandCompiler;
 import org.tungsten.client.util.io.ItemCompiler;
 import org.tungsten.client.util.io.ModuleCompiler;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
 public class Tungsten implements ClientModInitializer {
@@ -75,7 +70,9 @@ public class Tungsten implements ClientModInitializer {
 	public static Matrix4f posMatrix;
 	public static float delta;
 	public static MatrixStack stack;
-	public static Identifier logo = new Texture("tungsten.png");
+	private long lastMs = System.currentTimeMillis();
+	public static int tDelta;
+	public static Identifier logo = new Texture("icon/tungsten.png");
 	public static TungstenBridge tungstenBridge;
 
 	static {
@@ -138,6 +135,9 @@ public class Tungsten implements ClientModInitializer {
 			tes = Tessellator.getInstance();
 			buffer = tes.getBuffer();
 			posMatrix = drawContext.getMatrices().peek().getPositionMatrix();
+			long now = System.currentTimeMillis();
+			tDelta = (int) (now - lastMs);
+			lastMs = now;
 		});
 
 		tungstenBridge = new TungstenBridge();
