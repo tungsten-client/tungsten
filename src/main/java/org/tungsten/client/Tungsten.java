@@ -29,6 +29,7 @@ import org.tungsten.client.util.WebUtils;
 import org.tungsten.client.util.io.CommandCompiler;
 import org.tungsten.client.util.io.ItemCompiler;
 import org.tungsten.client.util.io.ModuleCompiler;
+import org.tungsten.client.util.render.notification.Notifications;
 
 import java.io.File;
 import java.io.IOException;

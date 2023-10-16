@@ -8,7 +8,6 @@ import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.config.GenericSetting;
 import org.tungsten.client.feature.module.config.KeybindSetting;
 import org.tungsten.client.feature.registry.ModuleRegistry;
-import org.tungsten.client.util.render.notification.NotificationUtil;
 import org.tungsten.client.util.render.notification.Notifications;
 
 import java.lang.reflect.Field;

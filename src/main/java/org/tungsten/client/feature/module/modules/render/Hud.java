@@ -32,6 +32,7 @@ public class Hud extends GenericModule {
     public static int logoHeight = 100;
     public static float imgAlpha = alpha.getValue().floatValue();
     public static float daVal;
+
     @Override
     protected void enable() {
     }
@@ -44,7 +45,6 @@ public class Hud extends GenericModule {
     void onRender(RenderEvent.HudNoMSAA event) {
         daVal = Tungsten.tDelta / 1000F;
         Notifications.newNotification("WOWWWW", 1000L).title("Test").build();
-
         // Hard code in resize arrow to be in bottom opposite of left of the logo.
         resizeX = logoX + (logoWidth - 10);
         resizeY = logoY + (logoHeight - 10);

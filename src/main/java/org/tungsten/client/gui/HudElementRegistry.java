@@ -1,16 +1,13 @@
 package org.tungsten.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.util.Texture;
-import org.tungsten.client.util.render.notification.NotificationUtil;
 
 import java.awt.*;
 
 import static org.tungsten.client.feature.module.modules.render.Hud.*;
-import static org.tungsten.client.util.render.FontUtils.primaryFont;
 
 public class HudElementRegistry {
 

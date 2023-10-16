@@ -1,16 +1,15 @@
 package org.tungsten.client.util.render.notification;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import lombok.Setter;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import org.tungsten.client.Tungsten;
-import org.tungsten.client.feature.module.modules.render.Hud;
 import org.tungsten.client.util.Texture;
 
 import java.awt.*;
 
 import static org.tungsten.client.util.render.FontUtils.primaryFont;
-import static org.tungsten.client.util.render.notification.Notifications.*;
 
 public class NotificationUtil {
 
