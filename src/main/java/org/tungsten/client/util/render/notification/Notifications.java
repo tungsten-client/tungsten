@@ -108,7 +108,8 @@ public class Notifications {
 
         float fadeIn = Math.min(existed / (float) fadeTime, 1);
         float fadeOut = Math.min(remaining / (float) fadeTime, 1);
-        return Animation.Easing.CIRC_IN_OUT.apply(Math.min(fadeIn, fadeOut));
+//        return Animation.Easing.CIRC_IN_OUT.apply(Math.min(fadeIn, fadeOut));
+        return Animation.Easing.BACK_IN_OUT.apply(Math.min(fadeIn, fadeOut));
     }
 
     public static void render() {
@@ -121,7 +122,7 @@ public class Notifications {
         notiX2 = screenWidth - 8;
         notiY2 = screenHeight - 8;
         for (Notifications notification : Notifications.notifications) {
-//            notification.setPosX(notification.getNotiX() - notification.getNotiWidth());
+            notification.setPosX((notification.getNotiX() - notification.getNotiWidth()) - (screenWidth - 200));
             notification.setPosY((notification.getNotiY() - y - notification.getNotiHeight()) - (screenHeight - 80));
             y -= (notification.getNotiHeight() + 5) * notification.getFade();
 

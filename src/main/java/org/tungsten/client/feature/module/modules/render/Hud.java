@@ -22,10 +22,6 @@ public class Hud extends GenericModule {
     static SliderSetting alpha = new SliderSetting(100D, 1D, 100D, "Opacity", "Change the opacity of the Tungsten logo. \n100 = No transparency\n1 = Barely visible");
     ButtonSetting edit = new ButtonSetting("Edit HUD", "Edit Elements", () -> client.setScreen(new HudEditorGui(client.currentScreen)));
     ButtonSetting reset = new ButtonSetting("Reset HUD", "Reset Sizes", HudElementRegistry::resetLogoSize);
-    @Override
-    protected void disable() {
-
-    }
     public static int logoX = -5;
     public static int logoY = -15;
     public static int resizeX = logoX + 90;
@@ -39,6 +35,11 @@ public class Hud extends GenericModule {
     @Override
     protected void enable() {
         Notifications.newNotification("Enabled Hud", 5_000L).title("Toggle").build();
+    }
+
+    @Override
+    protected void disable() {
+        Notifications.newNotification("Disabled Hud", 5_000L).title("Toggle").build();
     }
 
     @Override
