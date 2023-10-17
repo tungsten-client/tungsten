@@ -28,7 +28,7 @@ public class NotificationUtil {
         screenWidth = Tungsten.client.getWindow().getScaledWidth();
         screenHeight = Tungsten.client.getWindow().getScaledHeight();
         notiX = screenWidth - 105;
-        notiY = screenHeight - 50;
+        notiY = screenHeight - 45;
         notiX2 = screenWidth - 8;
         notiY2 = screenHeight - 8;
 
@@ -38,8 +38,8 @@ public class NotificationUtil {
                 NotificationUtil.textRender = new FontRenderer(new Font[] { primaryFont }, 10F);
             } catch (Exception e) { throw new RuntimeException(e); }
     }
-        // Render box bottom opposite of left side
 
+        // Render box bottom opposite of left side
         Renderer2d.renderRoundedQuad(
                 Tungsten.stack,
                 mainColor,

@@ -71,10 +71,9 @@ public class Tungsten implements ClientModInitializer {
 	public static Matrix4f posMatrix;
 	public static float delta;
 	public static MatrixStack stack;
-	private long lastMs = System.currentTimeMillis();
-	public static int tDelta;
 	public static Identifier logo = new Texture("icon/tungsten.png");
 	public static TungstenBridge tungstenBridge;
+
 
 	static {
 		Utils.ensureDirectoryIsCreated(RUNDIR);
@@ -136,9 +135,7 @@ public class Tungsten implements ClientModInitializer {
 			tes = Tessellator.getInstance();
 			buffer = tes.getBuffer();
 			posMatrix = drawContext.getMatrices().peek().getPositionMatrix();
-			long now = System.currentTimeMillis();
-			tDelta = (int) (now - lastMs);
-			lastMs = now;
+			Notifications.render();
 		});
 
 		tungstenBridge = new TungstenBridge();

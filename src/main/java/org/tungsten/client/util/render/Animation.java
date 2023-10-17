@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Range;
 
 /**
  * An animation state
+ * Shoutouts 0x150
  */
 public class Animation {
     double state;
