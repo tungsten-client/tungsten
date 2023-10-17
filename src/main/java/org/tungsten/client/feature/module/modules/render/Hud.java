@@ -1,7 +1,6 @@
 package org.tungsten.client.feature.module.modules.render;
 
 import me.x150.MessageSubscription;
-import org.tungsten.client.Tungsten;
 import org.tungsten.client.event.RenderEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.config.ButtonSetting;
@@ -9,10 +8,6 @@ import org.tungsten.client.feature.module.config.SliderSetting;
 import org.tungsten.client.gui.HudEditorGui;
 import org.tungsten.client.gui.HudElementRegistry;
 import org.tungsten.client.util.render.notification.Notifications;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Hud extends GenericModule {
     public Hud() {
@@ -39,7 +34,7 @@ public class Hud extends GenericModule {
 
     @Override
     protected void disable() {
-        Notifications.newNotification("Disabled Hud", 5_000L).title("Toggle").build();
+        Notifications.newNotification("Disabled Hud", 5_000L).title("Second").build();
     }
 
     @Override
