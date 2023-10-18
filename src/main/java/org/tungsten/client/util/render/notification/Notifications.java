@@ -35,7 +35,9 @@ public class Notifications {
     public static int screenWidth;
     public static int screenHeight;
     public static FontRenderer notiRenderer;
-    public static FontRenderer textRender;
+    public static FontRenderer textRenderer;
+    public static FontRenderer smallerTextRenderer;
+    public static FontRenderer evenSmallerTextRenderer;
     private final int notiWidth = Notifications.notiX2 - Notifications.notiX;
     private final int notiHeight = Notifications.notiY2 - Notifications.notiY;
 
@@ -106,10 +108,12 @@ public class Notifications {
             notification.setPosY((notification.getNotiY() - y - notification.notiHeight) - (screenHeight - 80));
             y -= (notification.notiHeight + 5) * notification.getFade();
 
-            if (notiRenderer == null || textRender == null) {
+            if(notiRenderer == null || textRenderer == null) {
                 try {
                     Notifications.notiRenderer = new FontRenderer(new Font[] { primaryFont }, 14F);
-                    Notifications.textRender = new FontRenderer(new Font[] { primaryFont }, 10F);
+                    Notifications.textRenderer = new FontRenderer(new Font[] { primaryFont }, 10F);
+                    Notifications.smallerTextRenderer = new FontRenderer(new Font[] { primaryFont }, 8F);
+                    Notifications.evenSmallerTextRenderer = new FontRenderer(new Font[] { primaryFont }, 6F);
                 } catch (Exception e) { throw new RuntimeException(e); }
             }
 
@@ -160,19 +164,102 @@ public class Notifications {
                     0.788F,
                     1F
             );
+            boolean normal = !(textRenderer.getStringWidth(notification.content) > (notiX2 - 6) - (notiX + 4));
+            boolean smaller = !(smallerTextRenderer.getStringWidth(notification.content) > (notiX2 - 6) - (notiX + 4));
+            boolean micro = !(evenSmallerTextRenderer.getStringWidth(notification.content) > (notiX2 - 6) - (notiX + 4));
+            if(normal) {
+                // Render noti content
+                textRenderer.drawString(
+                        stack,
+                        notification.content,
+                        notiX + 4F,
+                        notiY + 15F,
+                        0.968F,
+                        0.964F,
+                        0.788F,
+                        1F
+                );
+            }
+            if(smaller && !normal) {
+                smallerTextRenderer.drawString(
+                        stack,
+                        notification.content,
+                        notiX + 4F,
+                        notiY + 16F,
+                        0.968F,
+                        0.964F,
+                        0.788F,
+                        1F
+                );
+            }
+            if(micro && !smaller && !normal) {
+                evenSmallerTextRenderer.drawString(
+                        stack,
+                        notification.content,
+                        notiX + 4F,
+                        notiY + 19F,
+                        0.968F,
+                        0.964F,
+                        0.788F,
+                        1F
+                );
+            }
+            if(evenSmallerTextRenderer.getStringWidth(notification.content) > (notiX2 - 6) - (notiX + 4)) {
+                String moddedContent = notification.content;
+                int maxWidth = (notiX2 - 6) - (notiX + 4);
+                int currentWidth = (int) evenSmallerTextRenderer.getStringWidth(moddedContent);
+                int length = moddedContent.length();
 
-            // Render toggle message
-            textRender.drawString(
-                    stack,
-                    notification.content,
-                    notiX + 4F,
-                    notiY + 15F,
-                    0.968F,
-                    0.964F,
-                    0.788F,
-                    1F
-            );
+                for (int i = length - 1; i >= 0 && currentWidth > maxWidth; i--) {
+                    moddedContent = moddedContent.substring(0, i);
+                    currentWidth = (int) evenSmallerTextRenderer.getStringWidth(moddedContent);
+                }
 
+                int difference = notification.content.length() - moddedContent.length();
+                String s = notification.content.substring(notification.content.length() - difference);
+                boolean checkEmpty = !moddedContent.substring(moddedContent.length() - 1).isEmpty();
+                boolean checkSpace = moddedContent.substring(moddedContent.length() - 1).isBlank();
+                boolean isChar = (!checkSpace && checkEmpty);
+                if(isChar) {
+                    String c = moddedContent.substring(moddedContent.length() - 1);
+                    s = c + s;
+                    moddedContent = moddedContent.substring(0, moddedContent.length() - 1) + "-";
+                }
+                if(!(evenSmallerTextRenderer.getStringWidth(s) > maxWidth)) {
+                    evenSmallerTextRenderer.drawString(
+                            stack,
+                            moddedContent,
+                            notiX + 4F,
+                            notiY + 15F,
+                            0.968F,
+                            0.964F,
+                            0.788F,
+                            1F
+                    );
+                    evenSmallerTextRenderer.drawString(
+                            stack,
+                            s,
+                            notiX + 4F,
+                            notiY + 21F,
+                            0.968F,
+                            0.964F,
+                            0.788F,
+                            1F
+                    );
+                }
+                if(evenSmallerTextRenderer.getStringWidth(s) > maxWidth) {
+                    textRenderer.drawString(
+                            stack,
+                            "Too Long Notification!",
+                            notiX + 1F,
+                            notiY + 15F,
+                            1.F,
+                            0F,
+                            0F,
+                            1F
+                    );
+                }
+            }
             // Render progress bar
             // I couldn't figure out how to do this so shoutouts 0x, again LMAO
             long l = System.currentTimeMillis();
@@ -180,7 +267,7 @@ public class Notifications {
             par = MathHelper.clamp(par, 0, 1);
 
             double v = par * ((notiX2 - notiX) - 5D * 2D);
-            if (v > 1) {
+            if(v > 1) {
                 Renderer2d.renderRoundedQuad(
                         stack,
                         j,

@@ -1,6 +1,7 @@
 package org.tungsten.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import lombok.Setter;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import net.minecraft.client.util.Window;
@@ -19,11 +20,13 @@ import static org.tungsten.client.feature.module.modules.render.Hud.*;
 public class HudElementRegistry {
     private static FontRenderer defaultFontRenderer;
     private static java.util.List<GenericModule> sortedMods = List.of();
+    @Setter
+    private static float beta = 0.5F;
     public static void renderLogo() {
         if (Tungsten.client.currentScreen == null || Tungsten.client.currentScreen instanceof HudEditorGui) {
-            float alpha = imgAlpha / 100F;
+
             RenderSystem.setShaderTexture(0, new Texture("icon/TungstenNoBG.png"));
-            RenderSystem.setShaderColor(1, 1, 1, 0.5F); // Set it to 50% opacity. Once SliderSetting works, add alpha value instead.
+            RenderSystem.setShaderColor(1, 1, 1, HudElementRegistry.beta); // Set it to 50% opacity. Once SliderSetting works, add alpha value instead.
             // Render Tungsten LOGO.
             Renderer2d.renderTexture(
                     Tungsten.stack,
@@ -37,7 +40,7 @@ public class HudElementRegistry {
 
     public static void renderModuleList() {
         if (Tungsten.client.currentScreen == null || Tungsten.client.currentScreen instanceof HudEditorGui) {
-            float fontSize = 12F;
+            float fontSize = 11F;
             if (HudElementRegistry.defaultFontRenderer == null) {
                 try { HudElementRegistry.defaultFontRenderer = new FontRenderer(new Font[] { FontUtils.primaryFont }, fontSize); // Replace with Hud.fontSize when sliderSetting is working.
                 } catch (Exception e) { throw new RuntimeException(e); }

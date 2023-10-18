@@ -14,7 +14,7 @@ public class Hud extends GenericModule {
         super("HUD", "Enable default HUD elements.", "RENDER");
         this.registerSettings();
     }
-    static SliderSetting alpha = new SliderSetting(100D, 1D, 100D, "Opacity", "Change the opacity of the Tungsten logo. \n100 = No transparency\n1 = Barely visible");
+    static SliderSetting alpha = new SliderSetting(100.1D, 1D, 100D, "Opacity", "Change the opacity of the Tungsten logo. \n100 = No transparency\n1 = Barely visible");
     static SliderSetting size = new SliderSetting(6D, 0.1D, 20D, "Font Size", "Change the size of the module list font.");
     ButtonSetting edit = new ButtonSetting("Edit HUD", "Edit Elements", () -> client.setScreen(new HudEditorGui(client.currentScreen)));
     ButtonSetting reset = new ButtonSetting("Reset HUD", "Reset Sizes", HudElementRegistry::resetLogoSize);
@@ -26,7 +26,6 @@ public class Hud extends GenericModule {
     public static int resizeHeight = 10;
     public static int logoWidth = 100;
     public static int logoHeight = 100;
-    public static float imgAlpha = alpha.getValue().floatValue();
     public static float fontSize = size.getValue().floatValue();
 
     @Override
@@ -48,6 +47,7 @@ public class Hud extends GenericModule {
         // Hard code in resize arrow to be in bottom opposite of left of the logo.
         resizeX = logoX + (logoWidth - 10);
         resizeY = logoY + (logoHeight - 10);
+        if(Hud.alpha.getValue().floatValue() != 100.1F) HudElementRegistry.setBeta(Hud.alpha.getValue().floatValue());
         if(client.currentScreen == null) HudElementRegistry.renderModuleList();
         if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo();
         if(client.currentScreen instanceof HudEditorGui) {
