@@ -96,6 +96,7 @@ public class Notifications {
 
     public static void render() {
         Notifications.removeInactive();
+        if(stack == null) return;
         int y = 0;
         screenWidth = Tungsten.client.getWindow().getScaledWidth();
         screenHeight = Tungsten.client.getWindow().getScaledHeight();
