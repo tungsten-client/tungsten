@@ -116,9 +116,11 @@ public abstract class GenericModule {
 		if (state) {
 			Tungsten.eventManager.registerSubscribers(this);
 			this.enable();
+			Notifications.newNotification("Enabled " + this.name, 3_000L).title("Toggle").build();
 		} else {
 			Tungsten.eventManager.unregister(this);
 			this.disable();
+			Notifications.newNotification("Disabled " + this.name, 3_000L).title("Toggle").build();
 		}
 	}
 

@@ -30,12 +30,10 @@ public class Hud extends GenericModule {
 
     @Override
     protected void enable() {
-        Notifications.newNotification("Enabled Hud", 5_000L).title("Toggle").build();
     }
 
     @Override
     protected void disable() {
-        Notifications.newNotification("Disabled Hud", 5_000L).title("Second").build();
     }
 
     @Override

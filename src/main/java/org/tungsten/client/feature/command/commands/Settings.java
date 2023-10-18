@@ -19,12 +19,7 @@ public class Settings extends GenericCommand {
         builder.then(literal("hudAlpha").then(argument(
             "New Alpha", FloatArgumentType.floatArg(0F, 101F)).executes(context -> {
             HudElementRegistry.setBeta(FloatArgumentType.getFloat(context, ha) / 100F);
-            Notifications.newNotification("This is a very, extremely long 12 34567890", 10_000).title("Command").build();
-            Notifications.newNotification("This is a very, extremely long1234567890", 10_000).title("Command").build();
-            Notifications.newNotification("724358686868686868686868686868686868686868686868686868", 10_000).title("Command").build();
-            Notifications.newNotification("This is a fairly, long message.", 10_000).title("Command").build();
-            Notifications.newNotification("This is a Medium MSG.", 10_000).title("Command").build();
-            Notifications.newNotification("This is Average.", 10_000).title("Command").build();
+            Notifications.newNotification("Successfully Set Hud Alpha!", 5_000).title("Settings").build();
             return SINGLE_SUCCESS;
         })));
     }
