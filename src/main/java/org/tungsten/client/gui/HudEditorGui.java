@@ -26,6 +26,7 @@ public class HudEditorGui extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         if(shouldRenderLogo) HudElementRegistry.renderLogo();
+        HudElementRegistry.renderModuleList();
     }
 
     @Override
