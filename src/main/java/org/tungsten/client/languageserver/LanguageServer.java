@@ -15,7 +15,7 @@ public class LanguageServer {
     private Process process;
 
     @Getter
-    private static int port = 0;
+    private static int port = 9999;
 
     @Getter
     private static String addr;
@@ -48,7 +48,7 @@ public class LanguageServer {
         // find available port
         ServerSocket s = new ServerSocket(0);
         port = s.getLocalPort();
-        addr = "127.0.0.1:" + port;
+        addr = "127.0.0.1:" + 9999;
         s.close();
 
         Path LSPDir = Tungsten.APPDATA.resolve("lsp");
