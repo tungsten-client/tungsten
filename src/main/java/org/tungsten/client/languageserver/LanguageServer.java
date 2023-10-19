@@ -34,14 +34,14 @@ public class LanguageServer {
     /**
      *  Returns the respective LanguageServer config for the current os.
      */
-    public static String getConfigForOS(@NotNull Path langServ) {
+    private static String getConfigForOS(@NotNull Path langServ) {
         Path win = langServ.resolve("config_win");
         Path linux = langServ.resolve("config_linux");
         Path macos = langServ.resolve("config_mac");
-        if(Tungsten.getOS().startsWith("Win")) return String.valueOf(win);
-        if(Tungsten.getOS().startsWith("Lin")) return String.valueOf(linux);
-        if(Tungsten.getOS().startsWith("Mac")) return String.valueOf(macos);
-        return "";
+        if(Tungsten.getOS().startsWith("Win")) return win.toAbsolutePath().toString();
+        if(Tungsten.getOS().startsWith("Lin")) return linux.toAbsolutePath().toString();
+        if(Tungsten.getOS().startsWith("Mac")) return macos.toAbsolutePath().toString();
+        return win.toAbsolutePath().toString();
     }
 
     public LanguageServer() throws IOException {
@@ -54,7 +54,7 @@ public class LanguageServer {
         Path LSPDir = Tungsten.APPDATA.resolve("lsp");
         Path JDTLangServ = LSPDir.resolve("jdt-lang-serv");
 
-        String exe = String.valueOf(LSPDir.resolve("lsp-ws-proxy/lsp-ws-proxy.exe"));
+        String exe = LSPDir.resolve("lsp-ws-proxy/lsp-ws-proxy.exe").toAbsolutePath().toString();
         final ProcessBuilder pb = getProcessBuilder(JDTLangServ, LSPDir, exe);
 
         pb.redirectInput(ProcessBuilder.Redirect.INHERIT);
@@ -67,9 +67,9 @@ public class LanguageServer {
 
     @NotNull
     private static ProcessBuilder getProcessBuilder(@NotNull Path JDTLangServ, @NotNull Path LSPDir, String exe) {
-        String jar = String.valueOf(JDTLangServ.resolve("plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"));
+        String jar = JDTLangServ.resolve("plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar").toAbsolutePath().toString();
         String configOS = getConfigForOS(JDTLangServ);
-        String work = String.valueOf(LSPDir.resolve("work"));
+        String work = LSPDir.resolve("work").toAbsolutePath().toString();
 
         // https://github.com/qualified/lsp-ws-proxy#usage
         return new ProcessBuilder(
@@ -85,7 +85,7 @@ public class LanguageServer {
                 "-Dlog.protocol=true",
                 "-Dlog.level=ALL",
                 "-Xmx1G",
-                "--add-module=ALL-SYSTEM",
+                "--add-modules=ALL-SYSTEM",
                 "--add-opens",
                 "java.base/java.util=ALL-UNNAMED",
                 "--add-opens",
