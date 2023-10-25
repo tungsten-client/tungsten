@@ -140,9 +140,9 @@ function setup_button(name, module, element){
 
 function setup_slider(name, module, element){
   element.addEventListener('input', (event) => {
-    const elemdesc = event.target.parentNode.querySelector(".element-descriptor") 
-    const inner = elemdesc.innerHTML;
-    elemdesc.innerHTML = inner.substring(0, inner.indexOf("[")) + "[" + event.target.value + "]"
+    // const elemdesc = event.target.parentNode.querySelector(".element-descriptor")
+    // const inner = elemdesc.outerHTML;
+    // elemdesc.innerHTML = inner.substring(0, inner.indexOf("[")) + "[" + event.target.value + "]"
     tungstenBridge.broadcastSliderUpdate(name, parseInt(module), event.target.value)
   })
 }
@@ -218,20 +218,14 @@ function instanceModule(parent_category, module_id){
     let body = setting.children[1];
     let setting_name = element_descriptor.innerHTML;
     tungstenBridge.print(body.tagName);
-    if(body.getAttribute("class")=="button"){
+    if(body.getAttribute("class")=="button") {
       setup_button(setting_name, module_id, body);
-    }else if(body.getAttribute("class")=="input"){
-      switch(body.getAttribute("type").toLowerCase()){
-        case "text":
-          setup_textbox(setting_name, module_id, body);
-        break;
-
-        case "range":
-          element_descriptor.innerHTML = element_descriptor.innerHTML + " [" + body.value + "]"
-          setup_slider(setting_name, module_id, body);
-        break;
-      }
-    }else if(body.getAttribute("class")=="checkbox-container"){
+    } else if(body.getAttribute("class")=="slider-container") {
+      // element_descriptor.innerHTML = element_descriptor.innerHTML + " [" + body.value + "]"
+      setup_slider(setting_name, module_id, body);
+    } else if(body.getAttribute("class")=="textbox-container") {
+      setup_textbox(setting_name, module_id, body);
+    } else if(body.getAttribute("class")=="checkbox-container"){
       let checkbox = body.children[0];
       setup_checkbox(setting_name, module_id, checkbox);
     } else if (body.getAttribute("class")=="keybind") {

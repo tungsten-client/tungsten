@@ -9,6 +9,6 @@ public class TextboxSetting extends GenericSetting<String> {
 
 	@Override
 	public String toHTML() {
-		return this.getDescriptor() + "\n" + "<input type=\"text\" class=\"textbox\" placeholder=\"" + this.description + "\" value=\"" + this.getValue() + "\">";
+		return this.getDescriptor() + "\n" + "<label class=\"textbox-container\"><input type=\"text\" class=\"textbox\" placeholder=\"" + this.description + "\" value=\"" + this.getValue() + "\"></label>";
 	}
 }

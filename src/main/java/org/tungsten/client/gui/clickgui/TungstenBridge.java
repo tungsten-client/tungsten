@@ -97,7 +97,7 @@ public class TungstenBridge {
 				Tungsten.LOGGER.info("Set slider setting value to " + Double.parseDouble(value));
 				ss.setValue(Double.parseDouble(value));
 			} else {
-				Tungsten.LOGGER.info("Slier setting " + name + " not found!");
+				Tungsten.LOGGER.info("Slider setting " + name + " not found!");
 			}
 		}
 	}
