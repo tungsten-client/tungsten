@@ -15,9 +15,7 @@ public class FontUtils {
             primaryFont = Font.createFont(Font.PLAIN, new File("C:\\Users\\burke\\IdeaProjects\\tongueson\\src\\main\\resources\\assets\\tungsten\\font\\TitilliumWeb-SemiBold.ttf").getAbsoluteFile());
             secondaryFont = Font.createFont(Font.PLAIN, new File("C:\\Users\\burke\\IdeaProjects\\tongueson\\src\\main\\resources\\assets\\tungsten\\font\\Tajawal-Regular.ttf").getAbsoluteFile());
             backupFont = Font.createFont(Font.PLAIN, new File("C:\\Users\\burke\\IdeaProjects\\tongueson\\src\\main\\resources\\assets\\tungsten\\font\\OpenSans-Regular.ttf").getAbsoluteFile());
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (FontFormatException | IOException e) { throw new RuntimeException(e); }
     }
 
 }

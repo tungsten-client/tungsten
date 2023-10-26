@@ -16,9 +16,8 @@ public class Line {
     @Getter
     public static double y = client.getWindow().getScaledHeight() / 2D;
     /**
-     * <p> Draws a line from your crosshair to a position on the world.</p>
-     * <p> You need to get the correct MatrixStack in order for this to work. I used this context stack. </p>
-     * <p>         {@link net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback#EVENT#register((MatrixStack, float)} </p>
+     * <p> Draws a line from your crosshair to a position on the world. </p>
+     * <p> You need to get the correct MatrixStack in order for this to work. </p>
      * <p> It has to also be on an HUD render event, as we are drawing a 2d line towards a 3d spot. </p>
      *
      * @param stack the current context MatrixStack.
