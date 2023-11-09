@@ -36,9 +36,7 @@ public class TitleScreenMixin extends Screen {
 			kbm.reload();
 		}).dimensions(5, 30, 100, 20).build());
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("IDE"), button -> {
-			ClientIDE ide = ClientIDE.create();
-			this.client.setScreen(ide);
-			ide.reload();
+			ClientIDE.openIde();
 		}).dimensions(5, 55, 100, 20).build());
 	}
 }
