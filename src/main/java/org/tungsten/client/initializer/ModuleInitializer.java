@@ -6,7 +6,7 @@ import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.ModuleType;
 import org.tungsten.client.feature.module.ModuleTypeManager;
 import org.tungsten.client.feature.module.modules.client.ClientIDEModule;
-import org.tungsten.client.feature.module.modules.client.mClickGUI;
+import org.tungsten.client.feature.module.modules.client.ClickGUIModule;
 import org.tungsten.client.feature.module.modules.render.Hud;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.util.io.TungstenClassLoader;
@@ -43,7 +43,7 @@ public class ModuleInitializer {
 //		ExampleModule exampleModule3 = new ExampleModule();
 //		ModuleRegistry.addModule(exampleModule3);
 
-		ModuleRegistry.addModule(new mClickGUI());
+		ModuleRegistry.addModule(new ClickGUIModule());
 		ModuleRegistry.addModule(new ClientIDEModule());
 
 		// Register HUD module.

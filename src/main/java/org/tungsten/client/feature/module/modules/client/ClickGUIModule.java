@@ -4,8 +4,8 @@ import org.lwjgl.glfw.GLFW;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.gui.clickgui.ClickGUI;
 
-public class mClickGUI extends GenericModule {
-    public mClickGUI() {
+public class ClickGUIModule extends GenericModule {
+    public ClickGUIModule() {
         super("ClickGUI", "Enables the ClickGUI", "CLIENT");
         this.updateKeybind(GLFW.GLFW_KEY_RIGHT_SHIFT);
     }
