@@ -3,25 +3,23 @@
   "minVersion": "0.8",
   "package": "org.tungsten.client.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "ClientConnectionMixin",
-    "EntityVelocityUpdateS2CPacketAccessor",
-    "IdentifierAccessor",
-    "PlayerMovePacketAccessor",
-    "PlayerPositionLookPacketAccessor"
-  ],
   "client": [
     "ChatInputSuggestorMixin",
     "ChatScreenMixin",
+    "ClientConnectionMixin",
     "ClientPlayerEntityAccessor",
     "ClientPlayerEntityMixin",
     "ClientWorldMixin",
+    "EntityVelocityUpdateS2CPacketAccessor",
+    "GameRendererMixin",
+    "IdentifierAccessor",
     "KeyboardMixin",
     "MinecraftClientAccessor",
     "MinecraftClientMixin",
+    "PlayerMovePacketAccessor",
+    "PlayerPositionLookPacketAccessor",
     "SimpleOptionMixin",
-    "TitleScreenMixin",
-    "GameRendererMixin"
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
