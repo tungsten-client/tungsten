@@ -12,8 +12,6 @@ version = properties["project_version"]!!
 group = properties["maven_group"]!!
 
 repositories {
-    mavenLocal()
-    mavenCentral()
     maven("https://jitpack.io")
 
     maven("https://maven.terraformersmc.com/releases")
@@ -104,14 +102,12 @@ dependencies {
 
     /* fabric */
     modDepend(
-        includeMethod = IncludeMethod.NOT,
         group = "net.fabricmc",
         name = "fabric-loader",
         version = properties["dep_fabric_loader"].toString()
     )
 
     modDepend(
-        includeMethod = IncludeMethod.NOT,
         group = "net.fabricmc.fabric-api",
         name = "fabric-api",
         version = properties["dep_fabric_api"].toString()
@@ -124,7 +120,6 @@ dependencies {
         version = properties["dep_ann_jbr"].toString()
     )
     depend(
-        includeMethod = IncludeMethod.NOT,
         group = "org.jetbrains",
         name = "annotations",
         version = properties["dep_ann_jbr"].toString()
@@ -136,7 +131,6 @@ dependencies {
         version = properties["dep_ann_lombok"].toString()
     )
     depend(
-        includeMethod = IncludeMethod.NOT,
         group = "org.projectlombok",
         name = "lombok",
         version = properties["dep_ann_lombok"].toString()
@@ -163,19 +157,18 @@ dependencies {
         version = properties["dep_ultralight"].toString()
     )
 
-    /* mods */
     modDepend(
-        includeMethod = IncludeMethod.NOT,
-        group = "com.terraformersmc",
-        name = "modmenu",
-        version = properties["dep_mod_modmenu"].toString()
-    )
-
-    modDepend(
-        includeMethod = IncludeMethod.NOT,
+        includeMethod = IncludeMethod.INCLUDE,
         group = "com.github.0x3C50",
         name = "Renderer",
         version = properties["dep_mod_renderer"].toString()
+    )
+
+    /* mods */
+    modDepend(
+        group = "com.terraformersmc",
+        name = "modmenu",
+        version = properties["dep_mod_modmenu"].toString()
     )
 
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
