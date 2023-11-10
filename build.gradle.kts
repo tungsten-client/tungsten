@@ -175,7 +175,13 @@ dependencies {
 }
 
 tasks {
-    processResources { inputs.property("version", project.version) }
+    processResources {
+        inputs.property("version", project.version)
+        filesMatching("fabric.mod.json") {
+            expand("version" to project.version)
+        }
+    }
+
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
