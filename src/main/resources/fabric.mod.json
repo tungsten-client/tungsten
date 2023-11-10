@@ -6,10 +6,9 @@
   "description": "Modular Minecraft client for the new generation of gamers",
   "authors": [],
   "contact": {},
-  "email": "sexualabusehotline@tungstenclient.com",
   "license": "MIT",
   "icon": "assets/tungsten/icon/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "org.tungsten.client.Tungsten"
