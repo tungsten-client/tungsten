@@ -1,6 +1,5 @@
 package org.tungsten.client.languageserver;
 
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.Tungsten;
 
@@ -14,11 +13,17 @@ public class LanguageServer {
     private static LanguageServer inst = null;
     private Process process;
 
-    @Getter
     private static int port = 9999;
 
-    @Getter
     private static String addr;
+
+    public static int getPort() {
+        return port;
+    }
+
+    public static String getAddr() {
+        return addr;
+    }
 
     public static LanguageServer instance() {
         if(inst == null) {

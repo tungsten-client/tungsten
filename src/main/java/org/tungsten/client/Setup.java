@@ -1,6 +1,5 @@
 package org.tungsten.client;
 
-import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.tungsten.client.util.io.LibraryDownloader;
 
@@ -11,7 +10,6 @@ import java.util.zip.ZipInputStream;
 
 public class Setup {
 
-    @SneakyThrows
     public static void setup() {
         LibraryDownloader.ensurePresent();
         setupJDK();
@@ -28,7 +26,7 @@ public class Setup {
         throw new IllegalStateException("Compatible JDK installation not found. Please install JDK '17'");
     }
 
-    static void setupIDE() throws IOException {
+    static void setupIDE() {
         if(new File(String.valueOf(Tungsten.APPDATA), "ide").exists() && new File(String.valueOf(Tungsten.APPDATA), "lsp").exists()) return;
 
         Tungsten.LOGGER.info("Setting up IDE appdata");
@@ -41,11 +39,15 @@ public class Setup {
         File ideDest = new File(String.valueOf(Tungsten.APPDATA), "ide");
         File lspDest = new File(String.valueOf(Tungsten.APPDATA), "lsp");
 
-        unzip(ide, ideDest);
-        unzip(lsp, lspDest);
+        try {
+            unzip(ide, ideDest);
+            unzip(lsp, lspDest);
 
-        ide.close();
-        lsp.close();
+            ide.close();
+            lsp.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // util

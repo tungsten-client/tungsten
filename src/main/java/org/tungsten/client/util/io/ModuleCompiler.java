@@ -1,6 +1,5 @@
 package org.tungsten.client.util.io;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.initializer.ModuleInitializer;
 import org.tungsten.client.util.Utils;
@@ -23,8 +22,6 @@ public class ModuleCompiler {
 		searchAndCompileModules(Tungsten.RUNDIR.resolve("modules"));
 	}
 
-
-	@SneakyThrows
 	private static void searchAndCompileModules(Path path) {
 		Utils.rmDirectoryTree(ModuleInitializer.MODULES_COMPILED);
 		Utils.ensureDirectoryIsCreated(ModuleInitializer.MODULES_COMPILED);
@@ -36,8 +33,10 @@ public class ModuleCompiler {
 					throw new RuntimeException(e);
 				}
 			});
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	private static void compileModule(Path module) throws IOException {
 		Tungsten.LOGGER.info("compileModule called on " + module.getFileName().toString());

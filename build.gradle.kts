@@ -127,17 +127,6 @@ dependencies {
         version = properties["dep_ann_jbr"].toString()
     )
 
-    annotationProcessor(
-        group = "org.projectlombok",
-        name = "lombok",
-        version = properties["dep_ann_lombok"].toString()
-    )
-    depend(
-        group = "org.projectlombok",
-        name = "lombok",
-        version = properties["dep_ann_lombok"].toString()
-    )
-
     depend(
         includeMethod = IncludeMethod.SHADOW,
         group = "com.labymedia",

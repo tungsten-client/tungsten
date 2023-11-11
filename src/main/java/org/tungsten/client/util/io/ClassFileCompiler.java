@@ -1,9 +1,9 @@
 package org.tungsten.client.util.io;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 
 import javax.tools.*;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 public class ClassFileCompiler {
 	static final JavaCompiler systemJavaCompiler = ToolProvider.getSystemJavaCompiler();
 
-	@SneakyThrows
-	public static CompilationResults compile(Path input, List<String> additionalArgs) {
+	public static CompilationResults compile(Path input, List<String> additionalArgs) throws IOException {
 		Path tempDirectory = Files.createTempDirectory("tungsten-compiler");
 
 		DiagnosticCollector<JavaFileObject> jfs = new DiagnosticCollector<>();

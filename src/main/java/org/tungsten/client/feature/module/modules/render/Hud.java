@@ -44,12 +44,12 @@ public class Hud extends GenericModule {
         // Hard code in resize arrow to be in bottom opposite of left of the logo.
         resizeX = logoX + (logoWidth - 10);
         resizeY = logoY + (logoHeight - 10);
-        if(Hud.alpha.getValue().floatValue() != 100.1F) HudElementRegistry.setBeta(Hud.alpha.getValue().floatValue());
-        if(client.currentScreen == null) HudElementRegistry.renderModuleList(event.getContextStack());
-        if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo(event.getContextStack());
+        if(Hud.alpha.getValue().floatValue() != 100.1F) HudElementRegistry.alpha = Hud.alpha.getValue().floatValue();
+        if(client.currentScreen == null) HudElementRegistry.renderModuleList(event.contextStack);
+        if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo(event.contextStack);
         if(client.currentScreen instanceof HudEditorGui) {
-            if (HudEditorGui.selected) HudElementRegistry.highlightLogo(event.getContextStack());
-            else HudElementRegistry.drawResizeTriangle(event.getContextStack());
+            if (HudEditorGui.selected) HudElementRegistry.highlightLogo(event.contextStack);
+            else HudElementRegistry.drawResizeTriangle(event.contextStack);
         }
     }
         // TODO: Code in screen to align elements. ||| UPDATE: 80% Implemented. Still need to save positions to file.

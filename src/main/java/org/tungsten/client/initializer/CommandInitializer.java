@@ -1,6 +1,5 @@
 package org.tungsten.client.initializer;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.command.GenericCommand;
 import org.tungsten.client.feature.command.commands.Settings;
@@ -8,6 +7,7 @@ import org.tungsten.client.feature.registry.CommandRegistry;
 import org.tungsten.client.util.io.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +33,6 @@ public class CommandInitializer {
 	/*
 		WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
 	 */
-	@SneakyThrows
 	private static void searchForCommands(Path path) {
 		try (Stream<Path> v = Files.walk(path)) {
 			v.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".class")).forEach(path1 -> {
@@ -43,8 +42,10 @@ public class CommandInitializer {
 					throw new RuntimeException(e);
 				}
 			});
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	private static void initCommand(Path module) throws Exception {
 		try (InputStream file = Files.newInputStream(module)) {

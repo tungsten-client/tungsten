@@ -1,6 +1,5 @@
 package org.tungsten.client.util;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 
 import java.io.File;
@@ -29,25 +28,29 @@ public class Utils {
 		return !Arrays.equals(cSigP, EXPECTED_CLASS_SIGNATURE);
 	}
 
-	@SneakyThrows
 	public static boolean isDirectoryEmpty(Path directory) {
         if (!Files.isDirectory(directory)) {
             throw new IllegalArgumentException("Not a directory: " + directory.toAbsolutePath());
         }
 		try (Stream<Path> p = Files.list(directory)) {
 			return p.findAny().isEmpty();
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@SneakyThrows
 	public static void ensureDirectoryIsCreated(Path directory) {
-        if (Files.exists(directory) && !Files.isDirectory(directory)) {
-            Files.delete(directory);
+		try {
+			if (Files.exists(directory) && !Files.isDirectory(directory)) {
+				Files.delete(directory);
+			}
+			if (!Files.exists(directory)) {
+				Files.createDirectory(directory);
+			}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        if (!Files.exists(directory)) {
-            Files.createDirectory(directory);
-        }
-	}
+    }
 
 	public static void deleteFilesExcept(File directory, String... filenames) {
 
@@ -70,35 +73,38 @@ public class Utils {
 		}
 	}
 
-	@SneakyThrows
 	public static void rmDirectoryTree(Path directory) {
 		if (!Files.isDirectory(directory)) {
 			Tungsten.LOGGER.warn("Invalid directory path: " + directory.toAbsolutePath());
 			return;
 		}
-		Files.walkFileTree(directory, new FileVisitor<>() {
-			@Override
-			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-				return FileVisitResult.CONTINUE;
-			}
+		try {
+			Files.walkFileTree(directory, new FileVisitor<>() {
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
+					return FileVisitResult.CONTINUE;
+				}
 
-			@Override
-			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-				Files.delete(file);
-				return FileVisitResult.CONTINUE;
-			}
+				@Override
+				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+					Files.delete(file);
+					return FileVisitResult.CONTINUE;
+				}
 
-			@Override
-			public FileVisitResult visitFileFailed(Path file, IOException exc) {
-				return FileVisitResult.CONTINUE;
-			}
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException exc) {
+					return FileVisitResult.CONTINUE;
+				}
 
-			@Override
-			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-				Files.delete(dir);
-				return FileVisitResult.CONTINUE;
-			}
-		});
+				@Override
+				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+					Files.delete(dir);
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void unzip(Path zipFile, Path folder) throws IOException {

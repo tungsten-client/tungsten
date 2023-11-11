@@ -1,6 +1,5 @@
 package org.tungsten.client.initializer;
 
-import lombok.SneakyThrows;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -18,6 +17,7 @@ import org.tungsten.client.util.render.GradientText;
 import org.tungsten.client.util.io.TungstenClassLoader;
 import org.tungsten.client.util.Utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +47,6 @@ public class ItemInitializer {
     /*
         WE ARE LOADING COMPILED CLASSES, NOT COMPILING THEM
      */
-    @SneakyThrows
     private static void searchForItems(Path path) {
         try (Stream<Path> v = Files.walk(path)) {
             v.filter(path1 -> Files.isRegularFile(path1) && path1.toString().endsWith(".class")).forEach(path1 -> {
@@ -58,6 +57,8 @@ public class ItemInitializer {
                     throw new RuntimeException(e);
                 }
             });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

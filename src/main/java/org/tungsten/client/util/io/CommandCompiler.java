@@ -1,6 +1,5 @@
 package org.tungsten.client.util.io;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.initializer.CommandInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
@@ -25,7 +24,6 @@ public class CommandCompiler {
 	}
 
 
-	@SneakyThrows
 	private static void searchAndCompileCommands(Path path) {
 		Utils.rmDirectoryTree(CommandInitializer.COMMANDS_COMPILED);
 		Utils.ensureDirectoryIsCreated(CommandInitializer.COMMANDS_COMPILED);
@@ -37,8 +35,10 @@ public class CommandCompiler {
 					throw new RuntimeException(e);
 				}
 			});
-		}
-	}
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	private static void compileCommand(Path command) throws IOException {
 		Tungsten.LOGGER.info("compileCommand called on " + command.toAbsolutePath());

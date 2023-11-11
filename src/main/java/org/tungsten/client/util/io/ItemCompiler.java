@@ -1,6 +1,5 @@
 package org.tungsten.client.util.io;
 
-import lombok.SneakyThrows;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.initializer.ItemInitializer;
 import org.tungsten.client.initializer.ModuleInitializer;
@@ -18,14 +17,11 @@ import java.util.Locale;
 import java.util.stream.Stream;
 
 public class ItemCompiler {
-
     public static void compileItems() {
         Utils.ensureDirectoryIsCreated(Tungsten.RUNDIR.resolve("items"));
         searchAndCompileItems(Tungsten.RUNDIR.resolve("items"));
     }
 
-
-    @SneakyThrows
     private static void searchAndCompileItems(Path path) {
         Utils.rmDirectoryTree(ItemInitializer.ITEMS_COMPILED);
         Utils.ensureDirectoryIsCreated(ItemInitializer.ITEMS_COMPILED);
@@ -37,6 +33,8 @@ public class ItemCompiler {
                     throw new RuntimeException(e);
                 }
             });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

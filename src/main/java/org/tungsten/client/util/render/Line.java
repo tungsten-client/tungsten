@@ -1,6 +1,5 @@
 package org.tungsten.client.util.render;
 
-import lombok.Getter;
 import me.x150.renderer.render.Renderer2d;
 import me.x150.renderer.util.RendererUtils;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,9 +10,7 @@ import java.awt.*;
 import static org.tungsten.client.Tungsten.client;
 
 public class Line {
-    @Getter
     public static double x = client.getWindow().getScaledWidth() / 2D;
-    @Getter
     public static double y = client.getWindow().getScaledHeight() / 2D;
     /**
      * <p> Draws a line from your crosshair to a position on the world. </p>

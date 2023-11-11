@@ -18,7 +18,7 @@ public class Settings extends GenericCommand {
         final String ha = "New Alpha";
         builder.then(literal("hudAlpha").then(argument(
             "New Alpha", FloatArgumentType.floatArg(0F, 101F)).executes(context -> {
-            HudElementRegistry.setBeta(FloatArgumentType.getFloat(context, ha) / 100F);
+            HudElementRegistry.alpha = FloatArgumentType.getFloat(context, ha) / 100F;
             Notifications.newNotification("Successfully Set Hud Alpha!", 5_000).title("Settings").build();
             return SINGLE_SUCCESS;
         })));

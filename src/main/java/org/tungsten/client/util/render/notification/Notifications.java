@@ -2,12 +2,11 @@ package org.tungsten.client.util.render.notification;
 
 import com.google.common.base.Preconditions;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Builder;
-import lombok.NonNull;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+import org.eclipse.jgit.annotations.NonNull;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.util.Texture;
 import org.tungsten.client.util.render.Animation;
@@ -67,11 +66,14 @@ public class Notifications {
         notifications.removeIf(notification -> notification.createdAt + notification.duration <= System.currentTimeMillis());
     }
 
-    public static Notifications.NotificationsBuilder newNotification(String content, long duration) {
+    public static Notifications.Builder newNotification(String content, long duration) {
         return Notifications.builder().content(content).duration(duration);
     }
 
-    @Builder
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public Notifications(@NonNull final String title, @NonNull final String content, final long duration) {
         Preconditions.checkArgument(!content.isEmpty(), "content.isEmpty() == true");
         Preconditions.checkArgument(duration > 0, "duration <= 0");
@@ -280,6 +282,31 @@ public class Notifications {
                         4F
                 );
             }
+        }
+    }
+
+    public static class Builder {
+        private String title;
+        private String content;
+        private long duration;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder duration(long duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public Notifications build() {
+            return new Notifications(title, content, duration);
         }
     }
 }

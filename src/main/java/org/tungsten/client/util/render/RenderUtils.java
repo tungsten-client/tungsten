@@ -1,9 +1,9 @@
 package org.tungsten.client.util.render;
 
-import lombok.NonNull;
 import net.minecraft.client.render.Camera;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import org.eclipse.jgit.annotations.NonNull;
 import org.jetbrains.annotations.Contract;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
