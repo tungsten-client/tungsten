@@ -25,8 +25,8 @@ public class HudEditorGui extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        if(shouldRenderLogo) HudElementRegistry.renderLogo();
-        HudElementRegistry.renderModuleList();
+        if(shouldRenderLogo) HudElementRegistry.renderLogo(context.getMatrices());
+        HudElementRegistry.renderModuleList(context.getMatrices());
     }
 
     @Override

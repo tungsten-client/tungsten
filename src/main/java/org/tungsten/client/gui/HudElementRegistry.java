@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
 import net.minecraft.client.util.Window;
+import net.minecraft.client.util.math.MatrixStack;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.registry.ModuleRegistry;
@@ -22,14 +23,14 @@ public class HudElementRegistry {
     private static java.util.List<GenericModule> sortedMods = List.of();
     @Setter
     private static float beta = 0.5F;
-    public static void renderLogo() {
+    public static void renderLogo(MatrixStack stack) {
         if (Tungsten.client.currentScreen == null || Tungsten.client.currentScreen instanceof HudEditorGui) {
 
             RenderSystem.setShaderTexture(0, new Texture("icon/TungstenNoBG.png"));
             RenderSystem.setShaderColor(1, 1, 1, HudElementRegistry.beta); // Set it to 50% opacity. Once SliderSetting works, add alpha value instead.
             // Render Tungsten LOGO.
             Renderer2d.renderTexture(
-                    Tungsten.stack,
+                    stack,
                     logoX,
                     logoY,
                     logoWidth,
@@ -38,7 +39,7 @@ public class HudElementRegistry {
         }
     }
 
-    public static void renderModuleList() {
+    public static void renderModuleList(MatrixStack stack) {
         if (Tungsten.client.currentScreen == null || Tungsten.client.currentScreen instanceof HudEditorGui) {
             float fontSize = 11F;
             if (HudElementRegistry.defaultFontRenderer == null) {
@@ -58,7 +59,7 @@ public class HudElementRegistry {
                     float stringWidth = HudElementRegistry.defaultFontRenderer.getStringWidth(sortedMod.getName());
                     HudElementRegistry.defaultFontRenderer.drawString(
                             // MatrixStack
-                            Tungsten.stack,
+                            stack,
                             // String
                             sortedMod.getName(),
                             // X Coord
@@ -81,10 +82,10 @@ public class HudElementRegistry {
         }
     }
 
-    public static void highlightLogo() {
+    public static void highlightLogo(MatrixStack stack) {
         if(HudEditorGui.selected) {
             Renderer2d.renderRoundedOutline(
-                    Tungsten.stack,
+                    stack,
                     Color.GREEN,
                     logoX,
                     logoY,
@@ -97,11 +98,11 @@ public class HudElementRegistry {
         }
     }
 
-    public static void drawResizeTriangle() {
+    public static void drawResizeTriangle(MatrixStack stack) {
             RenderSystem.setShaderTexture(0, new Texture("icon/resize_arrow.png"));
             RenderSystem.setShaderColor(1, 1, 1, 0.8F);
             Renderer2d.renderTexture(
-                    Tungsten.stack,
+                    stack,
                     resizeX,
                     resizeY,
                     resizeWidth,

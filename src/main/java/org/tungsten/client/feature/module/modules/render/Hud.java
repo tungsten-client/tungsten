@@ -7,7 +7,6 @@ import org.tungsten.client.feature.module.config.ButtonSetting;
 import org.tungsten.client.feature.module.config.SliderSetting;
 import org.tungsten.client.gui.HudEditorGui;
 import org.tungsten.client.gui.HudElementRegistry;
-import org.tungsten.client.util.render.notification.Notifications;
 
 public class Hud extends GenericModule {
     public Hud() {
@@ -46,11 +45,11 @@ public class Hud extends GenericModule {
         resizeX = logoX + (logoWidth - 10);
         resizeY = logoY + (logoHeight - 10);
         if(Hud.alpha.getValue().floatValue() != 100.1F) HudElementRegistry.setBeta(Hud.alpha.getValue().floatValue());
-        if(client.currentScreen == null) HudElementRegistry.renderModuleList();
-        if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo();
+        if(client.currentScreen == null) HudElementRegistry.renderModuleList(event.getContextStack());
+        if(client.currentScreen == null && HudEditorGui.shouldRenderLogo) HudElementRegistry.renderLogo(event.getContextStack());
         if(client.currentScreen instanceof HudEditorGui) {
-            if (HudEditorGui.selected) HudElementRegistry.highlightLogo();
-            else HudElementRegistry.drawResizeTriangle();
+            if (HudEditorGui.selected) HudElementRegistry.highlightLogo(event.getContextStack());
+            else HudElementRegistry.drawResizeTriangle(event.getContextStack());
         }
     }
         // TODO: Code in screen to align elements. ||| UPDATE: 80% Implemented. Still need to save positions to file.

@@ -97,7 +97,7 @@ public class Tungsten implements ClientModInitializer {
 		LanguageServer.instance();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			Tungsten.cleanupUL();
+			//Tungsten.cleanupUL();
 			LanguageServer.kill();
 		}
 		));

@@ -49,8 +49,10 @@ public abstract class RenderEvent extends Event {
 		public static final Hud INSTANCE = new Hud();
 	}
 
-	public static class HudNoMSAA {
-		public static final HudNoMSAA INSTANCE = new HudNoMSAA();
+	public static class HudNoMSAA extends RenderEvent {
+		public HudNoMSAA(MatrixStack stack) {
+			super(stack);
+		}
 	}
 
 	public static class World extends RenderEvent {
