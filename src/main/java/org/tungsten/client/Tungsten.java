@@ -1,7 +1,6 @@
 package org.tungsten.client;
 
 import com.labymedia.ultralight.UltralightJava;
-import lombok.Getter;
 import me.x150.MessageManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -9,12 +8,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix4f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.config.Config;
@@ -61,13 +55,6 @@ public class Tungsten implements ClientModInitializer {
 
 	public static Config config = new Config();
 
-	public static Tessellator tes;
-
-	public static BufferBuilder buffer;
-	public static DrawContext context;
-	public static Matrix4f posMatrix;
-	public static float delta;
-	public static MatrixStack stack;
 	public static Identifier logo = new Texture("icon/tungsten.png");
 	public static TungstenBridge tungstenBridge;
 
@@ -126,13 +113,7 @@ public class Tungsten implements ClientModInitializer {
 		});
 
 		HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
-			context = drawContext;
-			delta = tickDelta;
-			stack = drawContext.getMatrices();
-			tes = Tessellator.getInstance();
-			buffer = tes.getBuffer();
-			posMatrix = drawContext.getMatrices().peek().getPositionMatrix();
-			Notifications.render();
+			Notifications.render(drawContext.getMatrices());
 		});
 
 		tungstenBridge = new TungstenBridge();

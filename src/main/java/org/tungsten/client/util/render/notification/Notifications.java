@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.NonNull;
 import me.x150.renderer.font.FontRenderer;
 import me.x150.renderer.render.Renderer2d;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.util.Texture;
@@ -15,7 +16,6 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.tungsten.client.Tungsten.stack;
 import static org.tungsten.client.util.render.FontUtils.primaryFont;
 
 public class Notifications {
@@ -94,7 +94,7 @@ public class Notifications {
         return Animation.Easing.BACK_IN_OUT.apply(Math.min(fadeIn, fadeOut));
     }
 
-    public static void render() {
+    public static void render(MatrixStack stack) {
         Notifications.removeInactive();
         if(stack == null) return;
         int y = 0;
@@ -120,7 +120,7 @@ public class Notifications {
 
             // Render box bottom opposite of left side
             Renderer2d.renderRoundedQuad(
-                    Tungsten.stack,
+                    stack,
                     mainColor,
                     notiX,
                     notiY,
@@ -132,7 +132,7 @@ public class Notifications {
 
             // Box border
             Renderer2d.renderRoundedOutline(
-                    Tungsten.stack,
+                    stack,
                     outlineColor,
                     notiX,
                     notiY,
@@ -147,7 +147,7 @@ public class Notifications {
             RenderSystem.setShaderTexture(0, new Texture("icon/TungstenOnlyW.png"));
             RenderSystem.setShaderColor(1, 1, 1, 0.8F);
             Renderer2d.renderTexture(
-                    Tungsten.stack,
+                    stack,
                     notiX - 4,
                     notiY - 4,
                     30,
