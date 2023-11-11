@@ -18,6 +18,8 @@ repositories {
     maven("https://maven.terraformersmc.com/snapshots")
 
     maven("https://maven.ladysnake.org/releases")
+
+    maven("https://maven.meteordev.org/releases")
 }
 
 enum class IncludeMethod { NOT, SHADOW, INCLUDE }
@@ -155,6 +157,13 @@ dependencies {
         group = "com.labymedia",
         name = "ultralight-java-databind",
         version = properties["dep_ultralight"].toString()
+    )
+
+    depend(
+        includeMethod = IncludeMethod.SHADOW,
+        group = "meteordevelopment",
+        name = "orbit",
+        version = properties["dep_orbit"].toString()
     )
 
     modDepend(

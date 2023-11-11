@@ -24,7 +24,7 @@ public class KeyboardMixin {
 	@Inject(method = "onKey", at = @At("RETURN"))
 	void onOnKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
 		KeyboardEvent ke = new KeyboardEvent(key, modifiers, action);
-		Tungsten.eventManager.send(ke);
+		Tungsten.EVENT_BUS.post(ke);
 		if (action == GLFW.GLFW_PRESS && key != -1) { // key = -1 means invalid key mapping, aka a special key like a volume wheel
 			if (client.player != null) {
 				if(client.currentScreen == null){

@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tungsten.client.Tungsten;
 import org.tungsten.client.feature.module.config.GenericSetting;
-import org.tungsten.client.feature.module.config.KeybindSetting;
 import org.tungsten.client.feature.registry.ModuleRegistry;
 import org.tungsten.client.util.render.notification.Notifications;
 
@@ -114,11 +113,11 @@ public abstract class GenericModule {
 	public void setEnabled(boolean state) {
 		this.enabled = state;
 		if (state) {
-			Tungsten.eventManager.registerSubscribers(this);
+			Tungsten.EVENT_BUS.subscribe(this);
 			this.enable();
 			Notifications.newNotification("Enabled " + this.name, 3_000L).title("Toggle").build();
 		} else {
-			Tungsten.eventManager.unregister(this);
+			Tungsten.EVENT_BUS.unsubscribe(this);
 			this.disable();
 			Notifications.newNotification("Disabled " + this.name, 3_000L).title("Toggle").build();
 		}

@@ -1,6 +1,6 @@
 package org.tungsten.client.feature.module.modules.render;
 
-import me.x150.MessageSubscription;
+import meteordevelopment.orbit.EventHandler;
 import org.tungsten.client.event.RenderEvent;
 import org.tungsten.client.feature.module.GenericModule;
 import org.tungsten.client.feature.module.config.ButtonSetting;
@@ -39,7 +39,7 @@ public class Hud extends GenericModule {
     protected void tickClient() {
     }
 
-    @MessageSubscription
+    @EventHandler
     void onRender(RenderEvent.HudNoMSAA event) {
         // Hard code in resize arrow to be in bottom opposite of left of the logo.
         resizeX = logoX + (logoWidth - 10);

@@ -1,7 +1,7 @@
 package org.tungsten.client;
 
 import com.labymedia.ultralight.UltralightJava;
-import me.x150.MessageManager;
+import meteordevelopment.orbit.EventBus;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
@@ -49,7 +50,7 @@ public class Tungsten implements ClientModInitializer {
 	public static final Path ULTRALIGHT = APPDATA.resolve("ultralight");
 	public final static Logger LOGGER = LoggerFactory.getLogger("Tungsten");
 	private static final String NATIVES_URL = "https://cdn.discordapp.com/attachments/1121169365883166790/1123366568903061634/natives.zip";
-	public static MessageManager eventManager = new MessageManager();
+	public static final EventBus EVENT_BUS = new EventBus();
 	public static Path ulNatives;
 	public static Path ulResources;
 
@@ -85,6 +86,8 @@ public class Tungsten implements ClientModInitializer {
 	public void onInitializeClient() {
 		Setup.setup();
 
+		EVENT_BUS.registerLambdaFactory("org.tungsten.client", ((lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup())));
+
 		ModuleCompiler.compileModules();
 		ModuleInitializer.initModules();
 
@@ -98,7 +101,6 @@ public class Tungsten implements ClientModInitializer {
 
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			//Tungsten.cleanupUL();
-			LanguageServer.kill();
 		}
 		));
 

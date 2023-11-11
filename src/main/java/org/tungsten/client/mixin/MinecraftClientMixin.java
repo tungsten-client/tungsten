@@ -15,12 +15,12 @@ import org.tungsten.client.event.WorldChangeEvent;
 public class MinecraftClientMixin {
 	@Inject(method = "tick", at = @At("HEAD"))
 	void onGameTick(CallbackInfo ci) {
-		Tungsten.eventManager.send(new GameTickEvent());
+		Tungsten.EVENT_BUS.post(new GameTickEvent());
 	}
 
 	@Inject(method = "setWorld", at = @At("RETURN"))
 	public void injectWorldEvent(final ClientWorld world, final CallbackInfo ci) {
 		WorldChangeEvent event = new WorldChangeEvent();
-		Tungsten.eventManager.send(event);
+		Tungsten.EVENT_BUS.post(event);
 	}
 }
