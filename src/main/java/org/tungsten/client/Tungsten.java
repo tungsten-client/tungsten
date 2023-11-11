@@ -47,9 +47,6 @@ import java.util.stream.Stream;
 public class Tungsten implements ClientModInitializer {
 
 	public static final MinecraftClient client = MinecraftClient.getInstance();
-
-	@Getter
-	private static final Tungsten INSTANCE = new Tungsten();
 	public static final Path RUNDIR = Path.of(MinecraftClient.getInstance().runDirectory.toURI())
 			.resolve("tungsten"); //PLEASE USE THIS DIRECTORY TO SAVE ALL CONFIGURATION FILES, EVERYTHING
 	public static final Path APPDATA = RUNDIR.resolve(
