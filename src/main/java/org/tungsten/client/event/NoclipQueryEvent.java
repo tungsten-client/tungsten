@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 @Getter
 @AllArgsConstructor
-public class NoclipQueryEvent extends Event {
+public class NoclipQueryEvent {
 	final PlayerEntity player;
 	@Setter
 	boolean shouldNoclip;

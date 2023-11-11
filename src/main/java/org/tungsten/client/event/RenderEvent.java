@@ -6,7 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 
 @Getter
-public abstract class RenderEvent extends Event {
+public abstract class RenderEvent {
 	protected MatrixStack contextStack;
 
 	public RenderEvent(MatrixStack contextStack) {

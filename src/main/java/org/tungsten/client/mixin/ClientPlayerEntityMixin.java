@@ -48,17 +48,16 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "pushOutOfBlocks")
 	public void onPushOutOfBlocks(double x, double y, CallbackInfo ci) {
-		PushOutOfBlockEvent pob = new PushOutOfBlockEvent();
+		PushOutOfBlockEvent pob = PushOutOfBlockEvent.get();
 		Tungsten.EVENT_BUS.post(pob);
         if (pob.isCancelled()) {
             ci.cancel();
         }
-
 	}
 
 	@Inject(at = @At("HEAD"), cancellable = true, method = "move")
 	public void onMove(MovementType mov, Vec3d delta, CallbackInfo ci) {
-		PlayerMoveEvent pm = new PlayerMoveEvent(mov, delta);
+		PlayerMoveEvent pm = PlayerMoveEvent.get(mov, delta);
 		Tungsten.EVENT_BUS.post(pm);
 		if (pm.isCancelled()) ci.cancel();
 	}

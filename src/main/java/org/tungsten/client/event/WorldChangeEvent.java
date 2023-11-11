@@ -1,7 +1,7 @@
 package org.tungsten.client.event;
 
-import lombok.AllArgsConstructor;
+public class WorldChangeEvent {
+    public static final WorldChangeEvent EVENT = new WorldChangeEvent();
 
-@AllArgsConstructor
-public class WorldChangeEvent extends Event {
+    private WorldChangeEvent() {}
 }

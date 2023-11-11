@@ -1,13 +1,27 @@
 package org.tungsten.client.event;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import meteordevelopment.orbit.ICancellable;
 import net.minecraft.network.packet.Packet;
 
-@AllArgsConstructor
 @Getter
-public abstract class PacketEvent extends Event {
+public abstract class PacketEvent implements ICancellable {
+	private boolean isCancelled;
 	protected Packet<?> packet;
+
+	protected PacketEvent(Packet<?> packet) {
+		this.packet = packet;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		this.isCancelled = cancelled;
+	}
+
+	@Override
+	public boolean isCancelled() {
+		return this.isCancelled;
+	}
 
 	public static class Received extends PacketEvent {
 		public Received(Packet<?> packet) {
